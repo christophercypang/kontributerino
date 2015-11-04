@@ -1,0 +1,103 @@
+﻿<ion-side-menus enable-menu-with-back-views="false">
+    <ion-side-menu-content>
+        <ion-nav-bar class="bar-calm">
+            <ion-nav-back-button>
+            </ion-nav-back-button>
+
+            <ion-nav-buttons side="left">
+                <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+            </ion-nav-buttons>
+            <ion-nav-buttons side="right">
+                <button class="button button-icon button-clear ion-search"></button>
+            </ion-nav-buttons>
+        </ion-nav-bar>
+        <ion-nav-view name="menuContent"></ion-nav-view>
+    </ion-side-menu-content>
+
+    <ion-side-menu side="left">
+        <ion-header-bar class="bar-calm">
+            <h1 class="title">Menu</h1>
+        </ion-header-bar>
+        <ion-content>
+            <div class="list" id="leftMenu">
+
+                <a class="item item-icon-left" nav-clear menu-close ng-click="login()">
+                    <i class="icon ion-person"></i>
+                    Profile
+                </a>
+
+                <a class="item item-icon-left" nav-clear menu-close href="#/app/home">
+                    <i class="icon ion-home"></i>
+                    Home
+                </a>
+
+                <a class="item item-icon-left" nav-clear menu-close href="#/app/events">
+                    <i class="icon ion-calendar"></i>
+                    Events
+                </a>
+
+           <!-- <a class="item item-icon-left" nav-clear menu-close href="#/app/eventTemplate">
+                    <i class="icon ion-clipboard"></i>
+                    Event Templates
+                </a>
+
+                <a class="item item-icon-left" nav-clear menu-close href="#/app/host">
+                    <i class="icon ion-calendar"></i>
+                    Events You're Hosting
+
+                </a>
+
+                <a class="item item-icon-left" nav-clear menu-close href="#/app/participate">
+                    <i class="icon ion-person-stalker"></i>
+                    Events You're Participating
+                </a>
+
+                <a class="item item-icon-left" nav-clear menu-close href="#/app/past">
+                    <i class="icon ion-clock"></i>
+                    Past Events
+                </a> -->
+
+
+                <a class="item item-icon-left" nav-clear menu-close href="#/app/settings">
+                    <i class="icon ion-gear-b"></i>
+                    Settings
+                </a>
+
+               
+
+                    <a class="image">
+                        <img src="img/kontributelogo.png">
+
+                    </a>
+
+
+                    <!-- <a class="item item-icon-left" nav-clear menu-close ng-click="login()">
+            <i class="icon ion-person"></i>
+            Profile
+        </a>
+
+
+        <a class="item item-icon-left" href="#/app/friends">
+            <i class="icon ion-person-stalker"></i>
+            Friends
+        </a>
+
+        <a class="item item-icon-left" href="#/app/active">
+            <i class="icon ion-bag"></i>
+            Active Kontribution Lists
+        </a>
+        <a class="item item-icon-left" href="#/app/schedule">
+            <i class="icon ion-calendar"></i>
+            Schedule
+        </a>
+        <a class="item item-icon-left" href="#/app/search">
+            <i class="icon ion-search"></i>
+            Search
+        </a> -->
+
+
+</div>
+
+        </ion-content>
+    </ion-side-menu>
+</ion-side-menus>

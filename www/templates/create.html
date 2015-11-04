@@ -1,0 +1,58 @@
+﻿<ion-view view-title="Create">
+    <ion-cotent>
+        <div class="card">
+            <div class="item text-center item-divider">
+
+                Creating An Event
+            </div>
+
+       <form name="createEventForm" ng-if="!eventCreation">
+                <div class="item item-text-wrap">
+          <label class="item item-input item-stacked-label">
+                            <span class="input-label"> Name </span>
+                            <input type="text" placeholder="Enter your Event Name here"  ng-model="title2" ng-minlength="1" ng-maxlength="40" required />
+                        </label>
+
+                        <label class="item item-input item-stacked-label">
+                            <span class="input-label"> Date</span>
+                            <input type="number" placeholder="mmddyyyy" ng-model="date2" ng-minlength="8" ng-maxlength="8" required />
+                        </label>
+
+                        <label class="item item-input item-stacked-label">
+                            <span class="input-label"> Time</span>
+                            <input type="number" placeholder="hhmm" ng-model="time2" ng-minlength="4" ng-maxlength="4" required />
+                        </label>
+
+                        <label class="item item-input item-stacked-label">
+                            <span class="input-label"> Location</span>
+                            <input type="text" placeholder="Enter your Event Location Here" ng-model="ddress2" ng-minlength="1" ng-maxlength="100" required />
+                        </label>
+
+                        <label class="item item-input item-stacked-label">
+                        <span class="input-label"> Guests</span>
+                        <input type="text" placeholder="Invite your Guests Here!" ng-model="guests2" ng-minlength="1" ng-maxlength="1000" required />
+                        </label>
+                        <span class="item text-center item-divider"
+            <button class="button button-block button-email" ng-click="createEvent(title2, time2, date2, time2, address2, description2, guests2)">Create!</button>
+             </span>
+        </div>
+
+
+        
+        </div>
+
+
+ <div class="item text-center item-divider" ng-if="anotherOne">
+
+               <button class="button button-block button-email" ng-click="showEvent()">Create Another Event?</button>
+            </div>
+
+
+
+
+
+
+
+
+    </ion-content>
+</ion-view>
