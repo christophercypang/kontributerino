@@ -1,58 +1,90 @@
 ﻿<ion-view view-title="Create">
-    <ion-cotent>
-        <div class="card">
-            <div class="item text-center item-divider">
+        <ion-content class="has-header list-inset">
+        <form name="createEventForm" ng-if="!eventCreation">
+                <div class="item item-text-wrap"> 
 
-                Creating An Event
-            </div>
-
-       <form name="createEventForm" ng-if="!eventCreation">
-                <div class="item item-text-wrap">
-          <label class="item item-input item-stacked-label">
+                    <div class="item item-divider"> 
+                        <h2>Creating An Event</h2>
+                    </div>
+                <label class="item item-input item-stacked-label">
                             <span class="input-label"> Name </span>
-                            <input type="text" placeholder="Enter your Event Name here"  ng-model="title2" ng-minlength="1" ng-maxlength="40" required />
+                            <input type="text" placeholder="Enter your Event Name here"  ng-model="title2" ng-minlength="1" ng-maxlength="40" required>
                         </label>
 
                         <label class="item item-input item-stacked-label">
                             <span class="input-label"> Date</span>
-                            <input type="number" placeholder="mmddyyyy" ng-model="date2" ng-minlength="8" ng-maxlength="8" required />
+                            <input type="date" required>
                         </label>
 
                         <label class="item item-input item-stacked-label">
                             <span class="input-label"> Time</span>
-                            <input type="number" placeholder="hhmm" ng-model="time2" ng-minlength="4" ng-maxlength="4" required />
+                            <input type="time" required>
                         </label>
 
                         <label class="item item-input item-stacked-label">
                             <span class="input-label"> Location</span>
-                            <input type="text" placeholder="Enter your Event Location Here" ng-model="ddress2" ng-minlength="1" ng-maxlength="100" required />
+                            <input type="text" placeholder="Enter your Event Location Here" ng-model="address2" ng-minlength="1" ng-maxlength="100" required>
+                        </label>
+
+                          <label class="item item-input item-stacked-label">
+                            <span class="input-label"> Description</span>
+                            <input type="text" placeholder="Enter your Event Location Here" ng-model="description2" ng-minlength="1" ng-maxlength="100" required>
                         </label>
 
                         <label class="item item-input item-stacked-label">
-                        <span class="input-label"> Guests</span>
-                        <input type="text" placeholder="Invite your Guests Here!" ng-model="guests2" ng-minlength="1" ng-maxlength="1000" required />
+                            <span class="input-label"> Guests</span>
+                            <input type="text" placeholder="Invite your Guests Here!" ng-model="guests2" ng-minlength="1" ng-maxlength="1000" required>
                         </label>
-                        <span class="item text-center item-divider"
-            <button class="button button-block button-email" ng-click="createEvent(title2, time2, date2, time2, address2, description2, guests2)">Create!</button>
-             </span>
+
+                        <div class="list">
+
+                            <div class="item item-divider"> 
+                                <h2>Additional Options</h2>
+                            </div>
+    
+        
+                            <ion-checkbox ng-model="votingPoll"
+                                ng-true-value="'pollTrue'"
+                                ng-false-value="'pollFalse'">
+                                Voting Poll
+                            </ion-checkbox>
+                            <!-- <div class="item">
+                                <pre ng-bind="votingPoll | json"></pre> 
+                            </div> -->
+                            <ion-checkbox ng-model="kontributeList"
+                                ng-true-value="'kontributeTrue'"
+                                ng-false-value="'kontributeFalse'">
+                                Kontributing List
+                            </ion-checkbox>
+                            <!-- <div class="item">
+                                <pre ng-bind="kontributeList | json"></pre> 
+                            </div>  -->
+        
+        
+                        </div>
+
+                        <span class="item text-center item-divider">
+                            <button class="button button-block button-email" ng-click="createEvent(title2, date2, time2, address2, description2, guests2)">Create!</button>
+                        </span>
+             </div>
+        </form>
+
+        <div class="item text-center item-divider" ng-if="anotherOne">
+            <button class="button button-block button-email" ng-click="showEvent()">Create Another Event?</button>
         </div>
 
 
         
-        </div>
-
-
- <div class="item text-center item-divider" ng-if="anotherOne">
-
-               <button class="button button-block button-email" ng-click="showEvent()">Create Another Event?</button>
-            </div>
-
-
-
-
-
-
-
-
+    
     </ion-content>
+    <ion-footer-bar>
+        <ion-tabs class="tabs-dark tabs-icon-top">
+            <ion-tab title="Attending" icon="ion-flag" href="#/app/events"></ion-tab>
+            <ion-tab title="Create" icon="ion-wrench" href="#/app/create"></ion-tab>
+            <ion-tab title="Host" icon="ion-person" href="#/app/host"></ion-tab>
+            <ion-tab title="Past" icon="ion-clock" href="#/app/past"></ion-tab>
+
+
+        </ion-tabs>
+    </ion-footer-bar>
 </ion-view>

@@ -8,6 +8,7 @@
       Ionic Framework Team&#xD;
     </author>
   <content src="index.html"/>
+    <gap:plugin name="com.ionic.keyboard" />
   <access origin="*"/>
   <access origin="auth.firebase.com"/>
   <access origin="*firebaseio.com"/>

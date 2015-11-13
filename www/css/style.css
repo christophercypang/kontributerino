@@ -1,1 +1,6 @@
 /* Empty. Add your own CSS if you like */
+.pad { padding: 25px; }
+
+body {
+  cursor: url('http://ionicframework.com/img/finger.png'), auto;
+}

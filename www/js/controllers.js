@@ -23,7 +23,8 @@ angular.module('kontribute.controllers', [])
   $scope.anotherOne = false; 
   $scope.attendingEvent = true; 
   
-
+  $scope.votingPoll = 'pollFalse';
+  $scope.kontributeList = 'kontributeFalse';
 
 
 
