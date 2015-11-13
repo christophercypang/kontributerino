@@ -102,8 +102,7 @@ function(){
   };
 
   // Perform the login action when the user submits the login form
-  $scope.doLogin = function(e) {
-    e.preventDefault();
+  $scope.doLogin = function() {
     var username = $scope.loginData.username;
     var password = $scope.loginData.password;
 
@@ -115,12 +114,13 @@ function(){
       console.log('Authentication success.');
       $scope.closeLogin();
     }).catch(function(error) {
-    })
       alert(error);
+    })
   };
 
   $scope.goToRegister = function() {
     console.log("This is being called.");
+    $scope.closeLogin();
     $state.transitionTo('app.register');
   }
 
@@ -147,7 +147,9 @@ function(){
         var email = $scope.user.email;
         var password = $scope.user.password;
         if (email && password) {
-            auth.$createUser(email, password)
+            auth.$createUser( {
+              email: email,
+              password: password} )
             .then(function() {
               console.log("User creation success.");
               // send user to login page
