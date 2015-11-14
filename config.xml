@@ -9,9 +9,9 @@
     </author>
   <content src="index.html"/>
     <gap:plugin name="com.ionic.keyboard" />
-     <gap:plugin name="com.phonegap.plugins.facebookconnect" version="0.12.0">
-        <param name="Kontribute" value="909983232427088" />
-        <param name="Kontribute" value="Kontribute" />
+     <gap:plugin name="com.phonegap.plugins.facebookconnect" version="0.12.0" source="plugins.cordova.io">
+        <param name="APP_ID" value="909983232427088" />
+        <param name="APP_NAME" value="Kontribute" />
     </gap:plugin>
   <access origin="*"/>
   <access origin="auth.firebase.com"/>
