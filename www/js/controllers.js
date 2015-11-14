@@ -1,6 +1,6 @@
 angular.module('kontribute.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $firebaseAuth, $state, $http, $ionicPopup, eventFactory, eventService) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $firebaseAuth, $state, $http, $ionicPopup, $location, $window, eventFactory, eventService) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -15,6 +15,11 @@ angular.module('kontribute.controllers', [])
 
   var firebaseRef = new Firebase('https://torrid-torch-6578.firebaseio.com');
   var loginObj = $firebaseAuth(firebaseRef);
+  
+  var userLogged = firebaseRef.getAuth();
+
+  //stores current user
+  var currentUser = {};
 
   // Form data for the login modal
   $scope.loginData = {};
@@ -99,13 +104,22 @@ function(){
 
   // Open the login modal
   $scope.login = function() {
+
+    if (userLogged !== null) {
+      console.log("user " + userLogged.uid + " is logged in with " + userLogged.provider);
+      $state.go('app.profile');
+      $scope.username = userLogged.uid;
+    }else{
+      console.log("user is logged out.");
     $scope.modal.show();
+  }
   };
 
   // Perform the login action when the user submits the login form
   $scope.doLogin = function() {
     var username = $scope.loginData.username;
     var password = $scope.loginData.password;
+
 
     loginObj.$authWithPassword ({
       email: username,
@@ -114,29 +128,32 @@ function(){
     .then(function(user) {
       console.log('Authentication success.');
       $scope.closeLogin();
+      $location.path('app');
+      $window.location.reload();
     }).catch(function(error) {
       alert(error);
     })
   };
 
+  $scope.doLogout = function() {
+    console.log("do logout");
+    firebaseRef.unauth();
+    userLogged == null;
+    $location.path('app');
+    $window.location.reload();
+  }
+
   $scope.goToRegister = function() {
     console.log("This is being called.");
     $scope.closeLogin();
-    $state.transitionTo('app.register');
+    $state.go('app.register');
   }
 
+  // profile shit
+  
+
 })
 
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
-})
 
 .controller('RegisterCtrl', function($scope, $firebaseAuth, $location) {
     var firebaseObj = new Firebase('https://torrid-torch-6578.firebaseio.com');
@@ -163,4 +180,5 @@ function(){
   };
 
 })
+
 
