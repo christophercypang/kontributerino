@@ -9,6 +9,10 @@
     </author>
   <content src="index.html"/>
     <gap:plugin name="com.ionic.keyboard" />
+     <gap:plugin name="com.phonegap.plugins.facebookconnect" version="0.8.0">
+        <param name="Kontribute" value="909983232427088" />
+        <param name="Kontribute" value="Kontribute" />
+    </gap:plugin>
   <access origin="*"/>
   <access origin="auth.firebase.com"/>
   <access origin="*firebaseio.com"/>

@@ -10,13 +10,18 @@ angular.module('kontribute.services', [])
 
       
         function createEvent(title, date, time, address, description, guests){
-            var newEvent = { 
+            
+
+
+
+
+            var globalEvent = { 
                 Title:  title, 
                 Date: date, 
                 Time: time, 
                 Address: address, 
                 Description: description, 
-                Users: guests, 
+                Users :  guests , 
             }; 
 
             console.log(newEvent.Time + " new event"); 
