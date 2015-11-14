@@ -8,8 +8,8 @@
       Ionic Framework Team&#xD;
     </author>
   <content src="index.html"/>
-    <gap:plugin name="com.ionic.keyboard" />
-     <gap:plugin name="com.phonegap.plugins.facebookconnect" version="0.8.0">
+    <gap:plugin name="com.ionic.keyboard" /></gap:plugin>
+     <gap:plugin name="com.phonegap.plugins.facebookconnect" version="0.12.0">
         <param name="Kontribute" value="909983232427088" />
         <param name="Kontribute" value="Kontribute" />
     </gap:plugin>
