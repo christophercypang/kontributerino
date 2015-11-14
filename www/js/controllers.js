@@ -151,8 +151,9 @@ function(){
 
   // profile shit
   
-
 })
+
+
 
 
 .controller('RegisterCtrl', function($scope, $firebaseAuth, $location) {
