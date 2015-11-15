@@ -28,6 +28,15 @@ angular.module('kontribute.controllers', [])
   $scope.anotherOne = false; 
   $scope.attendingEvent = true; 
   
+  //for validation
+  $scope.inputBoxesFilled = true; 
+  $scope.titleInput = true; 
+  $scope.timeInput = true;
+  $scope.dateInput = true; 
+  $scope.addressInput = true; 
+  $scope.descriptionInput = true; 
+  $scope.guestsInput = true; 
+  
   $scope.votingPoll = 'pollFalse';
   $scope.kontributeList = 'kontributeFalse';
 
@@ -36,7 +45,7 @@ angular.module('kontribute.controllers', [])
  $scope.getUserDetails = 
    function () {
    $scope.eventSubmitted = true; 
-     return eventFactory.getAllUsers().then(function(data) { //2. so you can use .then()
+     return eventFactory.getAllEvents().then(function(data) { //2. so you can use .then()
               console.log("we out here" + data.Title); 
               $scope.name = data.data.event.Title;
               $scope.date = data.data.event.Date;  
@@ -80,8 +89,46 @@ $scope.createEvent =
   function(title, date, time, address, description, guests){
     console.log("here in CTRL", title, date, time, address, description, guests); 
    
+if(title == undefined) {
+$scope.titleInput = false;
+} else {
+$scope.titleInput = true;
+}
+if(date == undefined) {
+$scope.dateInput = false;  
+} else {
+$scope.dateInput = true;
+}
+if(time == undefined) {
+$scope.timeInput = false; 
+} else {
+$scope.timeInput = true;
+}
+if(address == undefined){
+$scope.addressInput = false; 
+} else {
+$scope.addressInput = true; 
+}
+if(description == undefined){
+$scope.descriptionInput = false; 
+} else {
+$scope.descriptionInput = true; 
+}
+if(guests == undefined){
+$scope.guestsInput = false; 
+} else {
+$scope.guestsInput = true; 
+}
+     
+
+    if(!$scope.titleInput || !$scope.dateInput || !$scope.timeInput 
+      || !$scope.addressInput || !$scope.descriptionInput || !$scope.descriptionInput || !$scope.guestsInput) {
+       $scope.inputBoxesFilled = false; 
+    } else {
+
     eventService.createEvent(title, date, time, address, description, guests);
     $scope.confirmEvent(); 
+  }
     
   }; 
  

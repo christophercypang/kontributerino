@@ -4,3 +4,16 @@
 body {
   cursor: url('http://ionicframework.com/img/finger.png'), auto;
 }
+
+.validation {
+	color: red; 
+	font-size: 15px;
+
+}
+
+
+.regular {
+	color: blue; 
+	font-size: 10px;
+	
+}
