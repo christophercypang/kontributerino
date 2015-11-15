@@ -38,6 +38,21 @@ body {
 
 }
 
+.menuImage {
+	background: url(../img/kontributelogo.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    background-color: black; 
+    width: 100%;
+    height: 400px;
+    margin: auto;
+    z-index: 2;
+    position: relative;
+
+
+}
+
 
 .scroll {
     height: 100%;
