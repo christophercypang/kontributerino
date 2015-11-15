@@ -3,6 +3,7 @@
 
 body {
   cursor: url('http://ionicframework.com/img/finger.png'), auto;
+
 }
 
 .validation {
@@ -15,5 +16,34 @@ body {
 .regular {
 	color: blue; 
 	font-size: 10px;
-	
+
+}
+
+
+
+
+
+.homeImage {
+	background: url(../img/kontributelogo.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    background-color: black; 
+    width: 100%;
+    height: 100px;
+    margin: auto;
+    z-index: 2;
+    position: relative;
+
+
+}
+
+
+.scroll {
+    height: 100%;
+}
+ 
+#map {
+    width: 100%;
+    height: 100%;
 }
