@@ -13,14 +13,6 @@ angular.module('kontribute.controllers', [])
    vm.result;
    
 
-  var firebaseRef = new Firebase('https://torrid-torch-6578.firebaseio.com');
-  var loginObj = $firebaseAuth(firebaseRef);
-  
-  var userLogged = firebaseRef.getAuth();
-
-  //stores current user
-  var currentUser = {};
-
   // Form data for the login modal
   $scope.loginData = {};
   $scope.eventSubmitted = false; 
@@ -133,98 +125,69 @@ $scope.guestsInput = true;
   }; 
  
 
-$scope.validation = 
-function(){
+$scope.validation = function(){
   $scope.eventCreation = false; 
 }; 
-  // Create the login modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/login.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
-
-  // Triggered in the login modal to close it
-  $scope.closeLogin = function() {
-    $scope.modal.hide();
-  };
 
   // Open the login modal
-  $scope.login = function() {
-
-    if (userLogged !== null) {
-      console.log("user " + userLogged.uid + " is logged in with " + userLogged.provider);
-      $state.go('app.profile');
-      $scope.username = userLogged.uid;
-    }else{
-      console.log("user is logged out.");
-    $scope.modal.show();
-  }
+$scope.login = function() {
+    console.log("running?");
+    $state.go('app.login');
+    console.log("yes");
   };
 
-  // Perform the login action when the user submits the login form
-  $scope.doLogin = function() {
-    var username = $scope.loginData.username;
-    var password = $scope.loginData.password;
+})
 
+// Handles login and registration
+.controller('AuthCtrl', function($scope, authFactory, $firebaseAuth, $state, $window, $location ) {
 
-    loginObj.$authWithPassword ({
-      email: username,
-      password: password
-    })
-    .then(function(user) {
-      console.log('Authentication success.');
-      $scope.closeLogin();
-      $location.path('app');
-      $window.location.reload();
-    }).catch(function(error) {
-      alert(error);
-    })
+  var firebaseRef = new Firebase('https://torrid-torch-6578.firebaseio.com');
+  var auth = $firebaseAuth(firebaseRef);
+
+  var authCtrl = this;
+
+  authCtrl.user = {
+    email: '',
+    password: ''
   };
 
-  $scope.doLogout = function() {
-    console.log("do logout");
-    firebaseRef.unauth();
-    userLogged == null;
-    $location.path('app');
-    $window.location.reload();
-  }
+    // Perform the login action when the user submits the login form
+  authCtrl.doLogin = function() {
+    authFactory.$authWithPassword(authCtrl.user).then(function(auth){
+      $state.go('app.home');
+    }, function(error){
+      authCtrl.error = error;
+    });
+
+  };
 
   $scope.goToRegister = function() {
-    console.log("This is being called.");
-    $scope.closeLogin();
     $state.go('app.register');
   }
 
-  // profile shit
-  
+  authCtrl.signUp = function() {
+    authFactory.$createUser(authCtrl.user).then(function(user){
+      $state.go('app.home');
+      $window.location.reload();
+    }, function(error) {
+      authCtrl.error = error;
+    });
+  };
+
+
 })
 
+// Handles user profile
+.controller('ProfileCtrl', function($state, authFactory, $window, usersFactory) {
+  var profileCtrl = this;
 
 
 
-.controller('RegisterCtrl', function($scope, $firebaseAuth, $location) {
-    var firebaseObj = new Firebase('https://torrid-torch-6578.firebaseio.com');
-    var auth = $firebaseAuth(firebaseObj);
-
-    $scope.user ={};
-
-    $scope.signUp = function() {
-        var email = $scope.user.email;
-        var password = $scope.user.password;
-        if (email && password) {
-            auth.$createUser( {
-              email: email,
-              password: password} )
-            .then(function() {
-              console.log("User creation success.");
-              // send user to login page
-              $location.path('app');
-            }).catch(function(error) {
-              alert(error);
-            });
-      }
-    
+  profileCtrl.doLogout = function(){
+    authFactory.$unauth();
+    console.log("logout?")
+    $state.go('app.home');
+    $window.location.reload();
   };
 
 })

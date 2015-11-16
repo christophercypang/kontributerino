@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('kontribute', ['ionic', 'kontribute.controllers', 'kontribute.services', 'kontribute.factories','firebase'])
+angular.module('kontribute', ['ionic', 'kontribute.controllers', 'kontribute.services', 'kontribute.factories', 'kontribute.authFactory','kontribute.usersFactory','firebase'])
 
 
 .config(function($ionicConfigProvider) {
@@ -107,12 +107,31 @@ angular.module('kontribute', ['ionic', 'kontribute.controllers', 'kontribute.ser
             }
         })
 
+          .state('app.login', {
+            url:'/login',
+            views: {
+              'menuContent': {
+                templateUrl:'templates/login.html',
+                controller: 'AuthCtrl as authCtrl' 
+              }
+            },
+            resolve: {
+              requireNoAuth: function($state, authFactory){
+                return authFactory.$requireAuth().then(function(auth){
+                   $state.go('app.profile'); 
+              }, function(error) {
+                return;
+              });
+            }
+          }
+        })
+
           .state('app.register', {
             url:'/register',
             views: {
               'menuContent': {
                 templateUrl: 'templates/register.html',
-                controller: 'RegisterCtrl'
+                controller: 'AuthCtrl as authCtrl'
               }
             }
           })
@@ -122,7 +141,19 @@ angular.module('kontribute', ['ionic', 'kontribute.controllers', 'kontribute.ser
             views: {
               'menuContent': {
                 templateUrl: 'templates/profile.html',
-                controller: 'AppCtrl'
+                controller: 'ProfileCtrl as profileCtrl'
+              }
+            },
+            resolve: {
+              // auth: function($state, usersFactory, authFactory){
+              //   return authFactory.requireAuth().catch(function() {
+              //     $state.go('app.profile');
+              //   });
+              // },
+              profile: function(usersFactory, authFactory){
+                return authFactory.$requireAuth().then(function(auth){
+                  return usersFactory.getProfile(auth.uid).$loaded();
+                });
               }
             }
           })
@@ -130,4 +161,7 @@ angular.module('kontribute', ['ionic', 'kontribute.controllers', 'kontribute.ser
     
 
     $urlRouterProvider.otherwise('/app/home');
-});
+})
+
+
+.constant('FirebaseUrl', 'https://torrid-torch-6578.firebaseio.com/' );

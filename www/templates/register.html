@@ -3,21 +3,14 @@
 <h1 class="title">Register</h1>
 </ion-header-bar>
 <ion-content>
-<form>
-	<div class = "list">
-		<label class="item item-input">
-			<span class ="input-label">Enter Your Email</span>
-			<input type = "text" ng-model="user.email">
-		</label>
-		<label class ="item item-input">
-			<span class="input-label">Choose A Password</span>
-			<input type="password" ng-model="user.password">
-		</label>
-		<label class="item">
-			<button class = "button button-block button-position" type="submit" 
-			ng-click="signUp()" ng-disabled="!user.email || !user.password">Register</button>
-		</label>
-	</div>
+<form ng-submit="authCtrl.signUp()">
+  <div class="input-group">
+    <input type="email" class="form-control" placeholder="Email" ng-model="authCtrl.user.email">
+  </div>
+  <div class="input-group">
+    <input type="password" class="form-control" placeholder="Password" ng-model="authCtrl.user.password">
+  </div>
+  <input type="submit" class="btn btn-default" value="Register">
 </form>
 </ion-content>
 </ion-view>
