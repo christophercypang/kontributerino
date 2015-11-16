@@ -12,6 +12,10 @@ body {
 
 }
 
+.back {
+	background-color: black; 
+	
+}
 
 .regular {
 	color: blue; 
@@ -31,6 +35,22 @@ body {
     background-color: black; 
     width: 100%;
     height: 100px;
+    margin: auto;
+    z-index: 2;
+    position: relative;
+
+
+}
+
+
+.hostImage {
+	background: url(../img/kontributelogo.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    background-color: black; 
+    width: 100%;
+    height: 50px;
     margin: auto;
     z-index: 2;
     position: relative;

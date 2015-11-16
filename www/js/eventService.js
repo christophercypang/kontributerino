@@ -3,6 +3,7 @@ angular.module('kontribute.services', [])
 
         var vm = this; 
         vm.createEvent = createEvent;
+        vm.createLocalEvent = createLocalEvent;
         vm.data;
         vm.events = {}; 
 
@@ -26,7 +27,13 @@ angular.module('kontribute.services', [])
              };
          
 
-       
+       function createLocalEvent(title){
+
+
+            
+            eventFactory.createLocalEvent(title); 
+    
+             };
    
             
 
