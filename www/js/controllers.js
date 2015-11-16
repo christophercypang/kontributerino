@@ -29,9 +29,28 @@ angular.module('kontribute.controllers', [])
   $scope.descriptionInput = true; 
   $scope.guestsInput = true; 
   
+  
+  
+    $scope.PizzaParty = { title: 'Pizza Party', time: '12:00', address:'New York', description:'Whoa'}; 
+  $scope.PoopParty = { title: 'Poop Party', time: '12:20', address:'Chiraq', description:'Hello'}; 
+  $scope.events = [$scope.PizzaParty, $scope.PoopParty]; 
+  
+  
+  
+  
   $scope.votingPoll = 'pollFalse';
   $scope.kontributeList = 'kontributeFalse';
 
+
+
+$scope.getAllEventsHosting = 
+  function() {
+    return eventFactory.getAllHostedEvents().then(function(data){
+          
+          console.log("in the controller" + data.data); 
+      
+    });
+  };
 
 
  $scope.getUserDetails = 
@@ -124,6 +143,13 @@ $scope.guestsInput = true;
     
   }; 
  
+ 
+ 
+ 
+$scope.createLocalEvent = function(title) {
+  eventService.createLocalEvent(title);
+}
+
 
 $scope.validation = function(){
   $scope.eventCreation = false; 
