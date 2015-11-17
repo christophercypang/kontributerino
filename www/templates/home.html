@@ -14,7 +14,7 @@
   <ion-slide-box on-slide-changed="slideHasChanged($index)" ng-init="getEventsForMap()">
   <ion-slide ng-repeat="event in events">
     
-    <div>
+    <div id="eventCard">
     <p>{{event.event.Title}}</p>
     <p>{{event.event.Address}}</p>
     </div>
