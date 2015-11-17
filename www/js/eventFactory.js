@@ -68,6 +68,22 @@
                 });
         }
 
+
+   factory.getEventsForMap = function() {
+             var url = "https://torrid-torch-6578.firebaseio.com/chris.json";
+                return $http.get(url)
+                .success(function (data, status, headers, config) {                
+                        console.log(data); 
+                });
+        }
+
+
+
+
+
+
+
+
     return factory;
 });
         

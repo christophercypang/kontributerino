@@ -1,6 +1,6 @@
 angular.module('kontribute.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $firebaseAuth, $state, $http, $ionicPopup, $location, $window,eventFactory, eventService) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $firebaseAuth, $state, $http, $ionicPopup, $location, $window, eventFactory, eventService) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -77,7 +77,7 @@ $scope.getAllEventsHosting =
  $scope.getUserDetails = 
    function () {
    $scope.eventSubmitted = true; 
-     return eventFactory.getAllEvents().then(function(data) { //2. so you can use .then()
+     return eventFactory.getAllEvents().then(function(data) { 
               console.log("we out here" + data.Title); 
               $scope.name = data.data.event.Title;
               $scope.date = data.data.event.Date;  
@@ -218,6 +218,13 @@ $scope.login = function() {
 
 })
 
+
+
+
+
+
+
+
 // Handles login and registration
 .controller('AuthCtrl', function($scope, authFactory, $firebaseAuth, $state, $window, $location ) {
 
@@ -273,7 +280,7 @@ $scope.login = function() {
 })
 
 
-.controller('MapController', function($scope, $ionicLoading) {
+.controller('MapController', function($scope, $ionicLoading, eventFactory, eventService) {
  
     $scope.initialise = function() {
         var myLatlng = new google.maps.LatLng(37.3000, -120.4833);
@@ -303,6 +310,32 @@ $scope.login = function() {
         $scope.map = map;
     };
     google.maps.event.addDomListener(document.getElementById("map"), 'load', $scope.initialise())
+
+
+    $scope.getEventsForMap = function(){
+        return eventFactory.getEventsForMap().then(function(data) { 
+              var array = []; 
+              
+              array = Object.keys(data.data.invited);
+              
+              $scope.events = []; 
+             
+             
+              for(var i=0; i < array.length; i++){
+              $scope.events[i] = data.data.invited[array[i]]; 
+              console.log($scope.events[i]); 
+               }
+            
+         
+    
+      
+    });
+  };
+
+    
+
+
+
 
  
 });

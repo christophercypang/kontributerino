@@ -17,7 +17,7 @@ angular.module('kontribute.services', [])
                 Title:  title, 
                 Date: date, 
                 Time: time, 
-                Address: street +","+ city + "," + province, 
+                Address: street +", "+ city + ", " + province, 
                 Description: description, 
                 Users : guests , 
             }; 
@@ -34,7 +34,7 @@ angular.module('kontribute.services', [])
                 Title:  title, 
                 Date: date, 
                 Time: time, 
-                Address: street +","+ city + "," + province, 
+                Address: street +", "+ city + ", " + province, 
                 Description: description, 
                 Users : guests , 
             }; 
@@ -52,7 +52,7 @@ angular.module('kontribute.services', [])
                 Title:  title, 
                 Date: date, 
                 Time: time, 
-                Address: street +","+ city + "," + province,  
+                Address: street +", "+ city + ", " + province,  
                 Description: description, 
                 Users : guests , 
             }; 

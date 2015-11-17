@@ -10,10 +10,18 @@
     <div class="item item-divider">
     Events List
   </div>
-    	<div class="item item-text wrap">
-    	Test text
-    	</div>
-    	</div>
+    
+  <ion-slide-box on-slide-changed="slideHasChanged($index)" ng-init="getEventsForMap()">
+  <ion-slide ng-repeat="event in events">
+    
+    <div>
+    <p>{{event.event.Title}}</p>
+    <p>{{event.event.Address}}</p>
+    </div>
+  
+  </ion-slide>
+  
+</ion-slide-box>
 
 </div>
     </ion-content>
