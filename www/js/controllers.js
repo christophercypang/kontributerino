@@ -301,14 +301,62 @@ $scope.login = function() {
                 title: "My Location"
             });
         });
- 
-
-
-
-
 
         $scope.map = map;
+
+        return eventFactory.getEventsForMap().then(function(data) { 
+              var array = [];               
+              array = Object.keys(data.data.invited);
+              $scope.events = []; 
+              $scope.locations = []; 
+             
+              for(var i=0; i < array.length; i++){
+              $scope.events[i] = data.data.invited[array[i]]; 
+               }
+
+              for(var j=0; j< $scope.events.length; j++){
+                $scope.locations[j] = $scope.events[j].event.Address; 
+              }
+
+
+            var geocoder;
+            var map;
+            
+            geocoder = new google.maps.Geocoder();
+            var latlng = new google.maps.LatLng(-34.397, 150.644);
+     
+
+            var myOptions = {
+              zoom: 8,
+              center: latlng,
+              mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    
+
+
+    map = new google.maps.Map(document.getElementById("map"), myOptions);
+  
+    for(var z = 0; z < $scope.locations.length; z++){
+       var address = $scope.locations[z]; 
+        geocoder.geocode( { 'address': address}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+        map.setCenter(results[0].geometry.location);
+        var marker = new google.maps.Marker({
+            map: map,
+            position: results[0].geometry.location
+        });
+                }
+
+            })
+        }
+
+
+
+});
+
+
     };
+
     google.maps.event.addDomListener(document.getElementById("map"), 'load', $scope.initialise())
 
 
@@ -325,18 +373,9 @@ $scope.login = function() {
               $scope.events[i] = data.data.invited[array[i]]; 
               console.log($scope.events[i]); 
                }
-            
-         
-    
-      
+                  
     });
   };
-
-    
-
-
-
-
  
 });
 
