@@ -27,11 +27,18 @@ angular.module('kontribute.services', [])
              };
          
 
-       function createLocalEvent(title){
+       function createLocalEvent(title, date, time, address, description, guests){
 
-
+            var localEvent = { 
+                Title:  title, 
+                Date: date, 
+                Time: time, 
+                Address: address, 
+                Description: description, 
+                Users : guests , 
+            }; 
             
-            eventFactory.createLocalEvent(title); 
+            eventFactory.createLocalEvent(localEvent); 
     
              };
    

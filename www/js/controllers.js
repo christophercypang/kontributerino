@@ -29,29 +29,46 @@ angular.module('kontribute.controllers', [])
   $scope.descriptionInput = true; 
   $scope.guestsInput = true; 
   
-  
-  
-    $scope.PizzaParty = { title: 'Pizza Party', time: '12:00', address:'New York', description:'Whoa'}; 
-  $scope.PoopParty = { title: 'Poop Party', time: '12:20', address:'Chiraq', description:'Hello'}; 
+
+   $scope.PizzaParty = { Title: 'Pizza Party', Time: '12:00', Address:'New York', Description:'Whoa'}; 
+  $scope.PoopParty = { Title: 'Poop Party', Time: '12:20', Address:'Chiraq', Description:'Hello'}; 
+
   $scope.events = [$scope.PizzaParty, $scope.PoopParty]; 
-  
-  
-  
-  
+  console.log($scope.events);  
   $scope.votingPoll = 'pollFalse';
   $scope.kontributeList = 'kontributeFalse';
+
+
 
 
 
 $scope.getAllEventsHosting = 
   function() {
     return eventFactory.getAllHostedEvents().then(function(data){
-          
-          console.log("in the controller" + data.data); 
+          var array = []; 
+          var temp =[];  
+          $scope.events = []; 
+          array = Object.keys(data.data.host);  
+          console.log(array);      
+          for(var i=0; i < array.length; i++){
+              $scope.events[i] = data.data.host[array[i]]; 
+            
+               console.log($scope.events[i]); 
+              }
+            
+          // array.forEach(function(element) {
+          //   $scope.events
+          // })
+        console.log($scope.events); 
+        $scope.setScope($scope.events); 
       
     });
   };
 
+
+ $scope.setScope = function (arr) {
+    $scope.events = arr; 
+ }; 
 
  $scope.getUserDetails = 
    function () {
@@ -146,8 +163,8 @@ $scope.guestsInput = true;
  
  
  
-$scope.createLocalEvent = function(title) {
-  eventService.createLocalEvent(title);
+$scope.createLocalEvent = function(title, date, time, address, description, guests) {
+  eventService.createLocalEvent(title, date, time, address, description, guests);
 }
 
 
@@ -240,6 +257,11 @@ $scope.login = function() {
                 title: "My Location"
             });
         });
+ 
+
+        
+
+
  
         $scope.map = map;
     };

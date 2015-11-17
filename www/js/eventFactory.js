@@ -18,11 +18,11 @@
 
              }
 
-    factory.createLocalEvent = function(title) {
-                var localEventTitle = title.toLowerCase(); 
-                var url = "https://torrid-torch-6578.firebaseio.com/imran/host.json";
-                var eve = [localEventTitle];
-                $http.put(url, { event1: eve})
+    factory.createLocalEvent = function(localEvent) {
+                var localEventTitle = localEvent.Title.toLowerCase(); 
+                var url = "https://torrid-torch-6578.firebaseio.com/imran/host/" + localEventTitle + ".json";
+                //var eve = [localEventTitle];
+                $http.put(url, { event: localEvent })
                 .success(function(data, status, headers, config) {
                     console.log(data); 
                     

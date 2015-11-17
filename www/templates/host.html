@@ -6,21 +6,21 @@
 </button>
 
       
-<ion-slide-box on-slide-changed="slideHasChanged($index)">
+<ion-slide-box on-slide-changed="slideHasChanged($index)" ng-init="getAllEventsHosting()">
   
   <ion-slide ng-repeat="event in events">
    
     <div class="list card">
 
   <div class="item item-avatar" style="background-color:#C0C0C0 ; color: black ">
-    <h2>{{event.title}}</h2>
-    <h3>{{event.address}}</h3>
-    <p>{{event.time}}</p>
+    <h2>{{event.event.Title}}</h2>
+    <h3>{{event.event.Address}}</h3>
+    <p>{{event.event.Time}}</p>
   </div>
 
   <div class="item item-body"  style="background-color:#E0E0E0 " >
     <p>
-      {{event.description}}
+      {{event.event.Description}}
     </p>
     <p>
       <a href="#" class="subdued">1 Like</a>
@@ -44,8 +44,6 @@
   </div>
 
 </div>
-
-
 
 
 
