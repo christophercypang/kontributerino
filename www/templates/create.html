@@ -26,18 +26,18 @@
                             <input type="text" placeholder="Click to Enter Location" disabled="disabled">
                         </label>
 
-                        <label class="item item-input item-floating-label" ng-show="locationSelected" style="color: blue">
-                            <span class="input-label" ng-class="!addressInput ? 'validation' : ''"> Street</span>
+                        <label class="item item-input item-floating-label" ng-show="locationSelected">
+                            <span class="input-label" ng-class="!streetInput ? 'validation' : ''"> Street</span>
                             <input type="text" placeholder="Enter your Street Here" ng-model="street2" ng-minlength="1" ng-maxlength="100" required>
                         </label>
 
-                        <label class="item item-input item-floating-label" ng-show="locationSelected" style="color: blue">
-                            <span class="input-label" ng-class="!addressInput ? 'validation' : ''"> City</span>
+                        <label class="item item-input item-floating-label" ng-show="locationSelected" >
+                            <span class="input-label" ng-class="!cityInput ? 'validation' : ''"> City</span>
                             <input type="text" placeholder="Enter your City Here" ng-model="city2" ng-minlength="1" ng-maxlength="100" required>
                         </label>
 
-                        <label class="item item-input item-floating-label" ng-show="locationSelected" style="color: blue">
-                            <span class="input-label" ng-class="!addressInput ? 'validation' : ''"> Province/State</span>
+                        <label class="item item-input item-floating-label" ng-show="locationSelected" >
+                            <span class="input-label" ng-class="!provinceInput ? 'validation' : ''"> Province/State</span>
                             <input type="text" placeholder="Enter your Province/State Here" ng-model="province2" ng-minlength="1" ng-maxlength="100" required>
                         </label>
 

@@ -30,6 +30,7 @@ angular.module('kontribute.controllers', [])
   $scope.provinceInput = true; 
   $scope.descriptionInput = true; 
   $scope.guestsInput = true; 
+  
   $scope.locationSelected = false; 
   
 
@@ -179,7 +180,7 @@ $scope.guestsInput = true;
      
 
     if(!$scope.titleInput || !$scope.dateInput || !$scope.timeInput 
-      || !$scope.addressInput || !$scope.descriptionInput || !$scope.descriptionInput || !$scope.guestsInput) {
+      || !$scope.streetInput || !$scope.cityInput || !$scope.provinceInput || !$scope.descriptionInput || !$scope.descriptionInput || !$scope.guestsInput) {
        $scope.inputBoxesFilled = false; 
     } else {
 
@@ -193,13 +194,13 @@ $scope.guestsInput = true;
  
  
 $scope.createLocalEvent = function(title, date, time, street, city, province, description, guests) {
-  eventService.createLocalEvent(title, date, time, address, description, guests);
+  eventService.createLocalEvent(title, date, time, street, city, province, description, guests);
 }
 
 
 
 $scope.inviteUserToEvent = function(title, date, time, street, city, province, description, guests) {
-  eventService.inviteUserToEvent(title, date, time, address, description, guests);
+  eventService.inviteUserToEvent(title, date, time, street, city, province, description, guests);
 }
 
 
