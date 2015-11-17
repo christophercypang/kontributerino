@@ -25,9 +25,12 @@ angular.module('kontribute.controllers', [])
   $scope.titleInput = true; 
   $scope.timeInput = true;
   $scope.dateInput = true; 
-  $scope.addressInput = true; 
+  $scope.streetInput = true; 
+  $scope.cityInput = true; 
+  $scope.provinceInput = true; 
   $scope.descriptionInput = true; 
   $scope.guestsInput = true; 
+  $scope.locationSelected = false; 
   
 
    $scope.PizzaParty = { Title: 'Pizza Party', Time: '12:00', Address:'New York', Description:'Whoa'}; 
@@ -89,6 +92,22 @@ $scope.getAllEventsHosting =
 
        };
    
+
+$scope.locationClick = function(){
+  if($scope.locationSelected == false){
+    $scope.locationSelected = true; 
+  } else {
+    $scope.locationSelected = false; 
+  }
+ 
+}
+
+
+
+
+
+
+
 $scope.showEvent = function(){
   $scope.eventCreation = false; 
   $scope.anotherOne = false; 
@@ -114,8 +133,8 @@ $scope.breakButton = function(){
 
   } 
 $scope.createEvent = 
-  function(title, date, time, address, description, guests){
-    console.log("here in CTRL", title, date, time, address, description, guests); 
+  function(title, date, time, street, city, province, description, guests){
+    console.log("here in CTRL", title, date, time, street, city, province, description, guests); 
    
 if(title == undefined) {
 $scope.titleInput = false;
@@ -132,10 +151,20 @@ $scope.timeInput = false;
 } else {
 $scope.timeInput = true;
 }
-if(address == undefined){
-$scope.addressInput = false; 
+if(street == undefined){
+$scope.streetInput = false; 
 } else {
-$scope.addressInput = true; 
+$scope.streetInput = true; 
+}
+if(city == undefined){
+$scope.cityInput = false; 
+} else {
+$scope.cityInput = true; 
+}
+if(province == undefined){
+$scope.provinceInput = false; 
+} else {
+$scope.provinceInput = true; 
 }
 if(description == undefined){
 $scope.descriptionInput = false; 
@@ -154,7 +183,7 @@ $scope.guestsInput = true;
        $scope.inputBoxesFilled = false; 
     } else {
 
-    eventService.createEvent(title, date, time, address, description, guests);
+    eventService.createEvent(title, date, time, street, city, province, description, guests);
     $scope.confirmEvent(); 
   }
     
@@ -163,9 +192,16 @@ $scope.guestsInput = true;
  
  
  
-$scope.createLocalEvent = function(title, date, time, address, description, guests) {
+$scope.createLocalEvent = function(title, date, time, street, city, province, description, guests) {
   eventService.createLocalEvent(title, date, time, address, description, guests);
 }
+
+
+
+$scope.inviteUserToEvent = function(title, date, time, street, city, province, description, guests) {
+  eventService.inviteUserToEvent(title, date, time, address, description, guests);
+}
+
 
 
 $scope.validation = function(){
@@ -259,10 +295,10 @@ $scope.login = function() {
         });
  
 
-        
 
 
- 
+
+
         $scope.map = map;
     };
     google.maps.event.addDomListener(document.getElementById("map"), 'load', $scope.initialise())

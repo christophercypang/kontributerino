@@ -33,6 +33,25 @@
 
              }
 
+
+     factory.inviteUserToEvent = function(guests, eventDetails) {
+                var eventTitle = eventDetails.Title.toLowerCase();
+                var guestName = eventDetails.Users.toLowerCase();  
+                var url = "https://torrid-torch-6578.firebaseio.com/" + guestName + "/invited/" + eventTitle + ".json";
+                //var eve = [localEventTitle];
+                $http.put(url, { event: eventDetails })
+                .success(function(data, status, headers, config) {
+                    console.log(data); 
+                    
+                }).
+                error(function(data, status, headers, config) {
+                    ("error"); 
+                }); 
+
+             }
+
+
+
     factory.getAllEvents = function(number) {
              console.log("here in FAC"); 
                 return $http.get(url)
