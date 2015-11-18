@@ -1,48 +1,54 @@
-﻿<ion-view view-title="Events">
+﻿<ion-view view-title="Events" ng-controller="MapController">
         <ion-content>
-            <div class="homeImage"></div>
+           
+    
+<div class="eventsImage"></div>
     
 
+    <div id="map" data-tap-disabled="true"></div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<div class="card"> 
+    <div class="item item-divider">
+    Events List
+  </div>
+  </div>
     
-    </ion-content>
-    <ion-footer-bar>
-        <ion-tabs class="tabs-dark tabs-icon-top">
-            <ion-tab title="Attending" icon="ion-flag" href="#/app/events"></ion-tab>
-            <ion-tab title="Create" icon="ion-wrench" href="#/app/create"></ion-tab>
-            <ion-tab title="Host" icon="ion-person" href="#/app/host"></ion-tab>
-            <ion-tab title="Past" icon="ion-clock" href="#/app/past"></ion-tab>
+  <ion-slide-box on-slide-changed="slideHasChanged($index)" ng-init="getEventsForMap()">
+  <ion-slide ng-repeat="event in events">
+    
+    <div id="eventCard">
+    <p>{{event.event.Title}}</p>
+    <p>{{event.event.Address}}</p>
+    </div>
+  
+  </ion-slide>
+  
+</ion-slide-box>
 
 
-        </ion-tabs>
-    </ion-footer-bar>
+
+</ion-content>
+    
+   
+    <div class="tabs tabs-icon-left">
+ <a class="tab-item" href="#/app/events">
+    <i class="icon ion-flag"></i>
+    Attending
+  </a>
+   <a class="tab-item" href="#/app/create">
+    <i class="icon ion-wrench"></i>
+    Create
+  </a>
+   <a class="tab-item" href="#/app/host">
+    <i class="icon ion-person"></i>
+    Host
+  </a>
+   <a class="tab-item" href="#/app/past">
+    <i class="icon ion-clock"></i>
+    Past
+  </a>
+</div>
+
+   </ion-content>
 </ion-view>

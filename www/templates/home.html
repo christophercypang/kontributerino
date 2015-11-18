@@ -1,28 +1,20 @@
-﻿<ion-view view-title="Home" ng-controller="MapController">
+﻿<ion-view view-title="Home">
    <ion-content>
    <div class="homeImage"></div>
+   
+
+</ion-content>
     
-
-    <div id="map" data-tap-disabled="true"></div>
-
-
-    <div class="card"> 
-    <div class="item item-divider">
-    Events List
+<div class="tabs tabs-icon-left">
+  <a class="tab-item" href="#/app/events">
+    <i class="icon ion-flag"></i>
+    Events
+  </a>
+   <a class="tab-item" href="#/app/profile">
+    <i class="icon ion-person"></i>
+    Profile
+  </a>
   </div>
-    
-  <ion-slide-box on-slide-changed="slideHasChanged($index)" ng-init="getEventsForMap()">
-  <ion-slide ng-repeat="event in events">
-    
-    <div id="eventCard">
-    <p>{{event.event.Title}}</p>
-    <p>{{event.event.Address}}</p>
-    </div>
-  
-  </ion-slide>
-  
-</ion-slide-box>
 
-</div>
     </ion-content>
 </ion-view> 
