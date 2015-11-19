@@ -376,7 +376,66 @@ $scope.login = function() {
                   
     });
   };
- 
+
+})
+
+.controller('VoteController',function($scope,$ionicPopup){
+        console.log("vote controller");
+
+        $scope.items=[];
+        $scope.showPopup = function() {
+            $scope.data = {}
+
+            // An elaborate, custom popup
+            var myPopup = $ionicPopup.show({
+                template: '<input type="text" ng-model="data.vote">',
+                title: 'Enter New Option',
+                subTitle: 'Add New Option',
+                scope: $scope,
+                buttons: [
+                    { text: 'Cancel' },
+                    {
+                        text: '<b>Add</b>',
+                        type: 'button-positive',
+                        onTap: function(e) {
+                            if (!$scope.data.vote) {
+                                //don't allow the user to close unless he enters wifi password
+                                e.preventDefault();
+                                console.log("FAGGOT");
+                            } else {
+                              console.log("TESTERINO");
+                                return $scope.data;
+                              console.log("Test 2");
+                            }
+                        }
+                    },
+                ]
+            });
+            myPopup.then(function(res) {
+                console.log('Tapped!', res);
+                if(typeof res!='undefined')
+                  res.close="ion-close";
+                $scope.items.push(res)
+
+                console.log($scope.items);
+                console.log('Testing123');
+            });
+           /* $timeout(function() {
+                myPopup.close(); //close the popup after 3 seconds for some reason
+            }, 3000);*/
+          $scope.removeTestCase=function(){
+          $scope.remove();
+          };
+        };
+
+         $scope.addVoteOption=function(){
+            $scope.showPopup();
+        };
+
+        $scope.remove = function(item) {
+    $scope.items.splice($scope.items.indexOf(item), 1);
+  };
+
 });
 
 
