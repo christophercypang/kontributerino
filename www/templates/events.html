@@ -1,35 +1,50 @@
 ﻿<ion-view view-title="Events" ng-controller="MapController">
-        <ion-content>
+       
+
+<ion-content>
            
     
-<div class="eventsImage"></div>
-    
+<div class="eventsImage">  
+</div>
 
-    <div id="map" data-tap-disabled="true"></div>
-
+<div id="map" data-tap-disabled="true"> 
+</div>
 
 <div class="card"> 
     <div class="item item-divider">
     Events List
   </div>
+
   </div>
+
+  <ion-scroll direction="y" class="root"> 
+
+  <div class="list">
     
-  <ion-slide-box on-slide-changed="slideHasChanged($index)" ng-init="getEventsForMap()">
-  <ion-slide ng-repeat="event in events">
-    
-    <div id="eventCard">
+    <li ng-repeat="event in events">
+    <a class="item item-icon-left" ng-click="">
+    <i class="icon ion-calendar"></i>
     <p>{{event.event.Title}}</p>
+    <span class="item-note">
+    {{event.event.Time}}
+    </span>
     <p>{{event.event.Address}}</p>
-    </div>
-  
-  </ion-slide>
-  
-</ion-slide-box>
+    </a>
+    </li>
+  </div>
+  </ion-scroll>
+
+ 
+
 
 
 
 </ion-content>
     
+
+
+
+
    
     <div class="tabs tabs-icon-left">
  <a class="tab-item" href="#/app/events">
@@ -42,13 +57,10 @@
   </a>
    <a class="tab-item" href="#/app/host">
     <i class="icon ion-person"></i>
-    Host
+    Hosting
   </a>
-   <a class="tab-item" href="#/app/past">
-    <i class="icon ion-clock"></i>
-    Past
-  </a>
+  
 </div>
 
-   </ion-content>
+  
 </ion-view>
