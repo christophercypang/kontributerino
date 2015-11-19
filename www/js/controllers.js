@@ -33,12 +33,7 @@ angular.module('kontribute.controllers', [])
   
   $scope.locationSelected = false; 
   
-
-   $scope.PizzaParty = { Title: 'Pizza Party', Time: '12:00', Address:'New York', Description:'Whoa'}; 
-  $scope.PoopParty = { Title: 'Poop Party', Time: '12:20', Address:'Chiraq', Description:'Hello'}; 
-
-  $scope.events = [$scope.PizzaParty, $scope.PoopParty]; 
-  console.log($scope.events);  
+  $scope.events = [];  
   $scope.votingPoll = 'pollFalse';
   $scope.kontributeList = 'kontributeFalse';
 
@@ -52,8 +47,7 @@ $scope.getAllEventsHosting =
           var array = []; 
           var temp =[];  
           $scope.events = []; 
-          array = Object.keys(data.data.host);  
-          console.log(array);      
+          array = Object.keys(data.data.host);        
           for(var i=0; i < array.length; i++){
               $scope.events[i] = data.data.host[array[i]]; 
             
@@ -63,7 +57,6 @@ $scope.getAllEventsHosting =
           // array.forEach(function(element) {
           //   $scope.events
           // })
-        console.log($scope.events); 
         $scope.setScope($scope.events); 
       
     });
@@ -368,13 +361,10 @@ google.maps.event.addDomListener(document.getElementById("map"), 'load', $scope.
 };
 
 $scope.plotAllOnMap = function(showAll){
-console.log(showAll);
   if (showAll == false){ 
-    console.log("called");
        $scope.initialise();  
         } else { 
-
-return eventFactory.getEventsForMap().then(function(data) { 
+    return eventFactory.getEventsForMap().then(function(data) { 
               var array = [];               
               array = Object.keys(data.data.invited);
               $scope.events = []; 
