@@ -98,7 +98,19 @@ angular.module('kontribute', ['ionic', 'kontribute.controllers', 'kontribute.ser
                 }
             }
         })
-          .state('app.events', {
+
+
+        .state('app.vote', {
+        	url: "/vote",
+        	views: {
+        		'menuContent': {
+        			templateUrl: "templates/vote.html"
+
+        		}
+        	}
+        })
+
+        .state('app.events', {
             url: "/events",
             views: {
                 'menuContent': {

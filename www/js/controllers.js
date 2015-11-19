@@ -131,8 +131,17 @@ $scope.breakButton = function(){
         $scope.eventCreation = true; 
          $scope.anotherOne = true; 
       }); 
-
   } 
+
+$scope.checkVote = function(votingPoll) {
+  console.log("CheckVote");
+  if(votingPoll == 'pollTrue') {
+    console.log("Before state");
+    $state.go('app.vote');
+    console.log("after state");
+  };
+}
+
 $scope.createEvent = 
   function(title, date, time, street, city, province, description, guests){
     console.log("here in CTRL", title, date, time, street, city, province, description, guests); 
