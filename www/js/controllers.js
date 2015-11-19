@@ -218,6 +218,10 @@ $scope.validation = function(){
   $scope.eventCreation = false; 
 }; 
 
+$scope.returnHome = function() {
+  $state.go('app.home');
+};
+
   // Open the login modal
 $scope.login = function() {
     console.log("running?");
@@ -388,7 +392,7 @@ $scope.login = function() {
 
 })
 
-.controller('VoteController',function($scope,$ionicPopup){
+.controller('VoteController',function($scope,$ionicPopup, $state){
         console.log("vote controller");
 
         $scope.items=[];
@@ -434,16 +438,20 @@ $scope.login = function() {
             }, 3000);*/
           $scope.removeTestCase=function(){
           $scope.remove();
+           };
           };
-        };
 
          $scope.addVoteOption=function(){
             $scope.showPopup();
         };
 
         $scope.remove = function(item) {
-    $scope.items.splice($scope.items.indexOf(item), 1);
-  };
+        $scope.items.splice($scope.items.indexOf(item), 1);
+      };
+
+      $scope.returnEvent = function() {
+        $state.go('app.events');
+      };
 
 });
 
