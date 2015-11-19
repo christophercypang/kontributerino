@@ -102,6 +102,13 @@ body {
 	
 }
 
+.rootHost {
+	width: 100%;
+	height: 400px;
+	
+	
+}
+
 #eventCard {
     background-color: yellow;
     font-weight: bold;

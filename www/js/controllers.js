@@ -49,9 +49,7 @@ $scope.getAllEventsHosting =
           $scope.events = []; 
           array = Object.keys(data.data.host);        
           for(var i=0; i < array.length; i++){
-              $scope.events[i] = data.data.host[array[i]]; 
-            
-               console.log($scope.events[i]); 
+              $scope.events[i] = data.data.host[array[i]];  
               }
             
           // array.forEach(function(element) {

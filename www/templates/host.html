@@ -6,11 +6,11 @@
 </button>
 
       
-<ion-slide-box on-slide-changed="slideHasChanged($index)" ng-init="getAllEventsHosting()">
+
+   <ion-scroll direction="y" class="rootHost" ng-init="getAllEventsHosting()"> 
   
-  <ion-slide ng-repeat="event in events">
    
-    <div class="list card">
+    <div class="list card"  ng-repeat="event in events">
 
   <div class="item item-avatar" style="background-color:#C0C0C0 ; color: black ">
     <h2>{{event.event.Title}}</h2>
@@ -46,11 +46,10 @@
 </div>
 
 
+</ion-scroll>
 
-
-  </ion-slide>
   
-</ion-slide-box>
+
     
 
 </ion-content>
