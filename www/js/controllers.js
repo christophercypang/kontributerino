@@ -215,9 +215,8 @@ $scope.login = function() {
 
 
 
-
 // Handles login and registration
-.controller('AuthCtrl', function($scope, authFactory, $firebaseAuth, $state, $window, $location ) {
+.controller('AuthCtrl', function($scope, authFactory, $firebaseAuth, $state, $window, $location, usersFactory ) {
 
   var firebaseRef = new Firebase('https://torrid-torch-6578.firebaseio.com');
   var auth = $firebaseAuth(firebaseRef);
@@ -226,13 +225,22 @@ $scope.login = function() {
 
   authCtrl.user = {
     email: '',
-    password: ''
+    password: '',
   };
+
+  authCtrl.register = {
+    name: '',
+  };
+
 
     // Perform the login action when the user submits the login form
   authCtrl.doLogin = function() {
     authFactory.$authWithPassword(authCtrl.user).then(function(auth){
       $state.go('app.home');
+      console.log(auth.uid);
+      usersFactory.setCurrentUser(auth.uid);
+
+      $window.location.reload();
     }, function(error){
       authCtrl.error = error;
     });
@@ -246,6 +254,8 @@ $scope.login = function() {
   authCtrl.signUp = function() {
     authFactory.$createUser(authCtrl.user).then(function(user){
       $state.go('app.home');
+      console.log(user.uid);
+      usersFactory.createUser(user.uid, authCtrl.user.email, authCtrl.user.password, authCtrl.register.name);
       $window.location.reload();
     }, function(error) {
       authCtrl.error = error;
@@ -256,8 +266,12 @@ $scope.login = function() {
 })
 
 // Handles user profile
-.controller('ProfileCtrl', function($state, authFactory, $window, usersFactory) {
+.controller('ProfileCtrl', function($state, authFactory, $window, usersFactory, $scope) {
   var profileCtrl = this;
+
+
+  var profileID = usersFactory.getCurrentUser();
+  console.log(profileID);
 
 
 

@@ -1,4 +1,4 @@
-<ion-view view-title="Profile">
+<ion-view view-title="Profile" ng-controller="ProfileCtrl as profileCtrl">
 	<ion-header-bar>
 		<h1 class="title">Profile</h1>
 	</ion-header-bar>
@@ -8,7 +8,7 @@
 
 		<div class="item item-divider">
 			<i class = "icon ion-email"></i>
-			Email: 
+			Email: {{uid}}
 		</div>
 
 		<button class="button icon-left ion-power" ng-click="profileCtrl.doLogout()">Logout</button>
