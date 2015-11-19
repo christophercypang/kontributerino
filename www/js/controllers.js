@@ -282,6 +282,11 @@ $scope.login = function() {
 
 .controller('MapController', function($scope, $ionicLoading, eventFactory, eventService) {
  
+
+$scope.allEventsShowing = false; 
+$scope.showAll; 
+
+
     $scope.initialise = function() {
         var myLatlng = new google.maps.LatLng(37.3000, -120.4833);
  
@@ -304,7 +309,72 @@ $scope.login = function() {
 
         $scope.map = map;
 
+        
+
+
+
+
+
+};
+
+google.maps.event.addDomListener(document.getElementById("map"), 'load', $scope.initialise())
+    
+
+    $scope.getEventsForMap = function(){
         return eventFactory.getEventsForMap().then(function(data) { 
+              var array = []; 
+              
+              array = Object.keys(data.data.invited);
+              
+              $scope.events = []; 
+             
+             
+              for(var i=0; i < array.length; i++){
+              $scope.events[i] = data.data.invited[array[i]]; 
+              console.log($scope.events[i]); 
+               }
+                  
+    });
+  };
+
+  $scope.plotOnMap = function(name){
+            var geocoder;
+            var map;
+            var address = name; 
+            
+            geocoder = new google.maps.Geocoder();
+            var latlng = new google.maps.LatLng(-34.397, 150.644);
+     
+
+            var myOptions = {
+              zoom: 8,
+              center: latlng,
+              mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    map = new google.maps.Map(document.getElementById("map"), myOptions);
+
+        geocoder.geocode( { 'address': address}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+        map.setCenter(results[0].geometry.location);
+        var marker = new google.maps.Marker({
+            map: map,
+            position: results[0].geometry.location
+        });
+                }
+
+            })
+
+ 
+};
+
+$scope.plotAllOnMap = function(showAll){
+console.log(showAll);
+  if (showAll == false){ 
+    console.log("called");
+       $scope.initialise();  
+        } else { 
+
+return eventFactory.getEventsForMap().then(function(data) { 
               var array = [];               
               array = Object.keys(data.data.invited);
               $scope.events = []; 
@@ -355,29 +425,7 @@ $scope.login = function() {
 });
 
 
-    };
-
-    google.maps.event.addDomListener(document.getElementById("map"), 'load', $scope.initialise())
-
-
-    $scope.getEventsForMap = function(){
-        return eventFactory.getEventsForMap().then(function(data) { 
-              var array = []; 
-              
-              array = Object.keys(data.data.invited);
-              
-              $scope.events = []; 
-             
-             
-              for(var i=0; i < array.length; i++){
-              $scope.events[i] = data.data.invited[array[i]]; 
-              console.log($scope.events[i]); 
-               }
-                  
-    });
-  };
- 
+}
+};
 });
-
-
  

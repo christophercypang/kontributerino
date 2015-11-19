@@ -1,7 +1,7 @@
 ﻿<ion-view view-title="Events" ng-controller="MapController">
        
 
-<ion-content>
+<ion-content ng-init="getEventsForMap()">
            
     
 <div class="eventsImage">  
@@ -10,19 +10,15 @@
 <div id="map" data-tap-disabled="true"> 
 </div>
 
-<div class="card"> 
-    <div class="item item-divider">
-    Events List
-  </div>
 
-  </div>
+  <ion-toggle toggle-class="toggle-calm" ng-model="showAll" ng-change="plotAllOnMap(showAll)">View All Events On Map</ion-toggle>
 
   <ion-scroll direction="y" class="root"> 
 
   <div class="list">
     
     <li ng-repeat="event in events">
-    <a class="item item-icon-left" ng-click="">
+    <a class="item item-icon-left" ng-click="plotOnMap(event.event.Address)">
     <i class="icon ion-calendar"></i>
     <p>{{event.event.Title}}</p>
     <span class="item-note">
@@ -34,7 +30,6 @@
   </div>
   </ion-scroll>
 
- 
 
 
 
@@ -43,9 +38,6 @@
     
 
 
-
-
-   
     <div class="tabs tabs-icon-left">
  <a class="tab-item" href="#/app/events">
     <i class="icon ion-flag"></i>
