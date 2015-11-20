@@ -216,12 +216,14 @@ $scope.login = function() {
 
 
 // Handles login and registration
-.controller('AuthCtrl', function($scope, authFactory, $firebaseAuth, $state, $window, $location, usersFactory ) {
+.controller('AuthCtrl', function($scope, authFactory, $firebaseAuth, $state, $window, $location, usersFactory, $rootScope) {
 
   var firebaseRef = new Firebase('https://torrid-torch-6578.firebaseio.com');
   var auth = $firebaseAuth(firebaseRef);
 
   var authCtrl = this;
+
+  $rootScope.currUser = {}; 
 
   authCtrl.user = {
     email: '',
@@ -239,6 +241,7 @@ $scope.login = function() {
       $state.go('app.home');
       console.log(auth.uid);
       usersFactory.setCurrentUser(auth.uid);
+
 
       $window.location.reload();
     }, function(error){
@@ -266,12 +269,29 @@ $scope.login = function() {
 })
 
 // Handles user profile
-.controller('ProfileCtrl', function($state, authFactory, $window, usersFactory, $scope) {
+.controller('ProfileCtrl', function($ionicModal, $state, authFactory, $window, usersFactory, $scope, $rootScope) {
   var profileCtrl = this;
+
+  $ionicModal.fromTemplateUrl('templates/friends.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal){
+    $scope.modal = modal;
+  });
+
+  $scope.closeFriends = function() {
+    $scope.modal.hide();
+  };
+
+  $scope.showFriends = function() {
+    $scope.modal.show();
+  };
+
 
 
   var profileID = usersFactory.getCurrentUser();
   console.log(profileID);
+
 
 
 

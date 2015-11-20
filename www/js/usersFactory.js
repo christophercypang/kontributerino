@@ -3,7 +3,8 @@ angular.module('kontribute.usersFactory', [])
 		var usersRef = new Firebase(FirebaseUrl+'users');
 		var users = $firebaseArray(usersRef);
 
-		var currentUser;
+		var currentUser = {};
+
 
 		var Users={
 			getProfile: function(uid) {
@@ -23,7 +24,7 @@ angular.module('kontribute.usersFactory', [])
 				console.log("curr User:", currentUser);
 			},
 
-			getCurrentUser: function(){
+			getCurrentUser: function() {
 				return currentUser;
 			},	
 
