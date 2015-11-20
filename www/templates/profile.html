@@ -8,12 +8,14 @@
 
 		<div class="item item-divider">
 			<i class = "icon ion-email"></i>
-			Email: {{uid}}
+			Email: {{$scope.name}}
 		</div>
 
 		<button class="button icon-left ion-power" ng-click="profileCtrl.doLogout()">Logout</button>
 
 		<button class="button icon-left ion-person-stalker" ng-click="showFriends()">My Friends</button>
+
+		<button class="button icon-left ion-person" ng-click="getProfileInfo()">Get Profile Info</button>
 
 	</ion-content>
 </ion-modal-view>

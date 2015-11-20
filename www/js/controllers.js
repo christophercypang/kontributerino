@@ -223,7 +223,7 @@ $scope.login = function() {
 
   var authCtrl = this;
 
-  $rootScope.currUser = {}; 
+  var userModel;
 
   authCtrl.user = {
     email: '',
@@ -237,11 +237,9 @@ $scope.login = function() {
 
     // Perform the login action when the user submits the login form
   authCtrl.doLogin = function() {
-    authFactory.$authWithPassword(authCtrl.user).then(function(auth){
+    auth.$authWithPassword(authCtrl.user).then(function(auth){
       $state.go('app.home');
       console.log(auth.uid);
-      usersFactory.setCurrentUser(auth.uid);
-
 
       $window.location.reload();
     }, function(error){
@@ -269,8 +267,14 @@ $scope.login = function() {
 })
 
 // Handles user profile
-.controller('ProfileCtrl', function($ionicModal, $state, authFactory, $window, usersFactory, $scope, $rootScope) {
+.controller('ProfileCtrl', function($ionicModal, $state, authFactory, $window, usersFactory, $http, $scope, $rootScope) {
   var profileCtrl = this;
+
+  var ref = new Firebase('https://torrid-torch-6578.firebaseio.com');
+  var authData = ref.getAuth();
+
+  var profileInfo = usersFactory.getUser(authData.uid)
+
 
   $ionicModal.fromTemplateUrl('templates/friends.html', {
     scope: $scope,
@@ -287,10 +291,6 @@ $scope.login = function() {
     $scope.modal.show();
   };
 
-
-
-  var profileID = usersFactory.getCurrentUser();
-  console.log(profileID);
 
 
 
