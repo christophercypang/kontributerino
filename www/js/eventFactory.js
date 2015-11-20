@@ -18,6 +18,45 @@
 
              }
 
+    factory.createKontributeList = function(kontribute) {
+                var url = "https://torrid-torch-6578.firebaseio.com/imran1/event/klist.json";
+                $http.put(url, { list: kontribute })
+                .success(function(data, status, headers, config) {
+                    console.log(data); 
+                    
+                }).
+                error(function(data, status, headers, config) {
+                    ("error"); 
+                }); 
+
+             }
+
+    factory.updatelist1 = function(kontribute) {
+                var url = "https://torrid-torch-6578.firebaseio.com/imran1/event/klist1/list.json";
+                $http.patch(url, { List1detailsc: kontribute })
+                .success(function(data, status, headers, config) {
+                    console.log(data); 
+                    
+                }).
+                error(function(data, status, headers, config) {
+                    ("error"); 
+                }); 
+
+             }
+
+    factory.updatelist2 = function(kontribute) {
+                var url = "https://torrid-torch-6578.firebaseio.com/imran1/event/klist2/list.json";
+                $http.patch(url, { List2detailsc: kontribute })
+                .success(function(data, status, headers, config) {
+                    console.log(data); 
+                    
+                }).
+                error(function(data, status, headers, config) {
+                    ("error"); 
+                }); 
+
+             }
+
     factory.createLocalEvent = function(localEvent) {
                 var localEventTitle = localEvent.Title.toLowerCase(); 
                 var url = "https://torrid-torch-6578.firebaseio.com/imran/host/" + localEventTitle + ".json";
@@ -54,6 +93,14 @@
 
     factory.getAllEvents = function(number) {
              console.log("here in FAC"); 
+                return $http.get(url)
+                .success(function (data, status, headers, config) {                
+                        console.log(data); 
+                });
+        }
+
+    factory.getKontributeLists = function(number) {
+             var url = "https://torrid-torch-6578.firebaseio.com/imran1.json";
                 return $http.get(url)
                 .success(function (data, status, headers, config) {                
                         console.log(data); 

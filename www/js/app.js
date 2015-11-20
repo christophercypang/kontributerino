@@ -107,6 +107,24 @@ angular.module('kontribute', ['ionic', 'kontribute.controllers', 'kontribute.ser
             }
         })
 
+        .state('app.currkontribute', {
+            url: "/currkontribute",
+            views: {
+                'menuContent': {
+                    templateUrl: "templates/currkontribute.html"
+                }
+            }
+        })
+
+        .state('app.kontribute', {
+            url: "/kontribute",
+            views: {
+                'menuContent': {
+                    templateUrl: "templates/kontribute.html"
+                }
+            }
+        })
+
           .state('app.login', {
             url:'/login',
             views: {

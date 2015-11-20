@@ -32,6 +32,9 @@ angular.module('kontribute.controllers', [])
   $scope.guestsInput = true; 
   
   $scope.locationSelected = false; 
+
+  $scope.kcount = 1;
+  $scope.kcurr = 1;
   
   $scope.events = [];  
   $scope.votingPoll = 'pollFalse';
@@ -83,7 +86,23 @@ $scope.getAllEventsHosting =
         
 
        };
-   
+
+$scope.getKontributeLists = 
+  function() {
+    return eventFactory.getKontributeLists().then(function(data){
+        $scope.name = data.data.event.Title;
+        $scope.list1 = data.data.event.klist1.list.List1; 
+        $scope.list1current = data.data.event.klist1.list.List1detailsc.List1current;
+        $scope.list1name = data.data.event.klist1.list.List1details.List1name;
+        $scope.list1quantity = data.data.event.klist1.list.List1detailsq.List1quantity; 
+        $scope.list2 = data.data.event.klist2.list.List2;
+        $scope.list2current = data.data.event.klist2.list.List2detailsc.List2current;
+        $scope.list2name = data.data.event.klist2.list.List2details.List2name;
+        $scope.list2quantity = data.data.event.klist2.list.List2detailsq.List2quantity; 
+        $scope.list3 = data.data.event.klist3.list.List3; 
+
+      });
+  };
 
 $scope.locationClick = function(){
   if($scope.locationSelected == false){
@@ -188,7 +207,17 @@ $scope.createLocalEvent = function(title, date, time, street, city, province, de
   eventService.createLocalEvent(title, date, time, street, city, province, description, guests);
 }
 
+$scope.createKontributeList = function(list1name, list1quantity, kcount) {
+  eventService.createKontributeList(list1name, list1quantity, kcount);
+}
 
+$scope.updatelist1 = function(changeq) {
+  eventService.updatelist1(changeq);
+}
+
+$scope.updatelist2 = function(changeq) {
+  eventService.updatelist2(changeq);
+}
 
 $scope.inviteUserToEvent = function(title, date, time, street, city, province, description, guests) {
   eventService.inviteUserToEvent(title, date, time, street, city, province, description, guests);

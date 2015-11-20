@@ -1,0 +1,51 @@
+﻿<ion-view view-title="Kontribute">
+        <ion-content class="has-header list-inset">
+        <form name="createEventForm" ng-if="!eventCreation">
+                <div class="item item-text-wrap" ng-class="'regular'"> 
+
+                    <div class="item item-divider"> 
+                        <h2>Kontribute List</h2>
+                    </div>
+                        <label class="item item-input item-stacked-label">
+                            <span class="input-label" ng-show="kcount == 1" ng-class="!titleInput ? 'validation' : ''"> Item 1 Name </span>
+                            <input type="text" placeholder="Enter your Event Name here" ng-show="kcount == 1" ng-model="list1name" ng-minlength="1" ng-maxlength="100" required>
+                        </label>
+
+                        <label class="item item-input item-stacked-label">
+                            <span class="input-label" ng-show="kcount == 1" ng-class="!guestsInput ? 'validation' : ''"> Quantity</span>
+                            <input type="text" placeholder="Invite your Guests Here!" ng-show="kcount == 1" ng-model="list1quantity" ng-minlength="1" ng-maxlength="100" required>
+                        </label>
+
+                        <label class="item item-input item-stacked-label">
+                            <span class="input-label" ng-show="kcount == 2" ng-class="!titleInput ? 'validation' : ''"> Item 2 Name </span>
+                            <input type="text" placeholder="Enter your Event Name here" ng-show="kcount == 2" ng-model="list1name" ng-minlength="1" ng-maxlength="100" required>
+                        </label>
+
+                        <label class="item item-input item-stacked-label">
+                            <span class="input-label" ng-show="kcount == 2" ng-class="!guestsInput ? 'validation' : ''"> Quantity</span>
+                            <input type="text" placeholder="Invite your Guests Here!" ng-show="kcount == 2" ng-model="list1quantity" ng-minlength="1" ng-maxlength="100" required>
+                        </label>
+       
+                    </div>
+
+                        <span class="item text-center item-divider" ng-if="!inputBoxesFilled" ng-class="'validation'">Please fill in highlighted boxes above</span>
+                            <button class="button button-block button-email" ng-click="kcount = kcount + 1; kcurr = kcount - 1; createKontributeList(list1name, list1quantity, kcurr)">Create!</button>
+                        </span>
+             </div>
+        </form>
+       
+    
+    </ion-content>
+    <ion-footer-bar>
+        <ion-tabs class="tabs-dark tabs-icon-top">
+            <ion-tab title="Attending" icon="ion-flag" href="#/app/events"></ion-tab>
+            <ion-tab title="Create" icon="ion-wrench" href="#/app/create"></ion-tab>
+            <ion-tab title="Host" icon="ion-person" href="#/app/host"></ion-tab>
+            <ion-tab title="Past" icon="ion-clock" href="#/app/past"></ion-tab>
+            <ion-tab title="Create Kontribute Lists" icon="ion-clock" href="#/app/kontribute"></ion-tab>
+            <ion-tab title="Current Kontribute Lists" icon="ion-clock" href="#/app/currkontribute"></ion-tab>
+
+
+        </ion-tabs>
+    </ion-footer-bar>
+</ion-view>
