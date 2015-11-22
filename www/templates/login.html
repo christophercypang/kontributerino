@@ -1,20 +1,93 @@
-﻿<ion-view view-title="Login">
-    <ion-header-bar>
-        <h1 class="title">Login</h1>
-    </ion-header-bar>
-    <ion-content>
-        <form ng-submit="authCtrl.doLogin()">
-  <div class="input-group">
-    <input type="email" class="form-control" placeholder="Email" ng-model="authCtrl.user.email">
-  </div>
-  <div class="input-group">
-    <input type="password" class="form-control" placeholder="Password" ng-model="authCtrl.user.password">
-  </div>
-  <input type="submit" class="btn btn-default" value="Log In">
-</form>
+﻿<ion-view view-title="Login/Register">
+    
 
-    <div>
-        <button class ="button button-block button-positive" ng-click="goToRegister()"> Register </button>
-    </div>
+
+
+    <ion-header-bar>
+        <h1 class="title">Login/Register</h1>
+    </ion-header-bar>
+    
+
+
+
+    <ion-content>
+
+    <div class="loginImage">  
+</div>
+        
+
+
+<br>
+<br>
+
+
+<button class="button button-full button-balanced" ng-click="loginButtonClicked()" ng-show="!loginClicked && !hideLogin">
+  Login
+</button>
+<br>
+
+
+
+<button class="button button-full button-positive" ng-show="!registerButtonClicked && !hideRegister" ng-click="registerButton()">
+  Register
+</button>
+
+
+
+<div class="list" ng-show="registerButtonClicked && !hideRegister">
+  <label class="item item-input item-floating-label">
+    <span class="input-label">First Name</span>
+    <input type="text" placeholder="First Name" ng-model="authCtrl.user.firstName">
+  </label>
+
+  <label class="item item-input item-floating-label">
+    <span class="input-label">Last Name</span>
+    <input type="text" placeholder="Last Name" ng-model="authCtrl.user.lastName">
+  </label>
+  <label class="item item-input item-floating-label">
+    <span class="input-label">Email</span>
+    <input type="text" placeholder="Email" ng-model="authCtrl.user.email">
+  </label>
+
+  <label class="item item-input item-floating-label">
+    <span class="input-label">Password</span>
+    <input type="password" placeholder="Password" ng-model="authCtrl.user.password">
+  </label>
+
+
+    
+
+</div>
+
+<div class="list" ng-show="loginClicked && !hideLogin">
+  <label class="item item-input item-floating-label">
+    <span class="input-label">Email</span>
+    <input type="text" placeholder="Email" ng-model="authCtrl.user.email">
+  </label>
+
+  <label class="item item-input item-floating-label">
+    <span class="input-label">Password</span>
+    <input type="password" placeholder="Password" ng-model="authCtrl.user.password">
+  </label>
+
+  
+</div>
+    
+
+
     </ion-content>
+       <div class="tabs tabs-icon-left" ng-show="registerButtonClicked && !hideRegister">
+ <a class="tab-item" ng-click="authCtrl.signUp(authCtrl.user.email, authCtrl.user.password, authCtrl.user.firstName, authCtrl.user.lastName)">
+    <i class="icon ion-flag"></i>
+    Submit
+  </a>
+  </div>
+   <div class="tabs tabs-icon-left" ng-show="loginClicked && !hideLogin">
+ <a class="tab-item" ng-click="authCtrl.doLogin(authCtrl.user.email, authCtrl.user.password)">
+    <i class="icon ion-flag"></i>
+    Submit
+  </a>
+  </div>
+
+
 </ion-view>

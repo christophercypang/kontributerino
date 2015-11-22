@@ -57,9 +57,9 @@
 
              }
 
-    factory.createLocalEvent = function(localEvent) {
+    factory.createLocalEvent = function(localEvent, userName) {
                 var localEventTitle = localEvent.Title.toLowerCase(); 
-                var url = "https://torrid-torch-6578.firebaseio.com/imran/host/" + localEventTitle + ".json";
+                var url = "https://torrid-torch-6578.firebaseio.com/"+ userName +"/host/" + localEventTitle + ".json";
                 //var eve = [localEventTitle];
                 $http.put(url, { event: localEvent })
                 .success(function(data, status, headers, config) {
@@ -99,16 +99,16 @@
                 });
         }
 
-    factory.getKontributeLists = function(number) {
-             var url = "https://torrid-torch-6578.firebaseio.com/imran1.json";
+    factory.getKontributeLists = function(userName) {
+             var url = "https://torrid-torch-6578.firebaseio.com/" + userName + ".json";
                 return $http.get(url)
                 .success(function (data, status, headers, config) {                
                         console.log(data); 
                 });
         }
 
-    factory.getAllHostedEvents = function() {
-             var url = "https://torrid-torch-6578.firebaseio.com/imran.json";
+    factory.getAllHostedEvents = function(userName) {
+             var url = "https://torrid-torch-6578.firebaseio.com/" + userName + ".json";
                 return $http.get(url)
                 .success(function (data, status, headers, config) {                
                         console.log(data); 
@@ -116,8 +116,8 @@
         }
 
 
-   factory.getEventsForMap = function() {
-             var url = "https://torrid-torch-6578.firebaseio.com/chris.json";
+   factory.getEventsForMap = function(userName) {
+             var url = "https://torrid-torch-6578.firebaseio.com/" +userName+ ".json";
                 return $http.get(url)
                 .success(function (data, status, headers, config) {                
                         console.log(data); 

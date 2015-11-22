@@ -1,21 +1,51 @@
 <ion-view view-title="Profile" ng-controller="ProfileCtrl as profileCtrl">
-	<ion-header-bar>
-		<h1 class="title">Profile</h1>
-	</ion-header-bar>
+<ion-content>
+	<div class="eventsImage">  
 
-	<ion-content>
-		<h1>Profile</h1>
+</div>
 
+	
+		
 		<div class="item item-divider">
 			<i class = "icon ion-email"></i>
 			Email: {{$scope.name}}
 		</div>
 
-		<button class="button icon-left ion-power" ng-click="profileCtrl.doLogout()">Logout</button>
 
-		<button class="button icon-left ion-person-stalker" ng-click="showFriends()">My Friends</button>
+	
 
-		<button class="button icon-left ion-person" ng-click="getProfileInfo()">Get Profile Info</button>
+
+<div class="list card">
+
+  <a ng-click="showFriends()" class="item item-icon-left">
+    <i class="icon ion-person-stalker"></i>
+    My Friends
+  </a>
+
+  <a ng-click="getProfileInfo()" class="item item-icon-left">
+    <i class="icon ion-person"></i>
+    View Profile Info
+  </a>
+
+  
+ 
+
+</div>
+
 
 	</ion-content>
-</ion-modal-view>
+  
+
+
+
+
+  <div class="tabs tabs-icon-left" >
+ <a class="tab-item" ng-click="profileCtrl.doLogout()">
+    <i class="icon ion-power"></i>
+    <button class="button button-clear button-assertive">
+  Logout
+</button>
+  </a>
+ </div>
+	
+</ion-view>

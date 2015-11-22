@@ -1,6 +1,6 @@
 angular.module('kontribute.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $firebaseAuth, $state, $http, $ionicPopup, $location, $window, eventFactory, eventService) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $firebaseAuth, $state, $http, $ionicPopup, $location, $window, usersFactory, eventFactory, eventService) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -8,6 +8,19 @@ angular.module('kontribute.controllers', [])
   // listen for the $ionicView.enter event:
   //$scope.$on('$ionicView.enter', function(e) {
   //});
+
+
+  var ref = new Firebase('https://torrid-torch-6578.firebaseio.com');
+  var authData = ref.getAuth();
+
+  try { 
+  var profileInfo = usersFactory.getUser(authData.uid)
+  $scope.userName = authData.uid; 
+  } catch (e) {
+    console.log("not logged in, go log in homie"); 
+  }
+
+   
 
    var vm = this;
    vm.result;
@@ -46,7 +59,7 @@ angular.module('kontribute.controllers', [])
 
 $scope.getAllEventsHosting = 
   function() {
-    return eventFactory.getAllHostedEvents().then(function(data){
+    return eventFactory.getAllHostedEvents($scope.userName).then(function(data){
           var array = []; 
           var temp =[];  
           $scope.events = []; 
@@ -194,7 +207,7 @@ $scope.guestsInput = true;
        $scope.inputBoxesFilled = false; 
     } else {
 
-    eventService.createEvent(title, date, time, street, city, province, description, guests);
+    eventService.createEvent(title, date, time, street, city, province, description, guests, $scope.userName);
     $scope.confirmEvent(); 
   }
     
@@ -204,7 +217,7 @@ $scope.guestsInput = true;
  
  
 $scope.createLocalEvent = function(title, date, time, street, city, province, description, guests) {
-  eventService.createLocalEvent(title, date, time, street, city, province, description, guests);
+  eventService.createLocalEvent(title, date, time, street, city, province, description, guests, $scope.userName);
 }
 
 $scope.createKontributeList = function(list1name, list1quantity, kcount) {
@@ -246,6 +259,35 @@ $scope.login = function() {
 
 // Handles login and registration
 .controller('AuthCtrl', function($scope, authFactory, $firebaseAuth, $state, $window, $location, usersFactory, $rootScope) {
+  $scope.loginClicked = false;
+  $scope.registerButtonClicked = false;
+  $scope.hideLogin = false; 
+  $scope.hideRegister = false; 
+
+  $scope.loginButtonClicked = function (){
+      if($scope.loginClicked == true){
+        $scope.loginClicked = false; 
+        $scope.hideRegister = false; 
+      } else {
+        $scope.loginClicked = true; 
+        $scope.hideRegister = true; 
+        
+      }
+  }
+$scope.registerButton= function (){
+      if($scope.registerButtonClicked == true){
+        $scope.registerButtonClicked = false; 
+        $scope.hideLogin = false;  
+      } else {
+        $scope.registerButtonClicked = true;
+        $scope.hideLogin = true;  
+
+      }
+  }
+
+
+
+
 
   var firebaseRef = new Firebase('https://torrid-torch-6578.firebaseio.com');
   var auth = $firebaseAuth(firebaseRef);
@@ -265,11 +307,14 @@ $scope.login = function() {
 
 
     // Perform the login action when the user submits the login form
-  authCtrl.doLogin = function() {
+  authCtrl.doLogin = function(username, password) {
+
+    console.log(username, password); 
+
     auth.$authWithPassword(authCtrl.user).then(function(auth){
       $state.go('app.home');
       console.log(auth.uid);
-
+ console.log(username, password + "in te fncSFH"); 
       $window.location.reload();
     }, function(error){
       authCtrl.error = error;
@@ -281,11 +326,15 @@ $scope.login = function() {
     $state.go('app.register');
   }
 
-  authCtrl.signUp = function() {
+  authCtrl.signUp = function(email, password, firstname, lastname) {
+    console.log("signing up" + email, password); 
+
+
     authFactory.$createUser(authCtrl.user).then(function(user){
       $state.go('app.home');
-      console.log(user.uid);
-      usersFactory.createUser(user.uid, authCtrl.user.email, authCtrl.user.password, authCtrl.register.name);
+     console.log(user.uid); 
+      console.log("signing up again" + email, password); 
+      usersFactory.createUser(user.uid, authCtrl.user.email, authCtrl.user.password, firstname, lastname);
       $window.location.reload();
     }, function(error) {
       authCtrl.error = error;
@@ -337,6 +386,19 @@ $scope.login = function() {
 .controller('MapController', function($scope, $ionicLoading, eventFactory, eventService) {
  
 
+
+  var ref = new Firebase('https://torrid-torch-6578.firebaseio.com');
+  var authData = ref.getAuth();
+
+  try { 
+  var profileInfo = usersFactory.getUser(authData.uid)
+  $scope.userName = authData.uid; 
+  console.log("dude is back" + $scope.userName); 
+  } catch (e) {
+    console.log("not logged in, go log in homie"); 
+  }
+
+
 $scope.allEventsShowing = false; 
 $scope.showAll; 
 
@@ -375,7 +437,7 @@ google.maps.event.addDomListener(document.getElementById("map"), 'load', $scope.
     
 
     $scope.getEventsForMap = function(){
-        return eventFactory.getEventsForMap().then(function(data) { 
+        return eventFactory.getEventsForMap($scope.userName).then(function(data) { 
               var array = []; 
               
               array = Object.keys(data.data.invited);
@@ -425,7 +487,7 @@ $scope.plotAllOnMap = function(showAll){
   if (showAll == false){ 
        $scope.initialise();  
         } else { 
-    return eventFactory.getEventsForMap().then(function(data) { 
+    return eventFactory.getEventsForMap($scope.userName).then(function(data) { 
               var array = [];               
               array = Object.keys(data.data.invited);
               $scope.events = []; 

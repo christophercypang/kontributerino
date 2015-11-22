@@ -68,7 +68,7 @@ angular.module('kontribute.services', [])
         };
 
 
-       function createLocalEvent(title, date, time, street, city, province, description, guests){
+       function createLocalEvent(title, date, time, street, city, province, description, guests, userName){
 
             var localEvent = { 
                 Title:  title, 
@@ -79,7 +79,7 @@ angular.module('kontribute.services', [])
                 Users : guests , 
             }; 
             
-            eventFactory.createLocalEvent(localEvent); 
+            eventFactory.createLocalEvent(localEvent, userName); 
     
              };
    
