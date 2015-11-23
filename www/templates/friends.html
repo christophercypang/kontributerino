@@ -1,8 +1,34 @@
-<ion-modal-view>
+<ion-modal-view ng-init="getFriends()">
 	<ion-header-bar>
         <h1 class="title">Friends</h1>
         <div class="buttons">
             <button class="button button-clear" ng-click="closeFriends()">Close</button>
         </div>
+
     </ion-header-bar>
+
+    <ion-content>
+
+    	<div class = "item item-divider" ng-repeat="friend in allFriends">
+    		<div ng-repeat="fr in friend">
+    			{{fr.name}}
+    		</div>
+    	</div>
+
+
+        <div class="list card">
+        	<a ng-click="getAllUsers()" class="item item-icon-left">
+        		<i class="icon ion-person-stalker"></i>
+        		See All Users on Kontribute!
+        	</a>
+        </div>
+        <div class = "item item-divider" ng-repeat="user in allUsers">
+        	{{user.name}}
+        	<button class= "button button-small button-light " ng-click="addFriend(user)">Add Friend</button>
+        </div>
+
+
+
+    </ion-content>
+
 </ion-modal-view>

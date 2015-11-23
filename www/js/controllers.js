@@ -348,10 +348,39 @@ $scope.registerButton= function (){
 .controller('ProfileCtrl', function($ionicModal, $state, authFactory, $window, usersFactory, $http, $scope, $rootScope) {
   var profileCtrl = this;
 
-  var ref = new Firebase('https://torrid-torch-6578.firebaseio.com');
+  var ref = new Firebase('https://torrid-torch-6578.firebaseio.com/');
+  var usersRef = new Firebase('https://torrid-torch-6578.firebaseio.com/users')
   var authData = ref.getAuth();
+  var friendsRef = new Firebase('https://torrid-torch-6578.firebaseio.com/users/'+authData.uid+'/friends')
 
-  var profileInfo = usersFactory.getUser(authData.uid)
+  $scope.getProfileInfo = function() {
+    return usersFactory.getUser(authData.uid).then(function(data){
+      $scope.email = data.data.email;
+      $scope.name = data.data.name;
+      console.log($scope.name);
+    })
+  };
+
+  $scope.getAllUsers = function() {
+    usersRef.on('value', function(snapshot){
+      $scope.allUsers = snapshot.val();
+      console.log($scope.allUsers);
+    })
+
+  }
+
+  $scope.getFriends = function(){
+    friendsRef.on('value', function(snapshot){
+      $scope.allFriends = snapshot.val();
+      console.log($scope.allFriends);
+    })
+  };
+
+  $scope.addFriend = function(user) {
+    var friendUid = user.uid;
+    usersFactory.addFriend(authData.uid, user, friendUid);
+  };
+
 
 
   $ionicModal.fromTemplateUrl('templates/friends.html', {
@@ -367,7 +396,9 @@ $scope.registerButton= function (){
 
   $scope.showFriends = function() {
     $scope.modal.show();
+
   };
+
 
 
 

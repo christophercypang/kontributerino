@@ -1,4 +1,4 @@
-<ion-view view-title="Profile" ng-controller="ProfileCtrl as profileCtrl">
+<ion-view view-title="Profile" ng-controller="ProfileCtrl as profileCtrl" ng-init="getProfileInfo()">
 <ion-content>
 	<div class="eventsImage">  
 
@@ -7,8 +7,8 @@
 	
 		
 		<div class="item item-divider">
-			<i class = "icon ion-email"></i>
-			Email: {{$scope.name}}
+			<i class = "icon ion-scissors"></i>
+			Welcome {{name}}
 		</div>
 
 
@@ -22,10 +22,6 @@
     My Friends
   </a>
 
-  <a ng-click="getProfileInfo()" class="item item-icon-left">
-    <i class="icon ion-person"></i>
-    View Profile Info
-  </a>
 
   
  
