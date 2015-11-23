@@ -22,7 +22,8 @@
     <i class="icon ion-calendar"></i>
     <p>{{event.event.Title}}</p>
     <span class="item-note">
-    {{event.event.Time}}
+    {{event.event.Date | date: "yyyy-MM-dd" }} &nbsp &nbsp
+    {{event.event.Time | date: "HH:mm"}}
     </span>
     <p>{{event.event.Address}}</p>
     </a>

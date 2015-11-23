@@ -11,14 +11,15 @@
                             <input type="text" placeholder="Enter your Event Name here"  ng-model="title2" ng-minlength="1" ng-maxlength="40" required>
                         </label>
 
-                        <label class="item item-input item-stacked-label">
+                         <label class="item item-input item-stacked-label">
                             <span class="input-label" ng-class="!dateInput ? 'validation' : ''"> Date</span>
-                            <input type="date" ng-model="here1" required>
+                            <input type="date" placeholder="yyyy-MM-dd" ng-model="here1" required>
                         </label>
 
                         <label class="item item-input item-stacked-label">
                             <span class="input-label" ng-class="!timeInput ? 'validation' : ''"> Time</span>
-                            <input type="time" ng-model="here2" required>
+                            <input type="time" placeholder="HH:mm" ng-model="here2" required>
+                        </label>
                         </label>
 
                         <label class="item item-input item-stacked-label" ng-click="locationClick()">
@@ -67,21 +68,13 @@
                             <!-- <div class="item">
                                 <pre ng-bind="votingPoll | json"></pre> 
                             </div> -->
-                            <ion-checkbox ng-model="kontributeList"
-                                ng-true-value="'kontributeTrue'"
-                                ng-false-value="'kontributeFalse'">
-                                Kontributing List
-                            </ion-checkbox>
-                            <!-- <div class="item">
-                                <pre ng-bind="kontributeList | json"></pre> 
-                            </div>  -->
         
         
                         </div>
 
                         <span class="item text-center item-divider">
                         <span class="item text-center item-divider" ng-if="!inputBoxesFilled" ng-class="'validation'">Please fill in highlighted boxes above</span>
-                            <button class="button button-block button-email" ng-click="createEvent(title2, here1, here2, street2, city2, province2, description2, guests2); createLocalEvent(title2, here1, here2, street2, city2, province2, description2, guests2); inviteUserToEvent(title2, here1, here2, street2, city2, province2, description2, guests2)">Create!</button>
+                            <button class="button button-block button-email" ng-click="createEvent(title2, here1, here2, street2, city2, province2, description2, guests2); createLocalEvent(title2, here1, here2, street2, city2, province2, description2, guests2); inviteUserToEvent(title2, here1, here2, street2, city2, province2, description2, guests2); checkVote(votingPoll)">Create!</button>
                         </span>
              </div>
         </form>

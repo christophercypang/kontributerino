@@ -156,6 +156,17 @@ $scope.breakButton = function(){
       }); 
 
   } 
+
+  $scope.checkVote = function(votingPoll) {
+  console.log("CheckVote");
+  if(votingPoll == 'pollTrue') {
+    $state.go('app.vote');
+  } else {
+    $state.go('app.kontribution');
+  };
+}
+
+
 $scope.createEvent = 
   function(title, date, time, street, city, province, description, guests){
     console.log("here in CTRL", title, date, time, street, city, province, description, guests); 
@@ -241,6 +252,11 @@ $scope.inviteUserToEvent = function(title, date, time, street, city, province, d
 $scope.validation = function(){
   $scope.eventCreation = false; 
 }; 
+
+$scope.returnHome = function() {
+  $state.go('app.home');
+  $window.location.reload();
+};
 
   // Open the login modal
 $scope.login = function() {
@@ -348,10 +364,39 @@ $scope.registerButton= function (){
 .controller('ProfileCtrl', function($ionicModal, $state, authFactory, $window, usersFactory, $http, $scope, $rootScope) {
   var profileCtrl = this;
 
-  var ref = new Firebase('https://torrid-torch-6578.firebaseio.com');
+  var ref = new Firebase('https://torrid-torch-6578.firebaseio.com/');
+  var usersRef = new Firebase('https://torrid-torch-6578.firebaseio.com/users')
   var authData = ref.getAuth();
+  var friendsRef = new Firebase('https://torrid-torch-6578.firebaseio.com/users/'+authData.uid+'/friends')
 
-  var profileInfo = usersFactory.getUser(authData.uid)
+  $scope.getProfileInfo = function() {
+    return usersFactory.getUser(authData.uid).then(function(data){
+      $scope.email = data.data.email;
+      $scope.name = data.data.name;
+      console.log($scope.name);
+    })
+  };
+
+  $scope.getAllUsers = function() {
+    usersRef.on('value', function(snapshot){
+      $scope.allUsers = snapshot.val();
+      console.log($scope.allUsers);
+    })
+
+  }
+
+  $scope.getFriends = function(){
+    friendsRef.on('value', function(snapshot){
+      $scope.allFriends = snapshot.val();
+      console.log($scope.allFriends);
+    })
+  };
+
+  $scope.addFriend = function(user) {
+    var friendUid = user.uid;
+    usersFactory.addFriend(authData.uid, user, friendUid);
+  };
+
 
 
   $ionicModal.fromTemplateUrl('templates/friends.html', {
@@ -367,7 +412,9 @@ $scope.registerButton= function (){
 
   $scope.showFriends = function() {
     $scope.modal.show();
+
   };
+
 
 
 
@@ -540,5 +587,136 @@ $scope.plotAllOnMap = function(showAll){
 
 }
 };
-});
+})
  
+ 
+.controller('VoteController',function($scope,$ionicPopup, $state, $window){
+        console.log("vote controller");
+
+        $scope.items=[];
+        $scope.showPopup = function() {
+            $scope.data = {}
+
+            // An elaborate, custom popup
+            var myPopup = $ionicPopup.show({
+                template: '<input type="text" ng-model="data.vote">',
+                title: 'Enter New Option',
+                subTitle: 'Add New Option',
+                scope: $scope,
+                buttons: [
+                    { text: 'Cancel' },
+                    {
+                        text: '<b>Add</b>',
+                        type: 'button-positive',
+                        onTap: function(e) {
+                            if (!$scope.data.vote) {
+                                //don't allow the user to close unless he enters wifi password
+                                e.preventDefault();
+                                console.log("FAGGOT");
+                            } else {
+                              console.log("TESTERINO");
+                                return $scope.data;
+                              console.log("Test 2");
+                            }
+                        }
+                    },
+                ]
+            });
+            myPopup.then(function(res) {
+                console.log('Tapped!', res);
+                if(typeof res!='undefined')
+                  res.close="ion-close";
+                $scope.items.push(res)
+
+                console.log($scope.items);
+                console.log('Testing123');
+            });
+           /* $timeout(function() {
+                myPopup.close(); //close the popup after 3 seconds for some reason
+            }, 3000);*/
+          $scope.removeTestCase=function(){
+          $scope.remove();
+           };
+          };
+
+         $scope.addVoteOption=function(){
+            $scope.showPopup();
+        };
+
+        $scope.remove = function(item) {
+        $scope.items.splice($scope.items.indexOf(item), 1);
+      };
+
+      $scope.returnEvent = function() {
+        $scope.confirmEvent();
+        // $state.go('app.events');
+      };
+
+      $scope.toKontributeList = function() {
+        $state.go('app.kontribution');
+      };
+
+})
+
+.controller('KontributeController',function($scope,$ionicPopup, $state, $window){
+        console.log("kontribute controller");
+
+        $scope.items=[];
+        $scope.showPopup = function() {
+            $scope.data = {}
+
+            // An elaborate, custom popup
+            var myPopup = $ionicPopup.show({
+                template: '<input type="text" ng-model="data.kontribute">',
+                title: 'Enter New Option',
+                subTitle: 'Add New Option',
+                scope: $scope,
+                buttons: [
+                    { text: 'Cancel' },
+                    {
+                        text: '<b>Add</b>',
+                        type: 'button-positive',
+                        onTap: function(e) {
+                            if (!$scope.data.kontribute) {
+                                //don't allow the user to close unless he enters wifi password
+                                e.preventDefault();
+                                console.log("FAGGOT");
+                            } else {
+                              console.log("TESTERINO");
+                                return $scope.data;
+                              console.log("Test 2");
+                            }
+                        }
+                   },
+                ]
+            });
+            myPopup.then(function(res) {
+                console.log('Tapped!', res);
+                if(typeof res!='undefined')
+                  res.close="ion-close";
+                $scope.items.push(res)
+
+                console.log($scope.items);
+                console.log('Testing123');
+            });
+           /* $timeout(function() {
+                myPopup.close(); //close the popup after 3 seconds for some reason
+            }, 3000);*/
+          $scope.removeTestCase=function(){
+          $scope.remove();
+           };
+          };
+
+         $scope.addKontributeOption=function(){
+            $scope.showPopup();
+        };
+
+        $scope.remove = function(item) {
+        $scope.items.splice($scope.items.indexOf(item), 1);
+      };
+
+      $scope.returnEvent = function() {
+        $scope.confirmEvent();
+        $state.go('app.events');
+      };
+});
