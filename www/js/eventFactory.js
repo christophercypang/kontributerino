@@ -19,7 +19,8 @@
              }
 
     factory.createKontributeList = function(kontribute) {
-                var url = "https://torrid-torch-6578.firebaseio.com/imran1/event/klist.json";
+                var num = kontribute.List.toString(); 
+                var url = "https://torrid-torch-6578.firebaseio.com/imran1/event/klist"+ num +".json";
                 $http.put(url, { list: kontribute })
                 .success(function(data, status, headers, config) {
                     console.log(data); 
@@ -33,7 +34,7 @@
 
     factory.updatelist1 = function(kontribute) {
                 var url = "https://torrid-torch-6578.firebaseio.com/imran1/event/klist1/list.json";
-                $http.patch(url, { List1detailsc: kontribute })
+                $http.patch(url, { Listdetailsc: kontribute })
                 .success(function(data, status, headers, config) {
                     console.log(data); 
                     
@@ -46,7 +47,7 @@
 
     factory.updatelist2 = function(kontribute) {
                 var url = "https://torrid-torch-6578.firebaseio.com/imran1/event/klist2/list.json";
-                $http.patch(url, { List2detailsc: kontribute })
+                $http.patch(url, { Listdetailsc: kontribute })
                 .success(function(data, status, headers, config) {
                     console.log(data); 
                     
@@ -100,7 +101,7 @@
         }
 
     factory.getKontributeLists = function(userName) {
-             var url = "https://torrid-torch-6578.firebaseio.com/" + userName + ".json";
+             var url = "https://torrid-torch-6578.firebaseio.com/imran1.json";
                 return $http.get(url)
                 .success(function (data, status, headers, config) {                
                         console.log(data); 

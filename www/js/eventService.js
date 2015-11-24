@@ -30,21 +30,21 @@ angular.module('kontribute.services', [])
     
              };
          
-        function createKontributeList(list1name, list1quantity, kcount){
+        function createKontributeList(listname, listquantity, kcount){
 
             var kontribute = { 
-                List1: kcount,
-                List1details: {
-                    List1name: list1name,
+                List: kcount,
+                Listdetails: {
+                    Listname: listname,
                 },
-                List1detailsc: {
-                    List1current: "0",
+                Listdetailsc: {
+                    Listcurrent: 0,
                 },
-                List1detailsq: {
-                    List1quantity: list1quantity
+                Listdetailsq: {
+                    Listquantity: listquantity
                 },
             }; 
-            
+
             eventFactory.createKontributeList(kontribute); 
     
              };
@@ -52,7 +52,7 @@ angular.module('kontribute.services', [])
         function updatelist1(changeq){
 
             var kontribute = { 
-                List1current: changeq,
+                Listcurrent: changeq,
             }; 
             
             eventFactory.updatelist1(kontribute); 
@@ -61,7 +61,7 @@ angular.module('kontribute.services', [])
         function updatelist2(changeq){
 
             var kontribute = { 
-                List2current: changeq,
+                Listcurrent: changeq,
             }; 
             
             eventFactory.updatelist2(kontribute); 
