@@ -332,7 +332,8 @@ $scope.registerButton= function (){
   };
 
   authCtrl.register = {
-    name: '',
+    firstname: '',
+    lastname: '',
   };
 
 
@@ -364,7 +365,8 @@ $scope.registerButton= function (){
       $state.go('app.home');
      console.log(user.uid); 
       console.log("signing up again" + email, password); 
-      usersFactory.createUser(user.uid, authCtrl.user.email, authCtrl.user.password, firstname, lastname);
+      usersFactory.createUser(user.uid, authCtrl.user.email, authCtrl.user.password, 
+        authCtrl.register.firstname, authCtrl.register.lastname);
       $window.location.reload();
     }, function(error) {
       authCtrl.error = error;
@@ -386,8 +388,9 @@ $scope.registerButton= function (){
   $scope.getProfileInfo = function() {
     return usersFactory.getUser(authData.uid).then(function(data){
       $scope.email = data.data.email;
-      $scope.name = data.data.name;
-      console.log($scope.name);
+      $scope.firstname = data.data.firstname;
+      $scope.lastname = data.data.lastname;
+      console.log($scope.firstname);
     })
   };
 
@@ -410,6 +413,12 @@ $scope.registerButton= function (){
     var friendUid = user.uid;
     usersFactory.addFriend(authData.uid, user, friendUid);
   };
+
+  $scope.removeFriend = function(friend) {
+    var removeUid = friend.friend.uid;
+    usersFactory.removeFriend(authData.uid, removeUid);
+    
+  }
 
 
 

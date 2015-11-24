@@ -9,12 +9,13 @@ angular.module('kontribute.usersFactory', [])
 			return $firebaseObject(usersRef.child(uid));
 		}
 
-		factory.createUser = function(uid, email, password, name) {
+		factory.createUser = function(uid, email, password, firstname, lastname) {
 			usersRef.child(uid).set({
 				'uid': uid,
 				'email': email,
 				'password': password,
-				'name': name,
+				'firstname': firstname,
+				'lastname': lastname, 
 				'friends': 0
 			});
 		}
@@ -59,6 +60,12 @@ angular.module('kontribute.usersFactory', [])
 		 	error(function(data){
 		 		("error");
 		 	});
+		 }
+
+		 factory.removeFriend = function(uid, friendUid){
+		 	var friendRef = new Firebase('https://torrid-torch-6578.firebaseio.com/users/'+uid+'/friends/'+friendUid);
+		 	friendRef.remove();
+		 	console.log('friend with uid: '+friendUid+' removed.');
 		 }
 
 

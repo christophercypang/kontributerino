@@ -8,10 +8,10 @@
     </ion-header-bar>
 
     <ion-content>
-
     	<div class = "item item-divider" ng-repeat="friend in allFriends">
     		<div ng-repeat="fr in friend">
-    			{{fr.name}}
+    			{{fr.firstname}} {{fr.lastname}}
+                <button class = "button button-small button-light" ng-click="removeFriend(friend)">Remove Friend</button>
     		</div>
     	</div>
 
@@ -23,7 +23,7 @@
         	</a>
         </div>
         <div class = "item item-divider" ng-repeat="user in allUsers">
-        	{{user.name}}
+        	{{user.firstname}} {{user.lastname}}
         	<button class= "button button-small button-light " ng-click="addFriend(user)">Add Friend</button>
         </div>
 
