@@ -1,94 +1,23 @@
-﻿<ion-view view-title="testPage">
-    <ion-content>
+﻿<ion-view view-title="donotdelete" ng-controller="PushCtrl">
+ 
+        <ion-pane>
+        <ion-header-bar class="bar-stable">
+        <h1 class="title"> Ionic tester</h1>
+        </ion-header-bar>
+   <ion-content>
+<button class="button button-block button-dark" ng-click="identifyUser()">
+Identify a User
+</button>
 
 
-        <div class="list" ng-if="!eventSubmitted">
-         <label class="item item-input">
-                <span class="input-label">Internal use -> which event to get</span>
-                <input type="text" ng-model="number">
-            </label>
-            <label class="item item-input">
-                <span class="input-label">Title</span>
-                <input type="text" ng-model="title">
-            </label>
-            <label class="item item-input">
-                <span class="input-label">Date</span>
-                <input type="text" ng-model="date">
-            </label>
-
-            <label class="item item-input">
-                <span class="input-label">Time</span>
-                <input type="text" ng-model="time">
-            </label>
-            <label class="item item-input">
-                <span class="input-label">Address</span>
-                <input type="text" ng-model="address">
-            </label>
-            <label class="item item-input">
-                <span class="input-label">Description</span>
-                <input type="text" ng-model="description">
-            </label>
-            <label class="item item-input item-select">
-                <span class="input-label">
-                    People to Invite
-                </span>
-                <select ng-model="guests">
-                    <option>Hanson</option>
-                    <option selected>Drake</option>
-                    <option>Tian</option>
-                    <option>Chris</option>
-                    <option>Imran</option>
-                </select>
-            </label>
-            <button class="button button-email" ng-click="getUserDetails(number)">Get Events!</button>
-        </div>
+<button class="button button-block button-positive" ng-if="identified" ng-click="pushRegister()">
+Register for push
+</button>
 
 
-
-        <div class="list" ng-if="eventSubmitted">
-         <label class="item item-input">
-                <span class="input-label">Internal use -> which event to get</span>
-                <input type="text" ng-model="number">
-            </label>
-            <label class="item item-input">
-                <span class="input-label">Title</span>
-                <input type="text" value="{{title}}">
-            </label>
-
-            <label class="item item-input">
-                <span class="input-label">Date</span>
-                <input type="text" value="{{date}}">
-            </label>
-
-            <label class="item item-input">
-                <span class="input-label">Time</span>
-                <input type="text" value="{{time}}">
-            </label>
-              <label class="item item-input">
-                <span class="input-label">Address</span>
-                <input type="text" value="{{address}}">
-            </label>
-
-            <label class="item item-input">
-                <span class="input-label">Description</span>
-                <input type="text" value="{{description}}">
-            </label>
-            <label class="item item-input">
-                <span class="input-label">Invited</span>
-                <input type="text" value="{{users}}">
-            </label>
-             <button class="button button-email" ng-click="getUserDetails(number)">Get Events!</button>
-        </div>
-
-
-
-
-
-
-
-
-
+       
     </ion-content>
+    </ion-pane>
 </ion-view>
 
 

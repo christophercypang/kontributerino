@@ -1,0 +1,120 @@
+<ion-view view-title="Edit an Event" ng-controller="editEventCtrl">
+ 
+
+  <ion-content ng-init="getEventsForMap()" style="background-color: #000033">
+    
+ <div class="hostImage"></div>
+
+    <ion-scroll direction="y" class="rootHostEdit"> 
+
+
+  <div class="list">
+    
+    <li ng-repeat="event in events">
+    <a class="item item-icon-left" ng-click="showEvent($index)">
+    <i class="icon ion-calendar"></i>
+    <p>{{event.event.Title}}</p>
+    <span class="item-note">
+    {{event.event.Date | date: "yyyy-MM-dd" }} &nbsp &nbsp
+    {{event.event.Time | date: "HH:mm"}}
+    </span>
+    <p>{{event.event.Address}}</p>
+    </a>
+    </li>
+  </div>
+
+
+
+
+
+  </ion-scroll>
+
+  <ion-scroll direction="y" class="rootHostEditScroll">
+<div class="list card" ng-if="selectedVal" ng-repeat="event in selecteds">
+
+  <a ng-click="toggletitle()" class="item item-icon-left">
+    <i class="icon ion-flag"></i>
+    {{event.event.Title}}
+  </a>
+  <div class="list" ng-show="titleclicked">
+  <label class="item item-input item-floating-label">
+    <span class="input-label">Title</span>
+    <input type="text" placeholder="Enter a new title" ng-model="title">
+  </label>
+  
+</div>
+
+<a ng-click="toggleaddress()" class="item item-icon-left" >
+    <i class="icon ion-home"></i>
+    {{event.event.Address}}
+  </a>
+   <div class="list" ng-if="addressclicked">
+  <label class="item item-input item-floating-label">
+    <span class="input-label">Address</span>
+    <input type="text" placeholder="Enter a new address" ng-model="address">
+  </label>
+  
+</div>
+
+  <a ng-click="toggledate()" class="item item-icon-left" >
+    <i class="icon ion-calendar"></i>
+    {{event.event.Date}}
+  </a>
+
+ <div class="list" ng-if="dateclicked">
+  <label class="item item-input item-floating-label">
+    <span class="input-label">Date</span>
+    <input type="text" placeholder="Enter a new date" ng-model="date">
+  </label>
+  
+</div>
+  <a ng-click="toggletime()" class="item item-icon-left" >
+    <i class="icon ion-clock"></i>
+    {{event.event.Time}}
+  </a>
+
+ <div class="list" ng-if="timeclicked">
+  <label class="item item-input item-floating-label">
+    <span class="input-label">Time</span>
+    <input type="text" placeholder="Enter a new time" ng-model="time">
+  </label>
+  
+</div>
+  <a ng-click="toggledescription()" class="item item-icon-left" >
+    <i class="icon ion-document"></i>
+    {{event.event.Description}}
+  </a>
+   <div class="list" ng-if="descriptionclicked">
+  <label class="item item-input item-floating-label">
+    <span class="input-label">Description</span>
+    <input type="text" placeholder="Enter a new description" ng-model="description">
+  </label>
+  
+</div>
+
+  <a class="item item-icon-left" >
+    <i class="icon ion-person-add"></i>
+    {{event.event.Guests}}
+  </a>
+
+</div>
+
+
+ </ion-scroll>
+
+
+
+
+  </ion-content>
+
+<div class="tabs tabs-icon-left" ng-if="selectedVal">
+  <span class="tab-item" href="#/app/events">
+    <i class="icon ion-settings"></i>
+    Click a property to edit 
+  </span>
+ 
+  </div>
+
+
+
+</ion-view>

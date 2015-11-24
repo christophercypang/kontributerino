@@ -4,12 +4,13 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('kontribute', ['ionic','ionic.service.core', 'kontribute.controllers', 'kontribute.services', 'kontribute.factories', 'kontribute.authFactory','kontribute.usersFactory','firebase'])
+angular.module('kontribute', ['ionic','ngCordova','ionic.service.core', 'ionic.service.push', 'kontribute.controllers', 'kontribute.services', 'kontribute.factories', 'kontribute.authFactory','kontribute.usersFactory','firebase'])
 
 
 .config(function($ionicConfigProvider) {
     $ionicConfigProvider.tabs.position('bottom');
 })
+
 
 .run(function($ionicPlatform) {
 
@@ -28,6 +29,20 @@ angular.module('kontribute', ['ionic','ionic.service.core', 'kontribute.controll
     ionic.Platform.isFullScreen = true;
   });
 })
+
+
+
+
+.config(['$ionicAppProvider', function($ionicAppProvider) {
+  $ionicAppProvider.identify({
+    app_id: 'c4154fcd', 
+    api_key: 'b547883da0f77999ebcdef0a6d69a7c73b09b16cf7e3525b', 
+    dev_push: true
+  });
+}])
+
+
+
 
 .config(function ($compileProvider, $stateProvider, $urlRouterProvider) {
 
@@ -161,6 +176,16 @@ angular.module('kontribute', ['ionic','ionic.service.core', 'kontribute.controll
               'menuContent': {
                 templateUrl: 'templates/register.html',
                 controller: 'AuthCtrl as authCtrl'
+              }
+            }
+          })
+
+            .state('app.editEvent', {
+            url:'/editEvent',
+            views: {
+              'menuContent': {
+                templateUrl: 'templates/editEvent.html',
+               
               }
             }
           })

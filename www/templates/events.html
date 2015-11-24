@@ -1,7 +1,7 @@
 ﻿<ion-view view-title="Events" ng-controller="MapController">
        
 
-<ion-content ng-init="getEventsForMap()">
+<ion-content ng-init="getEventsForMap()" style="background-color: #000033">
            
     
 <div class="eventsImage">  
@@ -15,7 +15,7 @@
 
   <ion-scroll direction="y" class="root"> 
 
-  <div class="list">
+  <div class="list" ng-show="!notInvited">
     
     <li ng-repeat="event in events">
     <a class="item item-icon-left" ng-click="plotOnMap(event.event.Address)">
@@ -28,6 +28,18 @@
     <p>{{event.event.Address}}</p>
     </a>
     </li>
+  </div>
+
+
+
+
+  <div class="list" ng-show="notInvited">
+
+  <div class="card">
+  <div class="item item-text-wrap">
+    You haven't been invited to any events yet. If your hosting, select the hosting button to view those events.
+  </div>
+</div>
   </div>
   </ion-scroll>
 

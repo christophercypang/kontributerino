@@ -1,6 +1,6 @@
 angular.module('kontribute.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $firebaseAuth, $state, $http, $ionicPopup, $location, $window, usersFactory, eventFactory, eventService) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $firebaseAuth, $state, $http, $ionicPopup, $location, $window, $ionicPush, usersFactory, eventFactory, eventService) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -8,6 +8,13 @@ angular.module('kontribute.controllers', [])
   // listen for the $ionicView.enter event:
   //$scope.$on('$ionicView.enter', function(e) {
   //});
+
+
+
+
+
+
+
 
 
   var ref = new Firebase('https://torrid-torch-6578.firebaseio.com');
@@ -21,6 +28,13 @@ angular.module('kontribute.controllers', [])
   }
 
    
+
+
+
+
+
+
+
 
    var vm = this;
    vm.result;
@@ -447,8 +461,10 @@ $scope.registerButton= function (){
 
 
 $scope.allEventsShowing = false; 
-$scope.showAll; 
-
+$scope.showAll;
+$scope.showAllHosting;  
+$scope.notInvited = false;
+$scope.notHosting = false;
 
     $scope.initialise = function() {
         var myLatlng = new google.maps.LatLng(37.3000, -120.4833);
@@ -486,7 +502,10 @@ google.maps.event.addDomListener(document.getElementById("map"), 'load', $scope.
     $scope.getEventsForMap = function(){
         return eventFactory.getEventsForMap($scope.userName).then(function(data) { 
               var array = []; 
-              
+
+              if(data.data.invited == null){
+                $scope.notInvited = true; 
+              } else { 
               array = Object.keys(data.data.invited);
               
               $scope.events = []; 
@@ -496,8 +515,9 @@ google.maps.event.addDomListener(document.getElementById("map"), 'load', $scope.
               $scope.events[i] = data.data.invited[array[i]]; 
               console.log($scope.events[i]); 
                }
-                  
+     }             
     });
+
   };
 
   $scope.plotOnMap = function(name){
@@ -588,7 +608,7 @@ $scope.plotAllOnMap = function(showAll){
 }
 };
 })
- 
+
  
 .controller('VoteController',function($scope,$ionicPopup, $state, $window){
         console.log("vote controller");
@@ -719,4 +739,441 @@ $scope.plotAllOnMap = function(showAll){
         $scope.confirmEvent();
         $state.go('app.events');
       };
+})
+
+.controller('HostMapController', function($scope, $ionicLoading, $state, eventFactory, eventService) {
+ 
+$scope.gotoEditPage = function(){
+  $state.go('app.editEvent'); 
+}
+
+  var ref = new Firebase('https://torrid-torch-6578.firebaseio.com');
+  var authData = ref.getAuth();
+
+  try { 
+  var profileInfo = usersFactory.getUser(authData.uid)
+  $scope.userName = authData.uid; 
+  console.log("dude is back" + $scope.userName); 
+  } catch (e) {
+    console.log("not logged in, go log in homie"); 
+  }
+
+
+$scope.allEventsShowing = false; 
+$scope.showAll;
+$scope.showAllHosting;  
+$scope.notInvited = false;
+$scope.notHosting = false;
+
+    $scope.initialise = function() {
+        var myLatlng = new google.maps.LatLng(37.3000, -120.4833);
+ 
+        var mapOptions = {
+            center: myLatlng,
+            zoom: 16,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+ 
+        var map = new google.maps.Map(document.getElementById("hostMap"), mapOptions);
+ 
+        navigator.geolocation.getCurrentPosition(function(pos) {
+            map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+            var myLocation = new google.maps.Marker({
+                position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
+                map: map,
+                title: "My Location"
+            });
+        });
+
+        $scope.map = map;
+
+        
+
+
+
+
+
+};
+
+google.maps.event.addDomListener(document.getElementById("hostMap"), 'load', $scope.initialise())
+    
+
+    $scope.getEventsForMap = function(){
+        return eventFactory.getEventsForMap($scope.userName).then(function(data) { 
+              var array = []; 
+
+              if(data.data.host == null){
+                $scope.notInvited = true; 
+              } else { 
+              array = Object.keys(data.data.host);
+              
+              $scope.events = []; 
+             
+             
+              for(var i=0; i < array.length; i++){
+              $scope.events[i] = data.data.host[array[i]]; 
+              console.log($scope.events[i]); 
+               }
+     }             
+    });
+
+  };
+
+  $scope.plotOnMap = function(name){
+            var geocoder;
+            var map;
+            var address = name; 
+            
+            geocoder = new google.maps.Geocoder();
+            var latlng = new google.maps.LatLng(-34.397, 150.644);
+     
+
+            var myOptions = {
+              zoom: 8,
+              center: latlng,
+              mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    map = new google.maps.Map(document.getElementById("hostMap"), myOptions);
+
+        geocoder.geocode( { 'address': address}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+        map.setCenter(results[0].geometry.location);
+        var marker = new google.maps.Marker({
+            map: map,
+            position: results[0].geometry.location
+        });
+                }
+
+            })
+
+ 
+};
+
+$scope.plotAllOnMap = function(showAll){
+  if (showAll == false){ 
+       $scope.initialise();  
+        } else { 
+    return eventFactory.getEventsForMap($scope.userName).then(function(data) { 
+              var array = [];               
+              array = Object.keys(data.data.host);
+              $scope.events = []; 
+              $scope.locations = []; 
+             
+              for(var i=0; i < array.length; i++){
+              $scope.events[i] = data.data.host[array[i]]; 
+               }
+
+              for(var j=0; j< $scope.events.length; j++){
+                $scope.locations[j] = $scope.events[j].event.Address; 
+              }
+
+
+            var geocoder;
+            var map;
+            
+            geocoder = new google.maps.Geocoder();
+            var latlng = new google.maps.LatLng(-34.397, 150.644);
+     
+
+            var myOptions = {
+              zoom: 8,
+              center: latlng,
+              mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    
+
+
+    map = new google.maps.Map(document.getElementById("hostMap"), myOptions);
+  
+    for(var z = 0; z < $scope.locations.length; z++){
+       var address = $scope.locations[z]; 
+        geocoder.geocode( { 'address': address}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+        map.setCenter(results[0].geometry.location);
+        var marker = new google.maps.Marker({
+            map: map,
+            position: results[0].geometry.location
+        });
+                }
+
+            })
+        }
+
+
+
+});
+
+
+}
+};
+})
+
+
+
+// .controller('CalendarCtrl', function ($scope, $cordovaCalendar) {
+
+
+// document.addEventListener("deviceready", onDeviceReady, false);
+
+
+
+//   $cordovaCalendar.createCalendar({
+//     calendarName: 'Cordova Calendar',
+//     calendarColor: '#FF0000'
+//   }).then(function (result) {
+//     // success
+//   }, function (err) {
+//     // error
+//   });
+
+//   $cordovaCalendar.deleteCalendar('Cordova Calendar').then(function (result) {
+//     // success
+//   }, function (err) {
+//     // error
+//   });
+
+//   $cordovaCalendar.createEvent({
+//     title: 'Space Race',
+//     location: 'The Moon',
+//     notes: 'Bring sandwiches',
+//     startDate: new Date(2015, 0, 6, 18, 30, 0, 0, 0),
+//     endDate: new Date(2015, 1, 6, 12, 0, 0, 0, 0)
+//   }).then(function (result) {
+//     // success
+//   }, function (err) {
+//     // error
+//   });
+
+//   $cordovaCalendar.createEventWithOptions({
+//     title: 'Space Race',
+//     location: 'The Moon',
+//     notes: 'Bring sandwiches',
+//     startDate: new Date(2015, 0, 6, 18, 30, 0, 0, 0),
+//     endDate: new Date(2015, 1, 6, 12, 0, 0, 0, 0)
+//   }).then(function (result) {
+//     // success
+//   }, function (err) {
+//     // error
+//   });
+
+//   $cordovaCalendar.createEventInteractively({
+//     title: 'Space Race',
+//     location: 'The Moon',
+//     notes: 'Bring sandwiches',
+//     startDate: new Date(2015, 0, 6, 18, 30, 0, 0, 0),
+//     endDate: new Date(2015, 1, 6, 12, 0, 0, 0, 0)
+//   }).then(function (result) {
+//     // success
+//   }, function (err) {
+//     // error
+//   });
+
+//   $cordovaCalendar.createEventInNamedCalendar({
+//     title: 'Space Race',
+//     location: 'The Moon',
+//     notes: 'Bring sandwiches',
+//     startDate: new Date(2015, 0, 6, 18, 30, 0, 0, 0),
+//     endDate: new Date(2015, 1, 6, 12, 0, 0, 0, 0),
+//     calendarName: 'Cordova Calendar'
+//   }).then(function (result) {
+//     // success
+//   }, function (err) {
+//     // error
+//   });
+
+//   $cordovaCalendar.findEvent({
+//     title: 'Space Race',
+//     location: 'The Moon',
+//     notes: 'Bring sandwiches',
+//     startDate: new Date(2015, 0, 6, 18, 30, 0, 0, 0),
+//     endDate: new Date(2015, 1, 6, 12, 0, 0, 0, 0)
+//   }).then(function (result) {
+//     // success
+//   }, function (err) {
+//     // error
+//   });
+
+//   $cordovaCalendar.listEventsInRange(
+//     new Date(2015, 0, 6, 0, 0, 0, 0, 0),
+//     new Date(2015, 1, 6, 0, 0, 0, 0, 0)
+//   ).then(function (result) {
+//     // success
+//   }, function (err) {
+//     // error
+//   });
+
+//   $cordovaCalendar.listCalendars().then(function (result) {
+//     // success
+//   }, function (err) {
+//     // error
+//   });
+
+//   $cordovaCalendar.findAllEventsInNamedCalendar('Cordova Calendar').then(function (result) {
+//     // success
+//   }, function (err) {
+//     // error
+//   });
+
+//   $cordovaCalendar.modifyEvent({
+//     title: 'Space Race',
+//     location: 'The Moon',
+//     notes: 'Bring sandwiches',
+//     startDate: new Date(2015, 0, 6, 18, 30, 0, 0, 0),
+//     endDate: new Date(2015, 1, 6, 12, 0, 0, 0, 0), 
+//     newTitle: 'Ostrich Race',
+//     newLocation: 'Africa',
+//     newNotes: 'Bring a saddle',
+//     newStartDate: new Date(2015, 2, 12, 19, 0, 0, 0, 0),
+//     newEndDate: new Date(2015, 2, 12, 22, 30, 0, 0, 0)
+//   }).then(function (result) {
+//     // success
+//   }, function (err) {
+//     // error
+//   });
+
+//   $cordovaCalendar.deleteEvent({
+//     newTitle: 'Ostrich Race',
+//     location: 'Africa',
+//     notes: 'Bring a saddle',
+//     startDate: new Date(2015, 2, 12, 19, 0, 0, 0, 0),
+//     endDate: new Date(2015, 2, 12, 22, 30, 0, 0, 0)
+//   }).then(function (result) {
+//     // success
+//   }, function (err) {
+//     // error
+//   });
+
+// }) 
+
+.controller('editEventCtrl', function($scope, $ionicLoading, $state, eventFactory, eventService) {
+
+$scope.descriptionclicked = false; 
+$scope.timeclicked = false;
+$scope.titleclicked = false;
+$scope.dateclicked = false;
+$scope.addressclicked = false;
+
+
+$scope.selectedVal = false; 
+
+
+
+
+
+$scope.toggletime = function(){
+  console.log('fhasiughsafksdhf'); 
+  if($scope.timeclicked == false){
+
+$scope.timeclicked = true; 
+} else {
+$scope.timeclicked = false; 
+}
+}
+
+$scope.toggletitle= function(){
+   console.log('fhasiughsafksdhf'); 
+  if($scope.titleclicked == false){
+$scope.titleclicked = true; 
+} else {
+$scope.titleclicked = false; 
+}
+}
+
+$scope.toggledate = function(){
+   if($scope.dateclicked == false){
+$scope.dateclicked = true; 
+} else {
+$scope.dateclicked = false; 
+}
+}
+
+$scope.toggledescription = function(){
+  if($scope.descriptionclicked == false){
+$scope.descriptionclicked = true; 
+} else {
+$scope.descriptionclicked = false; 
+}
+}
+
+$scope.toggleaddress = function(){
+if($scope.addressclicked == false){
+$scope.addressclicked = true; 
+} else {
+$scope.addressclicked = false; 
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+$scope.gotoEditPage = function(){
+  $state.go('app.editEvent'); 
+  
+}
+
+  var ref = new Firebase('https://torrid-torch-6578.firebaseio.com');
+  var authData = ref.getAuth();
+
+  try { 
+  var profileInfo = usersFactory.getUser(authData.uid)
+  $scope.userName = authData.uid; 
+  console.log("dude is back" + $scope.userName); 
+  } catch (e) {
+    console.log("not logged in, go log in homie"); 
+  }
+
+
+
+
+$scope.showEvent = function(ele){
+  var eve = $scope.events[ele]; 
+  
+  $scope.selecteds = []; 
+  $scope.selecteds[0] = eve; 
+
+  
+  $scope.selectedVal = true; 
+
+
+  console.log($scope.selecteds); 
+}
+
+
+
+
+    $scope.getEventsForMap = function(){
+        return eventFactory.getEventsForMap($scope.userName).then(function(data) { 
+              var array = []; 
+
+              if(data.data.host == null){
+                $scope.notInvited = true; 
+              } else { 
+              array = Object.keys(data.data.host);
+              
+              $scope.events = []; 
+             
+             
+              for(var i=0; i < array.length; i++){
+              $scope.events[i] = data.data.host[array[i]]; 
+              console.log($scope.events[i]); 
+               }
+     }             
+    });
+
+  };
+        
+
+
+
+
+
+
 });
