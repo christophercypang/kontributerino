@@ -348,7 +348,7 @@ $scope.registerButton= function (){
  console.log(username, password + "in te fncSFH"); 
       $window.location.reload();
     }, function(error){
-      authCtrl.error = error;
+      alert(error);
     });
 
   };
@@ -369,7 +369,7 @@ $scope.registerButton= function (){
         authCtrl.register.firstname, authCtrl.register.lastname);
       $window.location.reload();
     }, function(error) {
-      authCtrl.error = error;
+      alert(error);
     });
   };
 
