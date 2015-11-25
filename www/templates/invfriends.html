@@ -1,0 +1,21 @@
+<ion-modal-view ng-init="getGuests()">
+	<ion-header-bar>
+        <h1 class="title">Friends</h1>
+        <div class="buttons">
+            <button class="button button-clear" ng-click="closeGuests()">Close</button>
+        </div>
+
+    </ion-header-bar>
+
+    <ion-content>
+        <div class = "item item-divider" ng-repeat="friend in allFriends">
+            <div ng-repeat="fr in friend">
+                {{fr.firstname}} {{fr.lastname}}
+                <button class = "button button-small button-light" ng-click="inviteFriend(friend)">Invite Friend</button>   
+            </div>
+        </div>
+
+
+    </ion-content>
+
+</ion-modal-view>

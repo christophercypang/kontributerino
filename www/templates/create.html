@@ -1,4 +1,4 @@
-﻿<ion-view view-title="Create">
+﻿<ion-view view-title="Create" ng-init="getInvitedGuests()">
         <ion-content class="has-header list-inset" >
         <form name="createEventForm" ng-if="!eventCreation">
                 <div class="item item-text-wrap" ng-class="'regular'"> 
@@ -47,10 +47,28 @@
                             <input type="text" placeholder="Enter your Event Location Here" ng-model="description2" ng-minlength="1" ng-maxlength="100" required>
                         </label>
 
-                        <label class="item item-input item-stacked-label">
-                            <span class="input-label" ng-class="!guestsInput ? 'validation' : ''"> Guests</span>
-                            <input type="text" placeholder="Invite your Guests Here!" ng-model="guests2" ng-minlength="1" ng-maxlength="1000" required>
+                     
+                        <label class="item item-input item-stacked-label" ng-click="showGuests()">
+                            Guests
+
                         </label>
+
+                        <label class ="item item-input item-stacked-label">
+
+                             <div class = "item item-divider" ng-repeat="guest in invitedGuests">
+                                <div ng-repeat="gu in guest">
+                                    <div ng-repeat="g in gu">
+
+                                
+                                   
+                                    {{g.firstname}} {{g.lastname}}
+                                    <button class = "button button-small button-light" ng-click="unInvite(g.uid)">Uninvite</button>
+                                </div>
+                            </div>
+                            </div>
+
+                        </label>
+                    
 
 
                         <div class="list">

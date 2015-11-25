@@ -125,6 +125,27 @@
                 });
         }
 
+    factory.createInviteList = function(uid, friend, friendUid) {
+        var url = 'https://torrid-torch-6578.firebaseio.com/TEMPINV/'+uid+'/invited/'+friendUid+'.json';
+        $http.put(url, {friend: friend})
+        .success(function(data){
+            console.log(data);
+        }). 
+        error(function(data) {
+            ("error");
+        });
+
+    }
+
+
+    factory.unInvite = function(uid, guid) {
+        console.log('https://torrid-torch-6578.firebaseio.com/TEMPINV/'+uid+'/invited/'+guid);
+        var guestRef = new Firebase ('https://torrid-torch-6578.firebaseio.com/TEMPINV/'+uid+'/invited/'+guid);
+        guestRef.remove();  
+        console.log('remove: '+guid);
+    }
+
+
 
 
 

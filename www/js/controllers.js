@@ -139,7 +139,58 @@ $scope.locationClick = function(){
  
 }
 
+$ionicModal.fromTemplateUrl('templates/invfriends.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal){
+    $scope.modal = modal;
+  });
 
+
+var ref = new Firebase('https://torrid-torch-6578.firebaseio.com/');
+var authData = ref.getAuth();
+// check if you are logged in
+if (authData != null) {
+var friendsRef = new Firebase('https://torrid-torch-6578.firebaseio.com/users/'+authData.uid+'/friends') ;
+var invitedRef = new Firebase('https://torrid-torch-6578.firebaseio.com/TEMPINV/'+authData.uid+'/invited'); 
+}
+$scope.showGuests = function() {
+  console.log("show guests");
+  $scope.modal.show();
+
+}
+$scope.closeGuests= function() {
+  $scope.modal.hide();
+}
+
+$scope.getGuests=function() {
+  friendsRef.on('value', function(snapshot) {
+    $scope.allFriends = snapshot.val();
+
+  })
+}
+
+$scope.inviteFriend = function(friend) {
+  var friendUid = friend.friend.uid;
+  eventFactory.createInviteList(authData.uid, friend, friendUid);
+  console.log("invite " + friend.friend.uid);
+
+}
+
+$scope.getInvitedGuests=function() {
+  invitedRef.on('value', function(snapshot){
+    $scope.invitedGuests = snapshot.val();
+    console.log($scope.invitedGuests);
+  })
+}
+
+$scope.unInvite = function(guest) {
+  console.log(guest);
+  var removeGUid = guest;
+
+  console.log("guid of person i want to delete:" +removeGUid);
+   eventFactory.unInvite(authData.uid, removeGUid);
+}
 
 
 
@@ -290,7 +341,7 @@ $scope.login = function() {
 
 
 // Handles login and registration
-.controller('AuthCtrl', function($scope, authFactory, $firebaseAuth, $state, $window, $location, usersFactory, $rootScope) {
+.controller('AuthCtrl', function($scope, authFactory, $firebaseAuth, $state, $window, $location, usersFactory, $rootScope ) {
   $scope.loginClicked = false;
   $scope.registerButtonClicked = false;
   $scope.hideLogin = false; 
@@ -347,7 +398,7 @@ $scope.registerButton= function (){
     auth.$authWithPassword(authCtrl.user).then(function(auth){
       $state.go('app.home');
       console.log(auth.uid);
- console.log(username, password + "in te fncSFH"); 
+      console.log(username, password + "in te fncSFH"); 
       $window.location.reload();
     }, function(error){
       alert(error);
@@ -360,17 +411,23 @@ $scope.registerButton= function (){
   }
 
 
-    $scope.FBLogin = function(authMethod) {
-    authFactory.$authWithOAuthRedirect(authMethod).then(function(authData){
-    }).catch(function(error){
-      if(error.code === 'TRANSPORT_UNAVAILABLE'){
-        authFactory.$authWithOAuthPopup(authMethod).then(function(authData){
-        });
-      } else {
-        console.log(error);
-      }
-    });
+  $scope.FBLogin = function() {
+    console.log("hello");
+    firebaseRef.authWithOAuthPopup('facebook', function(error, authData){
+      console.log(authData.uid);
+      $state.go('app.home');
+    } )
+
+    // authFactory.$onAuth(function(authData) {
+    //   if(authData === null) {
+    //     console.log('not logged in');
+    //   }
+    // } else {
+    //   $state.go('app.home');
+    //   console.log('logged in as ' + authData.uid);
+    // });
   }
+
 
   authCtrl.signUp = function(email, password, firstname, lastname) {
     console.log("signing up" + email, password); 
@@ -401,18 +458,12 @@ $scope.registerButton= function (){
   var friendsRef = new Firebase('https://torrid-torch-6578.firebaseio.com/users/'+authData.uid+'/friends')
 
    $scope.getProfileInfo = function() {
-    if(authData.provider='facebook') {
-      $scope.fbname = authData.facebook.displayName;
-
-    } else {
     return usersFactory.getUser(authData.uid).then(function(data){
       $scope.email = data.data.email;
       $scope.firstname = data.data.firstname;
       $scope.lastname = data.data.lastname;
       console.log($scope.firstname);
     })
-
-  }
   };
 
   $scope.getAllUsers = function() {
