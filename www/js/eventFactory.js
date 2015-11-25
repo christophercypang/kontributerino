@@ -61,6 +61,7 @@
 
 
     factory.updateLocalEventIfTitleChanged = function(changes, oldTitle, userName) {
+            console.log(changes.Title + 'new title' + oldTitle + "newtitel"); 
             if(changes.Title != oldTitle){
             var oldTitle = new Firebase("https://torrid-torch-6578.firebaseio.com/"+ userName +"/host/" + oldTitle);
             oldTitle.remove(); 

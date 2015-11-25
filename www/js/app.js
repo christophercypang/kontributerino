@@ -95,7 +95,8 @@ angular.module('kontribute', ['ionic', 'kontribute.controllers', 'kontribute.ser
                   'menuContent': {
                       templateUrl: "templates/host.html"
                   }
-              }
+              }, 
+              cache: false
           })
 
           .state('app.vote', {
@@ -181,7 +182,9 @@ angular.module('kontribute', ['ionic', 'kontribute.controllers', 'kontribute.ser
                 templateUrl: 'templates/editEvent.html',
                
               }
-            }
+            }, 
+            cache: false
+
           })
 
           .state('app.profile', {
