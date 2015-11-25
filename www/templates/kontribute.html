@@ -6,30 +6,52 @@
                     <div class="item item-divider"> 
                         <h2>Kontribute List</h2>
                     </div>
-                        <label class="item item-input item-stacked-label">
-                            <span class="input-label" ng-show="kcount == 1" ng-class="!titleInput ? 'validation' : ''"> Item 1 Name </span>
-                            <input type="text" placeholder="Enter your Event Name here" ng-show="kcount == 1" ng-model="list1name" ng-minlength="1" ng-maxlength="100" required>
+
+  <div class="item item-avatar" style="background-color:#C0C0C0 ; color: black" ng-show="kcount == 2">
+    <h2>Item: {{list1name}}</h2>
+    <h3>Current Quantity: {{list1current}}</h3>
+    <p>Max Quantity: {{list1quantity}}</p>
+  </div>
+
+  <div class="item item-avatar" style="background-color:#C0C0C0 ; color: black" ng-show="kcount == 3">
+    <h2>Item: {{list2name}}</h2>
+    <h3>Current Quantity: {{list2current}}</h3>
+    <p>Max Quantity: {{list2quantity}}</p>
+  </div>
+
+  <div class="item item-avatar" style="background-color:#C0C0C0 ; color: black" ng-show="kcount == 4">
+    <h2>Item: {{list3name}}</h2>
+    <h3>Current Quantity: {{list3current}}</h3>
+    <p>Max Quantity: {{list3quantity}}</p>
+  </div>
+
+  <div class="item item-avatar" style="background-color:#C0C0C0 ; color: black" ng-show="kcount == 5">
+    <h2>Item: {{list4name}}</h2>
+    <h3>Current Quantity: {{list4current}}</h3>
+    <p>Max Quantity: {{list4quantity}}</p>
+  </div>
+
+  <div class="item item-avatar" style="background-color:#C0C0C0 ; color: black" ng-show="kcount == 6">
+    <h2>Item: {{list5name}}</h2>
+    <h3>Current Quantity: {{list5current}}</h3>
+    <p>Max Quantity: {{list5quantity}}</p>
+  </div>
+
+                        <label class="item item-input item-stacked-label" >
+                            <span class="input-label" ng-class="!titleInput ? 'validation' : ''"> Item Name </span>
+                            <input type="text" placeholder="Item Name" ng-model="listname" ng-minlength="1" ng-maxlength="100" required>
                         </label>
 
                         <label class="item item-input item-stacked-label">
-                            <span class="input-label" ng-show="kcount == 1" ng-class="!guestsInput ? 'validation' : ''"> Quantity</span>
-                            <input type="text" placeholder="Invite your Guests Here!" ng-show="kcount == 1" ng-model="list1quantity" ng-minlength="1" ng-maxlength="100" required>
+                            <span class="input-label" ng-class="!guestsInput ? 'validation' : ''"> Quantity</span>
+                            <input type="number" placeholder="Max Quantity" ng-model="listquantity" ng-minlength="1" ng-maxlength="100" required>
                         </label>
 
-                        <label class="item item-input item-stacked-label">
-                            <span class="input-label" ng-show="kcount == 2" ng-class="!titleInput ? 'validation' : ''"> Item 2 Name </span>
-                            <input type="text" placeholder="Enter your Event Name here" ng-show="kcount == 2" ng-model="list1name" ng-minlength="1" ng-maxlength="100" required>
-                        </label>
-
-                        <label class="item item-input item-stacked-label">
-                            <span class="input-label" ng-show="kcount == 2" ng-class="!guestsInput ? 'validation' : ''"> Quantity</span>
-                            <input type="text" placeholder="Invite your Guests Here!" ng-show="kcount == 2" ng-model="list1quantity" ng-minlength="1" ng-maxlength="100" required>
-                        </label>
-       
+     
                     </div>
 
                         <span class="item text-center item-divider" ng-if="!inputBoxesFilled" ng-class="'validation'">Please fill in highlighted boxes above</span>
-                            <button class="button button-block button-email" ng-click="kcount = kcount + 1; kcurr = kcount - 1; createKontributeList(list1name, list1quantity, kcurr)">Create!</button>
+                            <button class="button button-block button-email" ng-click="kcount = kcount + 1; kcurr = kcount - 1; createKontributeList(listname, listquantity, kcurr); getKontributeLists(); listname = null; listquantity = null;">Create!</button>
                         </span>
              </div>
         </form>

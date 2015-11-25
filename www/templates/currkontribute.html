@@ -8,7 +8,6 @@
       
 <ion-slide-box on-slide-changed="slideHasChanged($index)" ng-init="getKontributeLists()">
   
-  <ion-slide ng-repeat="event in events">
    
     <div class="list card">
 
@@ -20,11 +19,11 @@
 
   <div class="item tabs tabs-secondary tabs-icon-left" style="background-color: #F8F8F8  ">
     <a class="tab-item" href="#">
-      <i class="icon ion-thumbsup" ng-show="list1current != list1quantity" ng-click="updatelist1(1 * list1current + 1); getKontributeLists()"></i>
+      <i class="icon ion-thumbsup" ng-show="list1current != list1quantity" ng-click="updatelist1(1 * list1current + 1); getKontributeLists();"></i>
       Kontribute
     </a>
     <a class="tab-item" href="#">
-      <i class="icon ion-thumbsdown" ng-show="list1current != 0" ng-click="updatelist1(1 * list1current - 1); getKontributeLists()"></i>
+      <i class="icon ion-thumbsdown" ng-show="list1current != 0" ng-click="updatelist1(1 * list1current - 1); getKontributeLists();"></i>
       Un-Kontribute
     </a>
   </div>
