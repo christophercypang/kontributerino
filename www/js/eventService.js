@@ -6,6 +6,7 @@ angular.module('kontribute.services', [])
         vm.createLocalEvent = createLocalEvent;
         vm.inviteUserToEvent = inviteUserToEvent; 
         vm.createKontributeList = createKontributeList;
+        vm.updateLocalEventIfTitleChanged = updateLocalEventIfTitleChanged; 
         vm.updatelist1 = updatelist1;
         vm.updatelist2 = updatelist2;
         vm.data;
@@ -100,6 +101,30 @@ angular.module('kontribute.services', [])
             eventFactory.inviteUserToEvent(nameOfGuest, localEvent); 
     
              };
+
+
+
+
+        function updateLocalEventIfTitleChanged(changes, oldTitle, userName){
+ 
+            console.log(userName + "hvhdahfahfa"); 
+             var localEvent = { 
+                Title:  changes.event.Title, 
+                Date: changes.event.Date,
+                Time: changes.event.Time,
+                Address: changes.event.Address,  
+                Description: changes.event.Description, 
+                Users : changes.event.Users, 
+            };
+
+
+            eventFactory.updateLocalEventIfTitleChanged(localEvent, oldTitle, userName); 
+        }
+
+
+
+
+
          
        
     });
