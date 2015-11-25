@@ -58,6 +58,29 @@
 
              }
 
+
+
+    factory.updateLocalEventIfTitleChanged = function(changes, oldTitle, userName) {
+            console.log(changes.Title + 'new title' + oldTitle + "newtitel"); 
+            if(changes.Title != oldTitle){
+            var oldTitle = new Firebase("https://torrid-torch-6578.firebaseio.com/"+ userName +"/host/" + oldTitle);
+            oldTitle.remove(); 
+            }
+            var newTitle = changes.Title; 
+            var url = "https://torrid-torch-6578.firebaseio.com/"+ userName +"/host/" + newTitle + ".json"; 
+                 $http.put(url, { event: changes })
+                .success(function(data, status, headers, config) {
+                    console.log(data); 
+                    
+                }).
+                error(function(data, status, headers, config) {
+                    ("error"); 
+                }); 
+
+             }
+
+
+
     factory.createLocalEvent = function(localEvent, userName) {
                 var localEventTitle = localEvent.Title.toLowerCase(); 
                 var url = "https://torrid-torch-6578.firebaseio.com/"+ userName +"/host/" + localEventTitle + ".json";

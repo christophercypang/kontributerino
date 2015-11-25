@@ -40,7 +40,11 @@
   <label class="item item-input item-floating-label">
     <span class="input-label">Title</span>
     <input type="text" placeholder="Enter a new title" ng-model="title">
+
   </label>
+    <button ng-click="updateTitle(title);toggletitle() " class="button button-small button-balanced">
+  Submit Changes
+</button>
   
 </div>
 
@@ -49,35 +53,64 @@
     {{event.event.Address}}
   </a>
    <div class="list" ng-if="addressclicked">
-  <label class="item item-input item-floating-label">
+  <label class="item item-input">
     <span class="input-label">Address</span>
-    <input type="text" placeholder="Enter a new address" ng-model="address">
+    <input type="text" placeholder="Enter a new address below" disabled="true">
+
   </label>
+
+   <label class="item item-input item-floating-label">
+                            <span class="input-label" ng-class="!streetInput ? 'validation' : ''"> Street</span>
+                            <input type="text" placeholder="Enter your Street Here" ng-model="street2" ng-minlength="1" ng-maxlength="100" required>
+                        </label>
+
+                        <label class="item item-input item-floating-label" >
+                            <span class="input-label" ng-class="!cityInput ? 'validation' : ''"> City</span>
+                            <input type="text" placeholder="Enter your City Here" ng-model="city2" ng-minlength="1" ng-maxlength="100" required>
+                        </label>
+
+                        <label class="item item-input item-floating-label">
+                            <span class="input-label" ng-class="!provinceInput ? 'validation' : ''"> Province/State</span>
+                            <input type="text" placeholder="Enter your Province/State Here" ng-model="province2" ng-minlength="1" ng-maxlength="100" required>
+       </label>
+   <button ng-click="updateAddress(street2, city2, province2); toggleaddress()" class="button button-small button-calm">
+  Submit Changes
+</button>
+
   
 </div>
 
   <a ng-click="toggledate()" class="item item-icon-left" >
     <i class="icon ion-calendar"></i>
-    {{event.event.Date}}
+    {{event.event.Date | date: "yyyy-MM-dd" }}
   </a>
 
  <div class="list" ng-if="dateclicked">
   <label class="item item-input item-floating-label">
     <span class="input-label">Date</span>
-    <input type="text" placeholder="Enter a new date" ng-model="date">
+    <input type="date" placeholder="Enter a new date" ng-model="date">
+  
+
   </label>
+  <button ng-click="updateDate(date); toggledate()" class="button button-small button-balanced">
+  Submit Changes
+</button>
   
 </div>
   <a ng-click="toggletime()" class="item item-icon-left" >
     <i class="icon ion-clock"></i>
-    {{event.event.Time}}
+   {{event.event.Time | date: "HH:mm"}}
   </a>
 
  <div class="list" ng-if="timeclicked">
   <label class="item item-input item-floating-label">
     <span class="input-label">Time</span>
-    <input type="text" placeholder="Enter a new time" ng-model="time">
+    <input type="time" placeholder="Enter a new time" ng-model="time">
+  
   </label>
+  <button ng-click="updateTime(time); toggletime()" class="button button-small button-calm">
+  Submit Changes
+</button>
   
 </div>
   <a ng-click="toggledescription()" class="item item-icon-left" >
@@ -88,7 +121,11 @@
   <label class="item item-input item-floating-label">
     <span class="input-label">Description</span>
     <input type="text" placeholder="Enter a new description" ng-model="description">
+  
   </label>
+  <button ng-click="updateDescription(description); toggledescription()" class="button button-small button-balanced">
+  Submit Changes
+</button>
   
 </div>
 
@@ -96,7 +133,9 @@
     <i class="icon ion-person-add"></i>
     {{event.event.Guests}}
   </a>
-
+<br>
+<br>
+<br>
 </div>
 
 

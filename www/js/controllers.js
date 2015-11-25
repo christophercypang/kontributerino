@@ -1126,7 +1126,7 @@ $scope.plotAllOnMap = function(showAll){
 
 // }) 
 
-.controller('editEventCtrl', function($scope, $ionicLoading, $state, eventFactory, eventService) {
+.controller('editEventCtrl', function($scope, $ionicLoading, $state, eventFactory, eventService, usersFactory) {
 
 $scope.descriptionclicked = false; 
 $scope.timeclicked = false;
@@ -1139,10 +1139,22 @@ $scope.selectedVal = false;
 
 
 
+  var ref = new Firebase('https://torrid-torch-6578.firebaseio.com');
+  var authData = ref.getAuth();
+
+  try { 
+  var profileInfo = usersFactory.getUser(authData.uid)
+  $scope.userName = authData.uid; 
+  console.log("dude is back" + $scope.userName); 
+  } catch (e) {
+    console.log("not logged in, go log in homie"); 
+  }
+
+  
+
 
 
 $scope.toggletime = function(){
-  console.log('fhasiughsafksdhf'); 
   if($scope.timeclicked == false){
 
 $scope.timeclicked = true; 
@@ -1152,7 +1164,7 @@ $scope.timeclicked = false;
 }
 
 $scope.toggletitle= function(){
-   console.log('fhasiughsafksdhf'); 
+ 
   if($scope.titleclicked == false){
 $scope.titleclicked = true; 
 } else {
@@ -1187,7 +1199,46 @@ $scope.addressclicked = false;
 
 
 
+$scope.updateTitle = function(changes){
+  var temp = 'title'; 
+  var oldTitle = $scope.selecteds[0].event.Title;
+  $scope.selecteds[0].event.Title = changes; 
+  eventService.updateLocalEventIfTitleChanged($scope.selecteds[0], oldTitle, $scope.userName); 
 
+}
+$scope.updateTime = function(changes){
+   var temp = 'time'; 
+    var oldTitle = $scope.selecteds[0].event.Title;
+   var time = $scope.selecteds[0].event.Time
+   $scope.selecteds[0].event.Time = changes;
+  eventService.updateLocalEventIfTitleChanged($scope.selecteds[0], oldTitle, $scope.userName); 
+
+}
+
+$scope.updateAddress = function(street, city, province){
+   var temp = street + ", " + city + ", " + province; 
+    var oldTitle = $scope.selecteds[0].event.Title;
+    var address = $scope.selecteds[0].event.Address; 
+   $scope.selecteds[0].event.Address = temp;
+  eventService.updateLocalEventIfTitleChanged($scope.selecteds[0], oldTitle, $scope.userName);
+}
+
+$scope.updateDate = function(changes){
+   var temp = 'date'; 
+    var oldTitle = $scope.selecteds[0].event.Title;
+    var date = $scope.selecteds[0].event.Date; 
+   $scope.selecteds[0].event.Date = changes;
+  eventService.updateLocalEventIfTitleChanged($scope.selecteds[0], oldTitle, $scope.userName);
+
+}
+
+$scope.updateDescription = function(changes){
+   var temp = 'description'; 
+    var oldTitle = $scope.selecteds[0].event.Title;
+   var description = $scope.selecteds[0].event.Description; 
+   $scope.selecteds[0].event.Description = changes;
+  eventService.updateLocalEventIfTitleChanged($scope.selecteds[0], oldTitle, $scope.userName);
+}
 
 
 
@@ -1199,19 +1250,6 @@ $scope.gotoEditPage = function(){
   $state.go('app.editEvent'); 
   
 }
-
-  var ref = new Firebase('https://torrid-torch-6578.firebaseio.com');
-  var authData = ref.getAuth();
-
-  try { 
-  var profileInfo = usersFactory.getUser(authData.uid)
-  $scope.userName = authData.uid; 
-  console.log("dude is back" + $scope.userName); 
-  } catch (e) {
-    console.log("not logged in, go log in homie"); 
-  }
-
-
 
 
 $scope.showEvent = function(ele){
