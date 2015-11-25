@@ -359,6 +359,19 @@ $scope.registerButton= function (){
     $state.go('app.register');
   }
 
+
+    $scope.FBLogin = function(authMethod) {
+    authFactory.$authWithOAuthRedirect(authMethod).then(function(authData){
+    }).catch(function(error){
+      if(error.code === 'TRANSPORT_UNAVAILABLE'){
+        authFactory.$authWithOAuthPopup(authMethod).then(function(authData){
+        });
+      } else {
+        console.log(error);
+      }
+    });
+  }
+
   authCtrl.signUp = function(email, password, firstname, lastname) {
     console.log("signing up" + email, password); 
 
@@ -387,13 +400,19 @@ $scope.registerButton= function (){
   var authData = ref.getAuth();
   var friendsRef = new Firebase('https://torrid-torch-6578.firebaseio.com/users/'+authData.uid+'/friends')
 
-  $scope.getProfileInfo = function() {
+   $scope.getProfileInfo = function() {
+    if(authData.provider='facebook') {
+      $scope.fbname = authData.facebook.displayName;
+
+    } else {
     return usersFactory.getUser(authData.uid).then(function(data){
       $scope.email = data.data.email;
       $scope.firstname = data.data.firstname;
       $scope.lastname = data.data.lastname;
       console.log($scope.firstname);
     })
+
+  }
   };
 
   $scope.getAllUsers = function() {
