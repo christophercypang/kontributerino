@@ -1,0 +1,47 @@
+<ion-view view-title="Guest List">
+ 
+        <ion-pane>
+     
+   <ion-content ng-init="getGuests()">
+
+ <div class="hostImage"></div>
+
+
+
+       <div class = "item item-divider" ng-repeat="guest in guests">
+                        <div class="row">
+                         <div class="col"> {{guest.friend.friend.firstname}} {{guest.friend.friend.lastname}}</div>
+                                    <div class="col col-25"> 
+  <button class = "button button-small button-balanced"  ng-click="unInvite($index)">Uninvite Friend
+  </button> 
+  </div>
+</div>
+  </div>
+
+
+    </ion-content>
+
+
+ <div class="tabs tabs-icon-left">
+ <a class="tab-item" href="#/app/create">
+    <i class="ion-arrow-left-c"></i>
+      Click to go back to your event!
+  </a>
+  </a>
+   <a class="tab-item" href="#/app/guestList">
+    <i class="icon ion-clipboard"></i>
+    View Guest List
+  </a>
+   </div>
+
+
+
+
+
+
+    </ion-pane>
+</ion-view>
+
+
+
+

@@ -200,9 +200,8 @@ $scope.otherPeoplePage = function(){
 
 
 $scope.guestList = function(){
-
     $scope.guestListClicked = true; 
-     $state.go('app.donotdelete'); 
+     $state.go('app.guestList'); 
 
 }
 
@@ -230,14 +229,14 @@ $scope.inviteFriend = function(friend) {
 }
 
 $scope.getInvitedGuests= function() {
-  console.log($scope.userName); 
+  
     return eventFactory.getAllInvitedGusts($scope.userName).then(function(data){
          
           var array = []; 
           var temp =[];  
           $scope.guests = []; 
           array = Object.keys(data.data.invited);    
-          console.log(array + "energy");     
+      
           for(var i=0; i < array.length; i++){
               $scope.guests[i] = data.data.invited[array[i]];  
               }
@@ -250,7 +249,7 @@ $scope.getInvitedGuests= function() {
           } else {
             $scope.gList = false; 
           }
-       console.log($scope.guests + "still runs"); 
+       
       
     });
   };
@@ -549,6 +548,7 @@ $scope.registerButton= function (){
   $scope.getFriends = function(){
     friendsRef.on('value', function(snapshot){
       $scope.allFriends = snapshot.val();
+
       console.log($scope.allFriends);
     })
   };
