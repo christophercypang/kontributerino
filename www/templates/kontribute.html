@@ -7,43 +7,32 @@
                         <h2>Kontribute List</h2>
                     </div>
 
-  <div class="item item-avatar" style="background-color:#C0C0C0 ; color: black" ng-show="kcount == 2">
-    <h2>Item: {{list1name}}</h2>
-    <h3>Current Quantity: {{list1current}}</h3>
-    <p>Max Quantity: {{list1quantity}}</p>
-  </div>
 
-  <div class="item item-avatar" style="background-color:#C0C0C0 ; color: black" ng-show="kcount == 3">
-    <h2>Item: {{list2name}}</h2>
-    <h3>Current Quantity: {{list2current}}</h3>
-    <p>Max Quantity: {{list2quantity}}</p>
-  </div>
+<button class="button button-full button-dark" style="margin-top:0px; margin-bottom:1px; border-style: outset" ng-click="getKontributeLists(); notViewList = true" ng-show="!notViewList">
+  View Your Created Kontribute List!
+</button>
 
-  <div class="item item-avatar" style="background-color:#C0C0C0 ; color: black" ng-show="kcount == 4">
-    <h2>Item: {{list3name}}</h2>
-    <h3>Current Quantity: {{list3current}}</h3>
-    <p>Max Quantity: {{list3quantity}}</p>
-  </div>
+<button class="button button-full button-dark" style="margin-top:0px; margin-bottom:1px; border-style: outset" ng-click="getKontributeLists(); notViewList = false" ng-show="notViewList">
+  Hide
+</button>
 
-  <div class="item item-avatar" style="background-color:#C0C0C0 ; color: black" ng-show="kcount == 5">
-    <h2>Item: {{list4name}}</h2>
-    <h3>Current Quantity: {{list4current}}</h3>
-    <p>Max Quantity: {{list4quantity}}</p>
+  <div class="list" ng-show="notViewList">
+  <li ng-repeat="event in events">
+  <div class="item item-avatar" style="background-color:#C0C0C0 ; color: black ">
+    <h2>List: {{event.list.List}}</h2>
+    <h2>Item: {{event.list.Listdetails.Listname}}</h2>
+    <h3>Current Quantity: {{event.list.Listdetailsc.Listcurrent}}</h3>
+    <p>Max Quantity: {{event.list.Listdetailsq.Listquantity}}</p>
   </div>
-
-  <div class="item item-avatar" style="background-color:#C0C0C0 ; color: black" ng-show="kcount == 6">
-    <h2>Item: {{list5name}}</h2>
-    <h3>Current Quantity: {{list5current}}</h3>
-    <p>Max Quantity: {{list5quantity}}</p>
   </div>
 
                         <label class="item item-input item-stacked-label" >
-                            <span class="input-label" ng-class="!titleInput ? 'validation' : ''"> Item Name </span>
+                            <span class="input-label" ng-class="!knameInput ? 'validation' : ''"> Item Name </span>
                             <input type="text" placeholder="Item Name" ng-model="listname" ng-minlength="1" ng-maxlength="100" required>
                         </label>
 
                         <label class="item item-input item-stacked-label">
-                            <span class="input-label" ng-class="!guestsInput ? 'validation' : ''"> Quantity</span>
+                            <span class="input-label" ng-class="!kquantityInput ? 'validation' : ''"> Quantity</span>
                             <input type="number" placeholder="Max Quantity" ng-model="listquantity" ng-minlength="1" ng-maxlength="100" required>
                         </label>
 
@@ -51,7 +40,7 @@
                     </div>
 
                         <span class="item text-center item-divider" ng-if="!inputBoxesFilled" ng-class="'validation'">Please fill in highlighted boxes above</span>
-                            <button class="button button-block button-email" ng-click="kcount = kcount + 1; kcurr = kcount - 1; createKontributeList(listname, listquantity, kcurr); getKontributeLists(); listname = null; listquantity = null;">Create!</button>
+                            <button class="button button-block button-email" ng-click="kcount = kcount + 1; kcurr = kcount - 1; createKontributeList(listname, listquantity, kcurr); listname = null; listquantity = null;">Create!</button>
                         </span>
              </div>
         </form>

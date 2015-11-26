@@ -135,6 +135,13 @@ body {
 	
 }
 
+.rootKlist {
+    width: 100%;
+    height: 60%;
+    
+    
+}
+
 #eventCard {
     background-color: yellow;
     font-weight: bold;
