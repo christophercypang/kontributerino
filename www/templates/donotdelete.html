@@ -1,4 +1,4 @@
-﻿<ion-view view-title="donotdelete">
+﻿<ion-view view-title="Invitations">
  
         <ion-pane>
         <ion-header-bar class="bar-stable">
@@ -6,17 +6,55 @@
         </ion-header-bar>
    <ion-content ng-init="getGuests()">
 
-        <div class = "item item-divider" ng-repeat="friend in allFriends">
+ <div class="hostImage"></div>
+
+        <div class = "item item-divider" ng-repeat="friend in allFriends" ng-show="!otherPeople">
             <div ng-repeat="fr in friend">
-                {{fr.firstname}} {{fr.lastname}}
-                <button class = "button button-small button-light" ng-click="inviteFriend(friend)">Invite Friend</button>   
+            <div class="row">
+ 
+  <div class="col">  {{fr.firstname}} {{fr.lastname}}</div>
+  <div class="col col-25"> <button class = "button button-small button-balanced" ng-click="inviteFriend(friend)">Invite Friend</button> </div>
+</div>
+
+               
+                 
             </div>
+        </div>
+
+     <div class="list card" ng-show="otherPeople">
+            <a ng-click="getAllUsers()" class="item item-icon-left">
+                <i class="icon ion-person-stalker"></i>
+                See All Users on Kontribute!
+            </a>
+        </div>
+        <div class = "item item-divider" ng-repeat="user in allUsers"  ng-show="otherPeople">
+            {{user.firstname}} {{user.lastname}}
+            <button class= "button button-small button-light " ng-click="addFriend(user)">Invite Kontributer</button>
         </div>
 
 
 
 
     </ion-content>
+
+
+ <div class="tabs tabs-icon-left">
+ <a class="tab-item" href="#/app/create">
+    <i class="ion-arrow-left-c"></i>
+      Click to go back to your event!
+  </a>
+  </a>
+   <a class="tab-item" href="#/app/guestList">
+    <i class="icon ion-clipboard"></i>
+    View Guest List
+  </a>
+   </div>
+
+
+
+
+
+
     </ion-pane>
 </ion-view>
 

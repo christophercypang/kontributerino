@@ -88,6 +88,14 @@ angular.module('kontribute', ['ionic', 'kontribute.controllers', 'kontribute.ser
                   }
               }
           })
+            .state('app.guestList', {
+              url: "/guestList",
+              views: {
+                  'menuContent': {
+                      templateUrl: "templates/guestList.html"
+                  }
+              }
+          })
 
            .state('app.eventTemplate', {
                url: "/eventTemplate",

@@ -67,8 +67,9 @@ angular.module('kontribute.controllers', [])
   $scope.votingPoll = 'pollFalse';
   $scope.kontributeList = 'kontributeFalse';
 
-
-
+  $scope.guestButtonClicked = false; 
+  $scope.otherPeople = false; 
+$scope.gList = false; 
 
 
 $scope.getAllEventsHosting = 
@@ -156,10 +157,45 @@ var invitedRef = new Firebase('https://torrid-torch-6578.firebaseio.com/TEMPINV/
 
 }
 $scope.showGuests = function() {
-  console.log("show guests");
-  $state.go('app.donotdelete'); 
+  if($scope.guestButtonClicked == false){
+    $scope.guestButtonClicked = true; 
+  } else {
+    $scope.guestButtonClicked = false; 
+  }
+ 
+ 
 
 }
+
+
+$scope.friendPage = function(){
+  if($scope.otherPeople == true){
+    $scope.otherPeople = false; 
+  }
+  $state.go('app.donotdelete'); 
+}
+
+$scope.otherPeoplePage = function(){
+
+    $scope.otherPeople = true; 
+     $state.go('app.donotdelete'); 
+
+}
+
+
+
+$scope.guestList = function(){
+
+    $scope.guestListClicked = true; 
+     $state.go('app.donotdelete'); 
+
+}
+
+
+
+
+
+
 $scope.closeGuests= function() {
   $scope.modal.hide();
 }
@@ -194,7 +230,12 @@ $scope.getInvitedGuests= function() {
           // array.forEach(function(element) {
           //   $scope.events
           // })
-       console.log($scope.guests); 
+          if($scope.guests.length > 0){
+            $scope.gList = true; 
+          } else {
+            $scope.gList = false; 
+          }
+       console.log($scope.guests + "still runs"); 
       
     });
   };
