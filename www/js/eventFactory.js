@@ -119,7 +119,7 @@
              console.log("here in FAC"); 
                 return $http.get(url)
                 .success(function (data, status, headers, config) {                
-                        console.log(data); 
+                      //  console.log(data); 
                 });
         }
 
@@ -127,7 +127,7 @@
              var url = "https://torrid-torch-6578.firebaseio.com/imran1.json";
                 return $http.get(url)
                 .success(function (data, status, headers, config) {                
-                        console.log(data); 
+                     //   console.log(data); 
                 });
         }
 
@@ -135,7 +135,7 @@
              var url = "https://torrid-torch-6578.firebaseio.com/" + userName + ".json";
                 return $http.get(url)
                 .success(function (data, status, headers, config) {                
-                        console.log(data); 
+                      //  console.log(data); 
                 });
         }
 
@@ -144,15 +144,15 @@
              var url = "https://torrid-torch-6578.firebaseio.com/" +userName+ ".json";
                 return $http.get(url)
                 .success(function (data, status, headers, config) {                
-                        console.log(data); 
+                   //     console.log(data); 
                 });
         }
 
-    factory.createInviteList = function(uid, friend, friendUid) {
-        var url = 'https://torrid-torch-6578.firebaseio.com/TEMPINV/'+uid+'/invited/'+friendUid+'.json';
-        $http.put(url, {friend: friend})
+    factory.createInviteList = function(uid, guest, guestUid) {
+        var url = 'https://torrid-torch-6578.firebaseio.com/TEMPINV/'+uid+'/invited/'+guestUid+'.json';
+        $http.put(url, {friend: guest})
         .success(function(data){
-            console.log(data);
+        //    console.log(data);
         }). 
         error(function(data) {
             ("error");
@@ -170,6 +170,13 @@
 
 
 
+   factory.getAllInvitedGusts = function(userName) {
+             var url = "https://torrid-torch-6578.firebaseio.com/TEMPINV/" + userName +".json";
+                return $http.get(url)
+                .success(function (data, status, headers, config) {                
+                      //  console.log(data); 
+                });
+        }
 
 
 

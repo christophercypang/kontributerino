@@ -27,7 +27,7 @@ angular.module('kontribute.usersFactory', [])
 
 			return $http.get(url)
 			.success(function(data, status, headers, config){
-				console.log(data);
+			//	console.log(data);
 			});
 		}
 

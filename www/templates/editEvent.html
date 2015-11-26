@@ -73,10 +73,13 @@
                             <span class="input-label" ng-class="!provinceInput ? 'validation' : ''"> Province/State</span>
                             <input type="text" placeholder="Enter your Province/State Here" ng-model="province2" ng-minlength="1" ng-maxlength="100" required>
        </label>
-   <button ng-click="updateAddress(street2, city2, province2); toggleaddress()" class="button button-small button-calm">
+       <div class="row responsive-sm">
+  <div class="col"> 
+  <button ng-click="updateAddress(street2, city2, province2); toggleaddress()" class="button button-small button-calm">
   Submit Changes
-</button>
-
+</button></div>
+</div>
+   
   
 </div>
 

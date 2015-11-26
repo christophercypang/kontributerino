@@ -1,6 +1,6 @@
 ﻿<ion-view view-title="Create" ng-init="getInvitedGuests()">
         <ion-content class="has-header list-inset" >
-        <form name="createEventForm" ng-if="!eventCreation">
+        <div name="createEventForm" ng-if="!eventCreation">
                 <div class="item item-text-wrap" ng-class="'regular'"> 
 
                     <div class="item item-divider"> 
@@ -53,21 +53,17 @@
 
                         </label>
 
-                        <label class ="item item-input item-stacked-label">
 
-                             <div class = "item item-divider" ng-repeat="guest in invitedGuests">
-                                <div ng-repeat="gu in guest">
-                                    <div ng-repeat="g in gu">
-
-                                
-                                   
-                                    {{g.firstname}} {{g.lastname}}
-                                    <button class = "button button-small button-light" ng-click="unInvite(g.uid)">Uninvite</button>
-                                </div>
+                             <div class ="list">
+                                    <li ng-repeat="guest in guests">
+                                    <a class="item item-icon-left" ng-click="unInvite($index)"> 
+                                    <i class="icon ion-close-circled"></i>
+                                    <p>{{guest.friend.friend.firstname}} {{guest.friend.friend.lastname}}</p>
+                                  </a>
+                                  </li>
                             </div>
-                            </div>
+                           
 
-                        </label>
                     
 
 
@@ -95,7 +91,7 @@
                             <button class="button button-block button-email" ng-click="createEvent(title2, here1, here2, street2, city2, province2, description2, guests2); createLocalEvent(title2, here1, here2, street2, city2, province2, description2, guests2); inviteUserToEvent(title2, here1, here2, street2, city2, province2, description2, guests2); checkVote(votingPoll)">Create!</button>
                         </span>
              </div>
-        </form>
+        </div>
 
         <div class="item text-center item-divider" ng-show="anotherOne">
             <button class="button button-block button-email" ng-click="showEvent()">Create Another Event?</button>

@@ -28,7 +28,15 @@ angular.module('kontribute', ['ionic', 'kontribute.controllers', 'kontribute.ser
     }
     ionic.Platform.isFullScreen = true;
   });
-})
+
+ 
+
+
+  })
+
+
+
+
 
 
 
@@ -68,7 +76,8 @@ angular.module('kontribute', ['ionic', 'kontribute.controllers', 'kontribute.ser
                   'menuContent': {
                       templateUrl: "templates/create.html"
                   }
-              }
+              }, 
+               cache: false
           })
 
           .state('app.settings', {
@@ -117,6 +126,15 @@ angular.module('kontribute', ['ionic', 'kontribute.controllers', 'kontribute.ser
             }
           }
         })
+         .state('app.donotdelete', {
+          url: "/donotdelete",
+          views: {
+            'menuContent': {
+              templateUrl: "templates/donotdelete.html"
+            }
+          }
+        })
+
 
 
           .state('app.events', {

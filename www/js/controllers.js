@@ -15,7 +15,7 @@ angular.module('kontribute.controllers', [])
 
 
 
-
+  
 
   var ref = new Firebase('https://torrid-torch-6578.firebaseio.com');
   var authData = ref.getAuth();
@@ -153,10 +153,11 @@ var authData = ref.getAuth();
 if (authData != null) {
 var friendsRef = new Firebase('https://torrid-torch-6578.firebaseio.com/users/'+authData.uid+'/friends') ;
 var invitedRef = new Firebase('https://torrid-torch-6578.firebaseio.com/TEMPINV/'+authData.uid+'/invited'); 
+
 }
 $scope.showGuests = function() {
   console.log("show guests");
-  $scope.modal.show();
+  $state.go('app.donotdelete'); 
 
 }
 $scope.closeGuests= function() {
@@ -177,19 +178,34 @@ $scope.inviteFriend = function(friend) {
 
 }
 
-$scope.getInvitedGuests=function() {
-  invitedRef.on('value', function(snapshot){
-    $scope.invitedGuests = snapshot.val();
-    console.log($scope.invitedGuests);
-  })
-}
+$scope.getInvitedGuests= function() {
+  console.log($scope.userName); 
+    return eventFactory.getAllInvitedGusts($scope.userName).then(function(data){
+         
+          var array = []; 
+          var temp =[];  
+          $scope.guests = []; 
+          array = Object.keys(data.data.invited);    
+          console.log(array + "energy");     
+          for(var i=0; i < array.length; i++){
+              $scope.guests[i] = data.data.invited[array[i]];  
+              }
+            
+          // array.forEach(function(element) {
+          //   $scope.events
+          // })
+       console.log($scope.guests); 
+      
+    });
+  };
 
-$scope.unInvite = function(guest) {
-  console.log(guest);
-  var removeGUid = guest;
+$scope.unInvite = function(index) {
+console.log($scope.guests[index]); 
+var removeGUid = $scope.guests[index].friend.friend.uid;
+$scope.guests.splice(index, 1); 
+  // console.log("guid of person i want to delete:" +removeGUid);
+ eventFactory.unInvite(authData.uid, removeGUid);
 
-  console.log("guid of person i want to delete:" +removeGUid);
-   eventFactory.unInvite(authData.uid, removeGUid);
 }
 
 

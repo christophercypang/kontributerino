@@ -1,21 +1,21 @@
-﻿<ion-view view-title="donotdelete" ng-controller="PushCtrl">
+﻿<ion-view view-title="donotdelete">
  
         <ion-pane>
         <ion-header-bar class="bar-stable">
         <h1 class="title"> Ionic tester</h1>
         </ion-header-bar>
-   <ion-content>
-<button class="button button-block button-dark" ng-click="identifyUser()">
-Identify a User
-</button>
+   <ion-content ng-init="getGuests()">
+
+        <div class = "item item-divider" ng-repeat="friend in allFriends">
+            <div ng-repeat="fr in friend">
+                {{fr.firstname}} {{fr.lastname}}
+                <button class = "button button-small button-light" ng-click="inviteFriend(friend)">Invite Friend</button>   
+            </div>
+        </div>
 
 
-<button class="button button-block button-positive" ng-if="identified" ng-click="pushRegister()">
-Register for push
-</button>
 
 
-       
     </ion-content>
     </ion-pane>
 </ion-view>
