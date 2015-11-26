@@ -70,6 +70,8 @@ angular.module('kontribute.controllers', [])
   $scope.guestButtonClicked = false; 
   $scope.otherPeople = false; 
 $scope.gList = false; 
+$scope.describeClicked = false; 
+
 
 
 $scope.getAllEventsHosting = 
@@ -156,15 +158,28 @@ var friendsRef = new Firebase('https://torrid-torch-6578.firebaseio.com/users/'+
 var invitedRef = new Firebase('https://torrid-torch-6578.firebaseio.com/TEMPINV/'+authData.uid+'/invited'); 
 
 }
+
+
 $scope.showGuests = function() {
+ 
   if($scope.guestButtonClicked == false){
     $scope.guestButtonClicked = true; 
   } else {
     $scope.guestButtonClicked = false; 
   }
  
- 
+}
 
+
+
+$scope.showDescribe = function() {
+ 
+  if($scope.describeClicked == false){
+    $scope.describeClicked = true; 
+  } else {
+    $scope.describeClicked = false; 
+  }
+ 
 }
 
 

@@ -1,10 +1,16 @@
 ﻿<ion-view view-title="Create" ng-init="getInvitedGuests()">
-        <ion-content class="has-header list-inset" >
+         
+        <ion-content >
+        
+
+<div class="hostImage"></div>
+
+
         <div name="createEventForm" ng-if="!eventCreation">
-                <div class="item item-text-wrap" ng-class="'regular'"> 
+                <div class="list card"> 
 
                     <div class="item item-divider"> 
-                        <h2>Creating An Event</h2>
+                        <h2>Event Details</h2>
                     </div>
                 <label class="item item-input item-stacked-label">
                             <span class="input-label" ng-class="!titleInput ? 'validation' : ''"> Name </span>
@@ -22,10 +28,31 @@
                         </label>
                         </label>
 
+  <div class="list card">
+                   
+                     <a class="item item-icon-left"  ng-click="locationClick()">
+                     <i class="icon ion-location"></i>
+                        
+                    <span class="item-note">
+                        Click to a Enter Location
+                         </span>
+                    </a>
+
+                    </div>
+<!--  <label class="item item-stacked-label">
+  <a class="item item-icon-left" ng-click="locationClick()">
+    <i class="icon ion-mic-a"></i>
+    Location
+    <span class="item-note">
+      Click to enter location
+    </span>
+  </a>
+</label> -->
+<!-- 
                         <label class="item item-input item-stacked-label" ng-click="locationClick()">
                             <span class="input-label"> Location</span>
-                            <input type="text" placeholder="Click to Enter Location" disabled="disabled">
-                        </label>
+                            
+                        </label> -->
 
                         <label class="item item-input item-floating-label" ng-show="locationSelected">
                             <span class="input-label" ng-class="!streetInput ? 'validation' : ''"> Street</span>
@@ -42,25 +69,32 @@
                             <input type="text" placeholder="Enter your Province/State Here" ng-model="province2" ng-minlength="1" ng-maxlength="100" required>
                         </label>
 
-                          <label class="item item-input item-stacked-label">
-                            <span class="input-label" ng-class="!descriptionInput ? 'validation' : ''"> Description</span>
-                            <input type="text" placeholder="Enter your Event Location Here" ng-model="description2" ng-minlength="1" ng-maxlength="100" required>
-                        </label>
+                            </div>
+                       
+                <div class="list card">
+                   <div class="item item-divider"> 
+                        <h2>Invitations</h2>
+                      </div>
+                     <a class="item item-icon-left" ng-click="showGuests()">
+                     <i class="icon ion-person-add"></i>
+                        
+                    <span class="item-note">
+                        Click to Invite Guests
+                         </span>
+                    </a>
 
-                     
-                        <label class="item item-input item-stacked-label" ng-click="showGuests()">
-                           <span class="input-label">Guests</span>
-                           <input type="text" placeholder="Click to Invite Guests" disabled="disabled">
-                        </label>
-                    
-                    <div class="list" ng-show="guestButtonClicked">
+                    </div>
+                  
+                  
+
+                    <div class="list card" ng-show="guestButtonClicked">
 
                             <div class="item item-divider">
                                 Kontribute Friends
                             </div>
                       
                          <a class="item item-icon-left" ng-click="friendPage()">
-                             <i class="icon ion-person-add"></i>
+                             <i class="icon ion-plus-round"></i>
                                Add Friends
                            
                              </a>
@@ -74,7 +108,7 @@
                                 Make Friends! 
                             </div>
                     <a class="item item-icon-left" ng-click="otherPeoplePage()">
-                             <i class="icon ion-person-add"></i>
+                             <i class="icon ion-plus-round"></i>
                                Add Other Kontributers
                               
                              </a>
@@ -93,7 +127,7 @@
                         </div>
                       
 
-                             
+                      <!--        
 
 
 
@@ -106,11 +140,28 @@
                                   </li>
                             </div>
                            
+ -->
+                       <div class="list card">
+                   <div class="item item-divider"> 
+                        <h2>Event Description</h2>
+                      </div>
+                     <a class="item item-icon-left" ng-click="showDescribe()">
+                     <i class="icon ion-information"></i>
+                       
+                    <span class="item-note">
+                        Click to write a description
+                         </span>
+                    </a>
 
-                    
+    <label class="item item-input item-floating-label" ng-show="describeClicked">
+                            <span class="input-label" ng-class="!descriptionInput ? 'validation' : ''"> Description</span>
+                            <input type="text" placeholder="Describe your event" ng-model="description2" ng-minlength="1" ng-maxlength="100" required>
+                        </label>
+                    </div>
+                  
 
 
-                        <div class="list">
+                        <div class="list card">
 
                             <div class="item item-divider"> 
                                 <h2>Additional Options</h2>
@@ -122,10 +173,8 @@
                                 ng-false-value="'pollFalse'">
                                 Voting Poll
                             </ion-checkbox>
-                            <!-- <div class="item">
-                                <pre ng-bind="votingPoll | json"></pre> 
-                            </div> -->
-        
+                         
+                      
         
                         </div>
 
@@ -140,6 +189,9 @@
             <button class="button button-block button-email" ng-click="showEvent()">Create Another Event?</button>
         </div>
 
+<br>
+<br>
+<br>
 
         
     </ion-content>

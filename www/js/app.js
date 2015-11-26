@@ -76,8 +76,8 @@ angular.module('kontribute', ['ionic', 'kontribute.controllers', 'kontribute.ser
                   'menuContent': {
                       templateUrl: "templates/create.html"
                   }
-              }, 
-               cache: false
+              }
+              
           })
 
           .state('app.settings', {
