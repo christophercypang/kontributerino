@@ -1,56 +1,59 @@
 ﻿<ion-view view-title="Current Kontribute Lists">
-    <ion-content>
- <div class="hostImage"></div>
-    <button class="button button-full button-dark" style="margin-top:0px; margin-bottom:1px; border-style: outset" ng-click="getKontributeLists()">
+    <ion-content ng-init="getKontributeLists(); getKontributeListsi()">
+<div class="hostImage"></div>
+    <button class="button button-full button-dark" style="margin-top:0px; margin-bottom:1px; border-style: outset" ng-click="getKontributeLists(); getKontributeListsi()">
   Refresh Your Current Kontribute Lists!
 </button>
 
-      
-<ion-slide-box on-slide-changed="slideHasChanged($index)" ng-init="getKontributeLists()">
-  
-   
-    <div class="list card">
 
+
+  <ion-scroll direction="y" class="rootKlist"> 
+  <div class="list">
+  <li ng-repeat="event in events">
   <div class="item item-avatar" style="background-color:#C0C0C0 ; color: black ">
-    <h2>Item: {{list1name}}</h2>
-    <h3>Current Quantity: {{list1current}}</h3>
-    <p>Max Quantity: {{list1quantity}}</p>
+    <h2>List: {{event.list.List}}</h2>
+    <h2>Item: {{event.list.Listdetails.Listname}}</h2>
+    <h3>Current Quantity: {{event.list.Listdetailsc.Listcurrent}}</h3>
+    <p>Max Quantity: {{event.list.Listdetailsq.Listquantity}}</p>
   </div>
 
   <div class="item tabs tabs-secondary tabs-icon-left" style="background-color: #F8F8F8  ">
     <a class="tab-item" href="#">
-      <i class="icon ion-thumbsup" ng-show="list1current != list1quantity" ng-click="updatelist1(1 * list1current + 1); getKontributeLists();"></i>
+      <i class="icon ion-thumbsup" ng-show="event.list.Listdetailsc.Listcurrent != event.list.Listdetailsq.Listquantity" ng-click="updateklistnum = 1 * event.list.List; updatelist(1 * event.list.Listdetailsc.Listcurrent + 1, updateklistnum);"></i>
       Kontribute
     </a>
     <a class="tab-item" href="#">
-      <i class="icon ion-thumbsdown" ng-show="list1current != 0" ng-click="updatelist1(1 * list1current - 1); getKontributeLists();"></i>
+      <i class="icon ion-thumbsdown" ng-show="event.list.Listdetailsc.Listcurrent != 0" ng-click="updateklistnum = 1 * event.list.List; updatelist(1 * event.list.Listdetailsc.Listcurrent - 1, updateklistnum);"></i>
       Un-Kontribute
     </a>
   </div>
-
-  <div class="item item-avatar" style="background-color:#C0C0C0 ; color: black ">
-    <h2>Item: {{list2name}}</h2>
-    <h3>Current Quantity: {{list2current}}</h3>
-    <p>Max Quantity: {{list2quantity}}</p>
-  </div>
-
-  <div class="item tabs tabs-secondary tabs-icon-left" style="background-color: #F8F8F8  ">
-    <a class="tab-item" href="#">
-      <i class="icon ion-thumbsup" ng-show="list2current != list2quantity" ng-click="updatelist2(1 * list2current + 1); getKontributeLists()"></i>
-      Kontribute
-    </a>
-    <a class="tab-item" href="#">
-      <i class="icon ion-thumbsdown" ng-show="list2current != 0" ng-click="updatelist2(1 * list2current - 1); getKontributeLists()"></i>
-      Un-Kontribute
-    </a>
-  </div>
-
 </div>
 
-  </ion-slide>
-  
-</ion-slide-box>
-    
+  <div class="list">
+  <li ng-repeat="eventi in eventsi">
+  <div class="item item-avatar" style="background-color:#C0C0C0 ; color: black ">
+    <h2>List: {{eventi.list.List}}</h2>
+    <h2>Item: {{eventi.list.Listdetails.Listname}}</h2>
+    <h3>Current Quantity: {{eventi.list.Listdetailsc.Listcurrent}}</h3>
+    <p>Max Quantity: {{eventi.list.Listdetailsq.Listquantity}}</p>
+  </div>
+
+  <div class="item tabs tabs-secondary tabs-icon-left" style="background-color: #F8F8F8  ">
+    <a class="tab-item" href="#">
+      <i class="icon ion-thumbsup" ng-show="eventi.list.Listdetailsc.Listcurrent != eventi.list.Listdetailsq.Listquantity" ng-click="updateklistnumi = 1 * eventi.list.List; updatelisti(1 * eventi.list.Listdetailsc.Listcurrent + 1, updateklistnumi);"></i>
+      Kontribute
+    </a>
+    <a class="tab-item" href="#">
+      <i class="icon ion-thumbsdown" ng-show="eventi.list.Listdetailsc.Listcurrent != 0" ng-click="updateklistnumi = 1 * eventi.list.List; updatelisti(1 * eventi.list.Listdetailsc.Listcurrent - 1, updateklistnumi);"></i>
+      Un-Kontribute
+    </a>
+  </div>
+</div>
+
+
+  </ion-scroll>
+
+   
 
 
 

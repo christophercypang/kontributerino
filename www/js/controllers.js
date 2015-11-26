@@ -62,6 +62,11 @@ angular.module('kontribute.controllers', [])
 
   $scope.kcount = 1;
   $scope.kcurr = 1;
+  $scope.updateklistnum = 0;
+  $scope.updateklistnumi = 0;
+  $scope.notViewList = false;
+  $scope.knameInput = true; 
+  $scope.kquantityInput = true; 
   
   $scope.events = [];  
   $scope.votingPoll = 'pollFalse';
@@ -93,11 +98,6 @@ $scope.getAllEventsHosting =
     });
   };
 
-
- $scope.setScope = function (arr) {
-    $scope.events = arr; 
- }; 
-
  $scope.getUserDetails = 
    function () {
    $scope.eventSubmitted = true; 
@@ -119,16 +119,30 @@ $scope.getAllEventsHosting =
 
 $scope.getKontributeLists = 
   function() {
-    return eventFactory.getKontributeLists().then(function(data){
-        $scope.name = data.data.event.Title;
-        $scope.list1 = data.data.event.klist1.list.List; 
-        $scope.list1current = data.data.event.klist1.list.Listdetailsc.Listcurrent;
-        $scope.list1name = data.data.event.klist1.list.Listdetails.Listname;
-        $scope.list1quantity = data.data.event.klist1.list.Listdetailsq.Listquantity; 
-        $scope.list2 = data.data.event.klist2.list.List;
-        $scope.list2current = data.data.event.klist2.list.Listdetailsc.Listcurrent;
-        $scope.list2name = data.data.event.klist2.list.Listdetails.Listname;
-        $scope.list2quantity = data.data.event.klist2.list.Listdetailsq.Listquantity; 
+    return eventFactory.getKontributeLists($scope.userName).then(function(data){
+          var array = []; 
+          var temp =[];  
+          $scope.events = []; 
+          array = Object.keys(data.data.kontributelists);        
+          for(var i=0; i < array.length; i++){
+              $scope.events[i] = data.data.kontributelists[array[i]];  
+              }
+        $scope.setScope($scope.events); 
+
+      });
+  };
+
+$scope.getKontributeListsi = 
+  function() {
+    return eventFactory.getKontributeListsi($scope.userName).then(function(data){
+          var array = []; 
+          var temp =[];  
+          $scope.eventsi = []; 
+          array = Object.keys(data.data.kontributelists);        
+          for(var i=0; i < array.length; i++){
+              $scope.eventsi[i] = data.data.kontributelists[array[i]];  
+              }
+        $scope.setScope($scope.eventsi); 
 
       });
   };
@@ -367,17 +381,34 @@ $scope.createLocalEvent = function(title, date, time, street, city, province, de
 }
 
 $scope.createKontributeList = function(listname, listquantity, kcount) {
-  eventService.createKontributeList(listname, listquantity, kcount);
-  $scope.listname = null;
+  eventService.createKontributeList(listname, listquantity, kcount, $scope.userName);
+  
+  if(listname == undefined){
+  $scope.knameInput = false; 
+  } else {
+  $scope.knameInput = true; 
+  }
+
+  if(listquantity == undefined){
+  $scope.kquantityInput = false; 
+  } else {
+  $scope.kquantityInput = true; 
+  }
+     
+    if(!$scope.knameInput || !$scope.kquantityInput) {
+       $scope.inputBoxesFilled = false; 
+    } else {
+    eventService.createKontributeList(listname, listquantity, kcount, $scope.userName);
+    }
 }
 
-$scope.updatelist1 = function(changeq) {
-  eventService.updatelist1(changeq);
+$scope.updatelist = function(changeq, updateklistnum) {
+  eventService.updatelist(changeq, updateklistnum, $scope.userName);
   $window.location.reload();
 }
 
-$scope.updatelist2 = function(changeq) {
-  eventService.updatelist2(changeq);
+$scope.updatelisti = function(changeq, updateklistnum) {
+  eventService.updatelisti(changeq, updateklistnum, $scope.userName);
   $window.location.reload();
 }
 

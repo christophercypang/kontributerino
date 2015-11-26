@@ -7,8 +7,8 @@ angular.module('kontribute.services', [])
         vm.inviteUserToEvent = inviteUserToEvent; 
         vm.createKontributeList = createKontributeList;
         vm.updateLocalEventIfTitleChanged = updateLocalEventIfTitleChanged; 
-        vm.updatelist1 = updatelist1;
-        vm.updatelist2 = updatelist2;
+        vm.updatelist = updatelist;
+        vm.updatelisti = updatelisti;
         vm.data;
         vm.events = {}; 
 
@@ -31,7 +31,7 @@ angular.module('kontribute.services', [])
     
              };
          
-        function createKontributeList(listname, listquantity, kcount){
+        function createKontributeList(listname, listquantity, kcount, userName){
 
             var kontribute = { 
                 List: kcount,
@@ -46,17 +46,26 @@ angular.module('kontribute.services', [])
                 },
             }; 
 
-            eventFactory.createKontributeList(kontribute); 
+            eventFactory.createKontributeList(kontribute, userName); 
     
              };
 
-        function updatelist1(changeq){
+        function updatelist(changeq, updateklistnum, userName){
 
             var kontribute = { 
                 Listcurrent: changeq,
             }; 
             
-            eventFactory.updatelist1(kontribute); 
+            eventFactory.updatelist(kontribute, updateklistnum, userName); 
+        };
+
+        function updatelisti(changeq, updateklistnum, userName){
+
+            var kontribute = { 
+                Listcurrent: changeq,
+            }; 
+            
+            eventFactory.updatelisti(kontribute, updateklistnum, userName); 
         };
 
         function updatelist2(changeq){
