@@ -555,7 +555,7 @@ $scope.registerButton= function (){
 })
 
 // Handles user profile
-.controller('ProfileCtrl', function($ionicModal, $state, authFactory, $window, usersFactory, $http, $scope, $rootScope) {
+.controller('ProfileCtrl', function($ionicModal, $ionicHistory, $state, authFactory, $window, usersFactory, $http, $scope, $rootScope) {
   var profileCtrl = this;
 Parse.initialize('FMq0Oa8GDND7cVrvVSllAAZiYjlpb3DHvaTk5WFX','Dvpbv2XOFsVmFxtIs4BY3N7FbKM6EAj2JwC5RvQ9'); 
  
@@ -577,10 +577,29 @@ $scope.usernameclicked = false;
 
 $scope.changeUserName = function(username){
   var user = Parse.User.current(); 
-console.log(user.get("username"));
-user.get("username");  
-user.save();
-  user.set("username", username); 
+  $scope.username = username; 
+  var temp = username; 
+
+    user.save(null, {
+    success: function(user) {
+       user.set("username", temp); 
+      user.save();
+    }
+  });
+}
+
+
+$scope.changeEmail = function(email){
+  var user = Parse.User.current(); 
+  $scope.email = email; 
+  var temp = email; 
+
+    user.save(null, {
+    success: function(user) {
+       user.set("email", temp); 
+      user.save();
+    }
+  });
 }
 
 
@@ -653,7 +672,11 @@ $scope.emailclicked = false;
 
 
   profileCtrl.doLogout = function(){
+    
    Parse.User.logOut(); 
+     $ionicHistory.nextViewOptions({
+    disableBack: true
+      });
     $state.go('app.home');
     
   };
@@ -861,24 +884,19 @@ $scope.plotAllOnMap = function(showAll){
                             if (!$scope.data.vote) {
                                 //don't allow the user to close unless he enters wifi password
                                 e.preventDefault();
-                                console.log("FAGGOT");
                             } else {
-                              console.log("TESTERINO");
                                 return $scope.data;
-                              console.log("Test 2");
                             }
                         }
                     },
                 ]
             });
             myPopup.then(function(res) {
-                console.log('Tapped!', res);
+        
                 if(typeof res!='undefined')
                   res.close="ion-close";
                 $scope.items.push(res)
 
-                console.log($scope.items);
-                console.log('Testing123');
             });
            /* $timeout(function() {
                 myPopup.close(); //close the popup after 3 seconds for some reason

@@ -1,0 +1,84 @@
+<ion-view view-title="Edit Your Profile" ng-controller="ProfileCtrl as profileCtrl" ng-init="getProfileInfo()" style="background: url('https://unsplash.it/500/700?image=911');no-repeat center center fixed;
+  background-size: cover;">
+<ion-content>
+	<div class="eventsImage">  
+
+</div>
+
+<div class="profileCover">
+	
+	<p>
+			Edit {{firstname}} {{lastname}}'s profile
+			</p>
+		</div>
+	 
+
+
+
+
+<div class="list">
+
+<div class="item item-button-right">
+    {{username}}
+    <button class="button button-positive" ng-click="toggleusername()">
+      <i class="icon ion-person"></i>
+    </button>
+  </div>
+
+  <div class="item item-input-inset" ng-if="usernameclicked">
+    <label class="item-input-wrapper">
+      <input type="text" placeholder="Enter a new username" ng-model="username">
+    </label>
+    <button class="button button-small" ng-click="changeUserName(username)">
+   Change
+    </button>
+  </div>
+
+</div>
+
+
+
+<div class="list">
+
+  <div class="item item-button-right">
+    {{email}}
+    <button class="button button-positive" ng-click="toggleemail()">
+      <i class="icon ion-email"></i>
+    </button>
+  </div>
+
+
+  
+
+  <div class="item item-input-inset" ng-if="emailclicked">
+    <label class="item-input-wrapper">
+      <input type="text" placeholder="Enter a new email" ng-model="email">
+    </label>
+    <button class="button button-small" ng-click="changeEmail(email)">
+     Change
+    </button>
+  </div>
+      
+   
+  
+</div>
+
+ 
+	</ion-content>
+  
+
+
+
+
+  <div class="tabs tabs-icon-left" >
+ <a class="tab-item" ng-click="profileCtrl.doLogout()">
+    <i class="icon ion-power"></i>
+    <button class="button button-clear button-assertive">
+  Logout
+</button>
+  </a>
+
+ </div>
+
+	
+</ion-view>

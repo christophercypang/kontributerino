@@ -235,7 +235,7 @@ angular.module('kontribute', ['ionic', 'ngCordova', 'kontribute.controllers', 'k
                
               }
             }, 
-      
+      cache: false
           })
 
           .state('app.profile', {
