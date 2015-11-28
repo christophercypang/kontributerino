@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('kontribute', ['ionic', 'kontribute.controllers', 'kontribute.services', 'kontribute.factories', 'kontribute.authFactory','kontribute.usersFactory','firebase' ])
+angular.module('kontribute', ['ionic', 'ngCordova', 'kontribute.controllers', 'kontribute.services', 'kontribute.factories', 'kontribute.authFactory','kontribute.usersFactory','firebase' ])
 
 
 .config(function($ionicConfigProvider) {
@@ -17,15 +17,34 @@ angular.module('kontribute', ['ionic', 'kontribute.controllers', 'kontribute.ser
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
+
+   // setTimeout(function() {
+   //      navigator.splashscreen.hide();
+   //  }, 100)
     if (window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       cordova.plugins.Keyboard.disableScroll(true);
+
+
 
     }
     if (window.StatusBar) {
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+
+
+
+ Parse.initialize('FMq0Oa8GDND7cVrvVSllAAZiYjlpb3DHvaTk5WFX','Dvpbv2XOFsVmFxtIs4BY3N7FbKM6EAj2JwC5RvQ9'); 
+  
+ 
+
+
+//     var TestObject = Parse.Object.extend("TestObject");
+// var testObject = new TestObject();
+// testObject.save({foo: "bar"}).then(function(object) {
+//   alert("yay! it worked");
+// });
     ionic.Platform.isFullScreen = true;
   });
 
@@ -180,16 +199,10 @@ angular.module('kontribute', ['ionic', 'kontribute.controllers', 'kontribute.ser
                 controller: 'AuthCtrl as authCtrl' 
               }
             },
-            resolve: {
-              requireNoAuth: function($state, authFactory){
-                return authFactory.$requireAuth().then(function(auth){
-                   $state.go('app.profile'); 
-              }, function(error) {
-                return;
-              });
-            }
-          }
-        })
+
+        
+      })
+        
 
           .state('app.register', {
             url:'/register',
@@ -221,18 +234,7 @@ angular.module('kontribute', ['ionic', 'kontribute.controllers', 'kontribute.ser
                 controller: 'ProfileCtrl as profileCtrl'
               }
             },
-            resolve: {
-              // auth: function($state, usersFactory, authFactory){
-              //   return authFactory.requireAuth().catch(function() {
-              //     $state.go('app.profile');
-              //   });
-              // },
-              profile: function(usersFactory, authFactory){
-                return authFactory.$requireAuth().then(function(auth){
-                  return usersFactory.getProfile(auth.uid).$loaded();
-                });
-              }
-            }
+          cache: false
           })
 
     

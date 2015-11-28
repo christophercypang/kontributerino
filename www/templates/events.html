@@ -18,14 +18,14 @@
   <div class="list" ng-show="!notInvited">
     
     <li ng-repeat="event in events">
-    <a class="item item-icon-left" ng-click="plotOnMap(event.event.Address)">
+    <a class="item item-icon-left" ng-click="plotOnMap(event.Address)">
     <i class="icon ion-calendar"></i>
-    <p>{{event.event.Title}}</p>
+    <p>{{event.Title}}</p>
     <span class="item-note">
-    {{event.event.Date | date: "yyyy-MM-dd" }} &nbsp &nbsp
-    {{event.event.Time | date: "HH:mm"}}
+    {{event.eventDate | date: "yyyy-MM-dd" }} &nbsp &nbsp
+    {{event.Time | date: "HH:mm"}}
     </span>
-    <p>{{event.event.Address}}</p>
+    <p>{{event.Address}}</p>
     </a>
     </li>
   </div>

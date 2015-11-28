@@ -1,6 +1,6 @@
 angular.module('kontribute.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $firebaseAuth, $state, $http, $ionicPopup, $location, $window, usersFactory, eventFactory, eventService) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $state, $http, $ionicPopup, $location, $window, $cordovaContacts, usersFactory, eventFactory, eventService) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -10,15 +10,8 @@ angular.module('kontribute.controllers', [])
   //});
 
 
-
-
-
-
-
-  
-
-  var ref = new Firebase('https://torrid-torch-6578.firebaseio.com');
-  var authData = ref.getAuth();
+  // var ref = new Firebase('https://torrid-torch-6578.firebaseio.com');
+  // var authData = ref.getAuth();
 
   try { 
   var profileInfo = usersFactory.getUser(authData.uid)
@@ -26,13 +19,7 @@ angular.module('kontribute.controllers', [])
   } catch (e) {
     console.log("not logged in, go log in homie"); 
   }
-
-   
-
-
-
-
-
+ Parse.initialize('FMq0Oa8GDND7cVrvVSllAAZiYjlpb3DHvaTk5WFX','Dvpbv2XOFsVmFxtIs4BY3N7FbKM6EAj2JwC5RvQ9'); 
 
 
 
@@ -77,7 +64,14 @@ angular.module('kontribute.controllers', [])
 $scope.gList = false; 
 $scope.describeClicked = false; 
 
-
+$scope.getAllContacts = function(){
+  $cordovaContacts.find({filter: ''}).then(function(results) {
+    $scope.contacts = results; 
+    console.log($scope.contacts); 
+  }, function(error) {
+    console.log(error); 
+  }); 
+}
 
 $scope.getAllEventsHosting = 
   function() {
@@ -164,14 +158,14 @@ $ionicModal.fromTemplateUrl('templates/invfriends.html', {
   });
 
 
-var ref = new Firebase('https://torrid-torch-6578.firebaseio.com/');
-var authData = ref.getAuth();
-// check if you are logged in
-if (authData != null) {
-var friendsRef = new Firebase('https://torrid-torch-6578.firebaseio.com/users/'+authData.uid+'/friends') ;
-var invitedRef = new Firebase('https://torrid-torch-6578.firebaseio.com/TEMPINV/'+authData.uid+'/invited'); 
+// var ref = new Firebase('https://torrid-torch-6578.firebaseio.com/');
+// var authData = ref.getAuth();
+// // check if you are logged in
+// if (authData != null) {
+// var friendsRef = new Firebase('https://torrid-torch-6578.firebaseio.com/users/'+authData.uid+'/friends') ;
+// var invitedRef = new Firebase('https://torrid-torch-6578.firebaseio.com/TEMPINV/'+authData.uid+'/invited'); 
 
-}
+
 
 
 $scope.showGuests = function() {
@@ -228,12 +222,12 @@ $scope.closeGuests= function() {
   $scope.modal.hide();
 }
 
-$scope.getGuests=function() {
-  friendsRef.on('value', function(snapshot) {
-    $scope.allFriends = snapshot.val();
+// $scope.getGuests=function() {
+//   friendsRef.on('value', function(snapshot) {
+//     $scope.allFriends = snapshot.val();
 
-  })
-}
+//   })
+// }
 
 $scope.inviteFriend = function(friend) {
   var friendUid = friend.friend.uid;
@@ -429,10 +423,21 @@ $scope.returnHome = function() {
 
   // Open the login modal
 $scope.login = function() {
-    console.log("running?");
-    $state.go('app.login');
-    console.log("yes");
-  };
+console.log("here"); 
+var curr = Parse.User.current(); 
+console.log(curr); 
+
+
+
+if(curr != null){
+ $state.go('app.profile'); 
+               } else {
+             $state.go('app.login');   
+          }
+    
+   
+  }; 
+
 
 })
 
@@ -440,14 +445,14 @@ $scope.login = function() {
 
 
 
-
-
 // Handles login and registration
-.controller('AuthCtrl', function($scope, authFactory, $firebaseAuth, $state, $window, $location, usersFactory, $rootScope ) {
+.controller('AuthCtrl', function($scope, authFactory, $state, $window, $location, usersFactory, $rootScope, $ionicHistory ) {
   $scope.loginClicked = false;
   $scope.registerButtonClicked = false;
   $scope.hideLogin = false; 
   $scope.hideRegister = false; 
+
+
 
   $scope.loginButtonClicked = function (){
       if($scope.loginClicked == true){
@@ -472,18 +477,15 @@ $scope.registerButton= function (){
 
 
 
+ var user = new Parse.User(); 
 
-
-  var firebaseRef = new Firebase('https://torrid-torch-6578.firebaseio.com');
-  var auth = $firebaseAuth(firebaseRef);
-
-  var authCtrl = this;
-
+  var authCtrl = this; 
   var userModel;
 
   authCtrl.user = {
     email: '',
     password: '',
+    username: '', 
   };
 
   authCtrl.register = {
@@ -497,14 +499,12 @@ $scope.registerButton= function (){
 
     console.log(username, password); 
 
-    auth.$authWithPassword(authCtrl.user).then(function(auth){
-      $state.go('app.home');
-      console.log(auth.uid);
-      console.log(username, password + "in te fncSFH"); 
-      $window.location.reload();
-    }, function(error){
-      alert(error);
-    });
+    authFactory.loginUser(username, password); 
+      
+     $state.go('app.home');
+      
+     // $window.location.reload();
+   
 
   };
 
@@ -532,15 +532,19 @@ $scope.registerButton= function (){
 
 
   authCtrl.signUp = function(email, password, firstname, lastname) {
-    console.log("signing up" + email, password); 
+   
 
+   authFactory.registerUser(authCtrl.user.username, authCtrl.user.password, authCtrl.user.email, authCtrl.register.firstname, authCtrl.register.lastname).then(function(user){
+     
 
-    authFactory.$createUser(authCtrl.user).then(function(user){
+     $ionicHistory.nextViewOptions({
+    disableBack: true
+      });
+
       $state.go('app.home');
-     console.log(user.uid); 
-      console.log("signing up again" + email, password); 
-      usersFactory.createUser(user.uid, authCtrl.user.email, authCtrl.user.password, 
-        authCtrl.register.firstname, authCtrl.register.lastname);
+    
+    //  usersFactory.createUser(user.uid, authCtrl.user.email, authCtrl.user.password, 
+    //    authCtrl.register.firstname, authCtrl.register.lastname);
       $window.location.reload();
     }, function(error) {
       alert(error);
@@ -554,10 +558,10 @@ $scope.registerButton= function (){
 .controller('ProfileCtrl', function($ionicModal, $state, authFactory, $window, usersFactory, $http, $scope, $rootScope) {
   var profileCtrl = this;
 
-  var ref = new Firebase('https://torrid-torch-6578.firebaseio.com/');
-  var usersRef = new Firebase('https://torrid-torch-6578.firebaseio.com/users')
-  var authData = ref.getAuth();
-  var friendsRef = new Firebase('https://torrid-torch-6578.firebaseio.com/users/'+authData.uid+'/friends')
+  // var ref = new Firebase('https://torrid-torch-6578.firebaseio.com/');
+  // var usersRef = new Firebase('https://torrid-torch-6578.firebaseio.com/users')
+  // var authData = ref.getAuth();
+  // var friendsRef = new Firebase('https://torrid-torch-6578.firebaseio.com/users/'+authData.uid+'/friends')
 
    $scope.getProfileInfo = function() {
     return usersFactory.getUser(authData.uid).then(function(data){
@@ -619,10 +623,9 @@ $scope.registerButton= function (){
 
 
   profileCtrl.doLogout = function(){
-    authFactory.$unauth();
-    console.log("logout?")
+   Parse.User.logOut(); 
     $state.go('app.home');
-    $window.location.reload();
+    
   };
 
 })
@@ -630,10 +633,10 @@ $scope.registerButton= function (){
 
 .controller('MapController', function($scope, $ionicLoading, eventFactory, eventService) {
  
+Parse.initialize('FMq0Oa8GDND7cVrvVSllAAZiYjlpb3DHvaTk5WFX','Dvpbv2XOFsVmFxtIs4BY3N7FbKM6EAj2JwC5RvQ9'); 
 
-
-  var ref = new Firebase('https://torrid-torch-6578.firebaseio.com');
-  var authData = ref.getAuth();
+  // var ref = new Firebase('https://torrid-torch-6578.firebaseio.com');
+  // var authData = ref.getAuth();
 
   try { 
   var profileInfo = usersFactory.getUser(authData.uid)
@@ -684,25 +687,37 @@ google.maps.event.addDomListener(document.getElementById("map"), 'load', $scope.
     
 
     $scope.getEventsForMap = function(){
-        return eventFactory.getEventsForMap($scope.userName).then(function(data) { 
-              var array = []; 
-
-              if(data.data.invited == null){
-                $scope.notInvited = true; 
-              } else { 
-              array = Object.keys(data.data.invited);
+         var data = eventFactory.getEventsForMap($scope.userName);  
+           $scope.events = []; 
+       var user = Parse.User.current(); 
+              data.equalTo("user", user); 
+              data.find({
+                success: function(results){
+                  for(i in results){
+                    $scope.kEvent = []; 
+                    $scope.kEvent[i] = results[i];  
               
-              $scope.events = []; 
-             
-             
-              for(var i=0; i < array.length; i++){
-              $scope.events[i] = data.data.invited[array[i]]; 
-              console.log($scope.events[i]); 
-               }
-     }             
-    });
+               $scope.events[i] = { 
+                Title:  $scope.kEvent[i].get("Title"), 
+                eventDate: $scope.kEvent[i].get("Date"), 
+                Time: $scope.kEvent[i].get("Time"), 
+                Address: $scope.kEvent[i].get("Address"), 
+                Description: $scope.kEvent[i].get("Description"), 
+                
+            }; 
+            
 
-  };
+console.log($scope.events[i]);
+
+                  }
+                }
+              })
+
+        
+
+    };
+
+  
 
   $scope.plotOnMap = function(name){
             var geocoder;
@@ -927,12 +942,16 @@ $scope.plotAllOnMap = function(showAll){
 
 .controller('HostMapController', function($scope, $ionicLoading, $state, eventFactory, eventService) {
  
+Parse.initialize('FMq0Oa8GDND7cVrvVSllAAZiYjlpb3DHvaTk5WFX','Dvpbv2XOFsVmFxtIs4BY3N7FbKM6EAj2JwC5RvQ9'); 
+
+
+
 $scope.gotoEditPage = function(){
   $state.go('app.editEvent'); 
 }
 
-  var ref = new Firebase('https://torrid-torch-6578.firebaseio.com');
-  var authData = ref.getAuth();
+  // var ref = new Firebase('https://torrid-torch-6578.firebaseio.com');
+  // var authData = ref.getAuth();
 
   try { 
   var profileInfo = usersFactory.getUser(authData.uid)
@@ -983,26 +1002,35 @@ google.maps.event.addDomListener(document.getElementById("hostMap"), 'load', $sc
     
 
     $scope.getEventsForMap = function(){
-        return eventFactory.getEventsForMap($scope.userName).then(function(data) { 
-              var array = []; 
-
-              if(data.data.host == null){
-                $scope.notInvited = true; 
-              } else { 
-              array = Object.keys(data.data.host);
+         var data = eventFactory.getEventsForMap($scope.userName);  
+           $scope.events = []; 
+       var user = Parse.User.current(); 
+              data.equalTo("user", user); 
+              data.find({
+                success: function(results){
+                  for(i in results){
+                    $scope.kEvent = []; 
+                    $scope.kEvent[i] = results[i];  
               
-              $scope.events = []; 
-             
-             
-              for(var i=0; i < array.length; i++){
-              $scope.events[i] = data.data.host[array[i]]; 
-              console.log($scope.events[i]); 
-               }
-     }             
-    });
+               $scope.events[i] = { 
+                Title:  $scope.kEvent[i].get("Title"), 
+                eventDate: $scope.kEvent[i].get("Date"), 
+                Time: $scope.kEvent[i].get("Time"), 
+                Address: $scope.kEvent[i].get("Address"), 
+                Description: $scope.kEvent[i].get("Description"), 
+                
+            }; 
+            
 
-  };
+console.log($scope.events[i]);
 
+                  }
+                }
+              })
+
+        
+
+    };
   $scope.plotOnMap = function(name){
             var geocoder;
             var map;
@@ -1094,10 +1122,24 @@ $scope.plotAllOnMap = function(showAll){
 
 
 
-// .controller('CalendarCtrl', function ($scope, $cordovaCalendar) {
+.controller('CalendarCtrl', function ($scope, $cordovaCalendar) {
 
 
-// document.addEventListener("deviceready", onDeviceReady, false);
+   $scope.createEvent = function() {
+        $cordovaCalendar.createEvent({
+            title: 'Space Race',
+            location: 'The Moon',
+            notes: 'Bring sandwiches',
+            startDate: new Date(2015, 0, 15, 18, 30, 0, 0, 0),
+            endDate: new Date(2015, 1, 17, 12, 0, 0, 0, 0)
+        }).then(function (result) {
+            console.log("Event created successfully");
+        }, function (err) {
+            console.error("There was an error: " + err);
+        });
+    }
+ 
+})
 
 
 
@@ -1231,6 +1273,11 @@ $scope.plotAllOnMap = function(showAll){
 
 .controller('editEventCtrl', function($scope, $ionicLoading, $state, eventFactory, eventService, usersFactory) {
 
+
+Parse.initialize('FMq0Oa8GDND7cVrvVSllAAZiYjlpb3DHvaTk5WFX','Dvpbv2XOFsVmFxtIs4BY3N7FbKM6EAj2JwC5RvQ9'); 
+
+
+
 $scope.descriptionclicked = false; 
 $scope.timeclicked = false;
 $scope.titleclicked = false;
@@ -1242,8 +1289,8 @@ $scope.selectedVal = false;
 
 
 
-  var ref = new Firebase('https://torrid-torch-6578.firebaseio.com');
-  var authData = ref.getAuth();
+  // var ref = new Firebase('https://torrid-torch-6578.firebaseio.com');
+  // var authData = ref.getAuth();
 
   try { 
   var profileInfo = usersFactory.getUser(authData.uid)
@@ -1303,44 +1350,119 @@ $scope.addressclicked = false;
 
 
 $scope.updateTitle = function(changes){
+  var KontributeEvents = Parse.Object.extend("KontributeEvent")
+  var kontributeEvents = new KontributeEvents();
+  var user = Parse.User.current();
+  kontributeEvents.set("objectId", $scope.events[0].objectID);
+  kontributeEvents.set("Address", $scope.events[0].Address);
+  kontributeEvents.set("Title", $scope.events[0].Title);
+  kontributeEvents.set("Time",$scope.events[0].Time);
+  kontributeEvents.set("Date", $scope.events[0].eventDate);
+  kontributeEvents.set("Description", $scope.events[0].Description);
+
   var temp = 'title'; 
-  var oldTitle = $scope.selecteds[0].event.Title;
-  $scope.selecteds[0].event.Title = changes; 
-  eventService.updateLocalEventIfTitleChanged($scope.selecteds[0], oldTitle, $scope.userName); 
-
+  var oldTitle = $scope.events[0].Title;
+  $scope.events[0].Title = changes; 
+  kontributeEvents.save(null, {
+    success: function(kontributeEvents) {
+      kontributeEvents.set("Title", changes);
+      kontributeEvents.save();
+    }
+  });
 }
+
+
+
+
+
+
 $scope.updateTime = function(changes){
-   var temp = 'time'; 
-    var oldTitle = $scope.selecteds[0].event.Title;
-   var time = $scope.selecteds[0].event.Time
-   $scope.selecteds[0].event.Time = changes;
-  eventService.updateLocalEventIfTitleChanged($scope.selecteds[0], oldTitle, $scope.userName); 
+  var KontributeEvents = Parse.Object.extend("KontributeEvent")
+  var kontributeEvents = new KontributeEvents();
+  var user = Parse.User.current();
+  kontributeEvents.set("objectId", $scope.events[0].objectID);
+  kontributeEvents.set("Address", $scope.events[0].Address);
+  kontributeEvents.set("Title", $scope.events[0].Title);
+  kontributeEvents.set("Time",$scope.events[0].Time);
+  kontributeEvents.set("Date", $scope.events[0].eventDate);
+  kontributeEvents.set("Description", $scope.events[0].Description);
 
+  var temp = 'time'; 
+  var oldTitle = $scope.events[0].Time;
+  $scope.events[0].Time = changes; 
+  kontributeEvents.save(null, {
+    success: function(kontributeEvents) {
+      kontributeEvents.set("Time", changes);
+      kontributeEvents.save();
+    }
+  });
 }
+
 
 $scope.updateAddress = function(street, city, province){
-   var temp = street + ", " + city + ", " + province; 
-    var oldTitle = $scope.selecteds[0].event.Title;
-    var address = $scope.selecteds[0].event.Address; 
-   $scope.selecteds[0].event.Address = temp;
-  eventService.updateLocalEventIfTitleChanged($scope.selecteds[0], oldTitle, $scope.userName);
+  var temp = street + ", " + city + ", " + province;
+  var KontributeEvents = Parse.Object.extend("KontributeEvent")
+  var kontributeEvents = new KontributeEvents();
+  var user = Parse.User.current();
+  kontributeEvents.set("objectId", $scope.events[0].objectID);
+  kontributeEvents.set("Address", $scope.events[0].Address);
+  kontributeEvents.set("Title", $scope.events[0].Title);
+  kontributeEvents.set("Time",$scope.events[0].Time);
+  kontributeEvents.set("Date", $scope.events[0].eventDate);
+  kontributeEvents.set("Description", $scope.events[0].Description);
+
+  var oldTitle = $scope.events[0].Address;
+  $scope.events[0].Address = temp; 
+  kontributeEvents.save(null, {
+    success: function(kontributeEvents) {
+      kontributeEvents.set("Address", temp);
+      kontributeEvents.save();
+    }
+  });
 }
 
 $scope.updateDate = function(changes){
-   var temp = 'date'; 
-    var oldTitle = $scope.selecteds[0].event.Title;
-    var date = $scope.selecteds[0].event.Date; 
-   $scope.selecteds[0].event.Date = changes;
-  eventService.updateLocalEventIfTitleChanged($scope.selecteds[0], oldTitle, $scope.userName);
+  var KontributeEvents = Parse.Object.extend("KontributeEvent")
+  var kontributeEvents = new KontributeEvents();
+  var user = Parse.User.current();
+  kontributeEvents.set("objectId", $scope.events[0].objectID);
+  kontributeEvents.set("Address", $scope.events[0].Address);
+  kontributeEvents.set("Title", $scope.events[0].Title);
+  kontributeEvents.set("Time",$scope.events[0].Time);
+  kontributeEvents.set("Date", $scope.events[0].eventDate);
+  kontributeEvents.set("Description", $scope.events[0].Description);
 
+  var temp = 'date'; 
+  var oldTitle = $scope.events[0].eventDate;
+  $scope.events[0].eventDate = changes; 
+  kontributeEvents.save(null, {
+    success: function(kontributeEvents) {
+      kontributeEvents.set("Date", changes);
+      kontributeEvents.save();
+    }
+  });
 }
 
 $scope.updateDescription = function(changes){
-   var temp = 'description'; 
-    var oldTitle = $scope.selecteds[0].event.Title;
-   var description = $scope.selecteds[0].event.Description; 
-   $scope.selecteds[0].event.Description = changes;
-  eventService.updateLocalEventIfTitleChanged($scope.selecteds[0], oldTitle, $scope.userName);
+  var KontributeEvents = Parse.Object.extend("KontributeEvent")
+  var kontributeEvents = new KontributeEvents();
+  var user = Parse.User.current();
+  kontributeEvents.set("objectId", $scope.events[0].objectID);
+  kontributeEvents.set("Address", $scope.events[0].Address);
+  kontributeEvents.set("Title", $scope.events[0].Title);
+  kontributeEvents.set("Time",$scope.events[0].Time);
+  kontributeEvents.set("Date", $scope.events[0].eventDate);
+  kontributeEvents.set("Description", $scope.events[0].Description);
+
+  var temp = 'descriptione'; 
+  var oldTitle = $scope.events[0].Description;
+  $scope.events[0].Description = changes; 
+  kontributeEvents.save(null, {
+    success: function(kontributeEvents) {
+      kontributeEvents.set("Description", changes);
+      kontributeEvents.save();
+    }
+  });
 }
 
 
@@ -1372,27 +1494,36 @@ $scope.showEvent = function(ele){
 
 
     $scope.getEventsForMap = function(){
-        return eventFactory.getEventsForMap($scope.userName).then(function(data) { 
-              var array = []; 
-
-              if(data.data.host == null){
-                $scope.notInvited = true; 
-              } else { 
-              array = Object.keys(data.data.host);
+         var data = eventFactory.getEventsForMap($scope.userName);  
+           $scope.events = []; 
+       var user = Parse.User.current(); 
+              data.equalTo("user", user); 
+              data.find({
+                success: function(results){
+                  for(i in results){
+                    $scope.kEvent = []; 
+                    $scope.kEvent[i] = results[i];  
               
-              $scope.events = []; 
-             
-             
-              for(var i=0; i < array.length; i++){
-              $scope.events[i] = data.data.host[array[i]]; 
-              console.log($scope.events[i]); 
-               }
-     }             
-    });
+               $scope.events[i] = { 
+                Title:  $scope.kEvent[i].get("Title"), 
+                eventDate: $scope.kEvent[i].get("Date"), 
+                Time: $scope.kEvent[i].get("Time"), 
+                Address: $scope.kEvent[i].get("Address"), 
+                Description: $scope.kEvent[i].get("Description"),
+                objectID: $scope.kEvent[i].id,
+                
+            }; 
+            
 
-  };
+console.log($scope.events[i]);
+
+                  }
+                }
+              })
+
         
 
+    };
 
 
 

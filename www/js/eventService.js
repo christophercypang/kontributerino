@@ -82,7 +82,7 @@ angular.module('kontribute.services', [])
 
             var localEvent = { 
                 Title:  title, 
-                Date: date, 
+                eventDate: date, 
                 Time: time, 
                 Address: street +", "+ city + ", " + province, 
                 Description: description, 

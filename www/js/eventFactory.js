@@ -81,18 +81,38 @@
 
 
 
-    factory.createLocalEvent = function(localEvent, userName) {
-                var localEventTitle = localEvent.Title.toLowerCase(); 
-                var url = "https://torrid-torch-6578.firebaseio.com/"+ userName +"/host/" + localEventTitle + ".json";
+    factory.createLocalEvent = function(local, userName) {
+         
+        // Parse.initialize('FMq0Oa8GDND7cVrvVSllAAZiYjlpb3DHvaTk5WFX','Dvpbv2XOFsVmFxtIs4BY3N7FbKM6EAj2JwC5RvQ9'); 
+         var user = Parse.User.current(); 
+         var KontributeEvent = Parse.Object.extend("KontributeEvent");
+            var kontributeEvent = new KontributeEvent({"Address": local.Address, "Date": local.eventDate, "Description": local.Description, "Time": local.Time, "Title": local.Title, "user": user});
+              kontributeEvent.save(null, {
+                success: function(object){
+        //              var user2 = Parse.User();  
+        // user2.add("hostedEvents", kontributeEvent.get("objectId")); 
+        // user2.add("allEvents", kontributeEvent.get("objectId")); 
+    }, 
+    error: function(object, error){
+        console.log('eee'); 
+    }
+              }); 
+               
+
+
+
+
+                // var localEventTitle = localEvent.Title.toLowerCase(); 
+                // var url = "https://torrid-torch-6578.firebaseio.com/"+ userName +"/host/" + localEventTitle + ".json";
                 //var eve = [localEventTitle];
-                $http.put(url, { event: localEvent })
-                .success(function(data, status, headers, config) {
-                    console.log(data); 
+                // $http.put(url, { event: localEvent })
+                // .success(function(data, status, headers, config) {
+                //     console.log(data); 
                     
-                }).
-                error(function(data, status, headers, config) {
-                    ("error"); 
-                }); 
+                // }).
+                // error(function(data, status, headers, config) {
+                //     ("error"); 
+                // }); 
 
              }
 
@@ -149,11 +169,16 @@
 
 
    factory.getEventsForMap = function(userName) {
-             var url = "https://torrid-torch-6578.firebaseio.com/" +userName+ ".json";
-                return $http.get(url)
-                .success(function (data, status, headers, config) {                
-                   //     console.log(data); 
-                });
+             var events = Parse.Object.extend('KontributeEvent'); 
+             var data = new Parse.Query(events); 
+            return data; 
+            
+
+             // var url = "https://torrid-torch-6578.firebaseio.com/" +userName+ ".json";
+             //    return $http.get(url)
+             //    .success(function (data, status, headers, config) {                
+             //       //     console.log(data); 
+             //    });
         }
 
     factory.createInviteList = function(uid, guest, guestUid) {

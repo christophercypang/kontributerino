@@ -13,12 +13,12 @@
     <li ng-repeat="event in events">
     <a class="item item-icon-left" ng-click="showEvent($index)">
     <i class="icon ion-calendar"></i>
-    <p>{{event.event.Title}}</p>
+    <p>{{event.Title}}</p>
     <span class="item-note">
-    {{event.event.Date | date: "yyyy-MM-dd" }} &nbsp &nbsp
-    {{event.event.Time | date: "HH:mm"}}
+    {{event.eventDate | date: "yyyy-MM-dd" }} &nbsp &nbsp
+    {{event.Time | date: "HH:mm"}}
     </span>
-    <p>{{event.event.Address}}</p>
+    <p>{{event.Address}}</p>
     </a>
     </li>
   </div>
@@ -34,7 +34,7 @@
 
   <a ng-click="toggletitle()" class="item item-icon-left">
     <i class="icon ion-flag"></i>
-    {{event.event.Title}}
+    {{event.Title}}
   </a>
   <div class="list" ng-show="titleclicked">
   <label class="item item-input item-floating-label">
@@ -50,7 +50,7 @@
 
 <a ng-click="toggleaddress()" class="item item-icon-left" >
     <i class="icon ion-home"></i>
-    {{event.event.Address}}
+    {{event.Address}}
   </a>
    <div class="list" ng-if="addressclicked">
   <label class="item item-input">
@@ -85,7 +85,7 @@
 
   <a ng-click="toggledate()" class="item item-icon-left" >
     <i class="icon ion-calendar"></i>
-    {{event.event.Date | date: "yyyy-MM-dd" }}
+    {{event.eventDate | date: "yyyy-MM-dd" }}
   </a>
 
  <div class="list" ng-if="dateclicked">
@@ -102,7 +102,7 @@
 </div>
   <a ng-click="toggletime()" class="item item-icon-left" >
     <i class="icon ion-clock"></i>
-   {{event.event.Time | date: "HH:mm"}}
+   {{event.Time | date: "HH:mm"}}
   </a>
 
  <div class="list" ng-if="timeclicked">
@@ -118,7 +118,7 @@
 </div>
   <a ng-click="toggledescription()" class="item item-icon-left" >
     <i class="icon ion-document"></i>
-    {{event.event.Description}}
+    {{event.Description}}
   </a>
    <div class="list" ng-if="descriptionclicked">
   <label class="item item-input item-floating-label">
@@ -134,7 +134,7 @@
 
   <a class="item item-icon-left" >
     <i class="icon ion-person-add"></i>
-    {{event.event.Guests}}
+    {{event.Guests}}
   </a>
 <br>
 <br>
