@@ -557,20 +557,50 @@ $scope.registerButton= function (){
 // Handles user profile
 .controller('ProfileCtrl', function($ionicModal, $state, authFactory, $window, usersFactory, $http, $scope, $rootScope) {
   var profileCtrl = this;
+Parse.initialize('FMq0Oa8GDND7cVrvVSllAAZiYjlpb3DHvaTk5WFX','Dvpbv2XOFsVmFxtIs4BY3N7FbKM6EAj2JwC5RvQ9'); 
+ 
+$scope.emailclicked = false; 
+$scope.usernameclicked = false; 
 
-  // var ref = new Firebase('https://torrid-torch-6578.firebaseio.com/');
-  // var usersRef = new Firebase('https://torrid-torch-6578.firebaseio.com/users')
-  // var authData = ref.getAuth();
-  // var friendsRef = new Firebase('https://torrid-torch-6578.firebaseio.com/users/'+authData.uid+'/friends')
 
    $scope.getProfileInfo = function() {
-    return usersFactory.getUser(authData.uid).then(function(data){
-      $scope.email = data.data.email;
-      $scope.firstname = data.data.firstname;
-      $scope.lastname = data.data.lastname;
-      console.log($scope.firstname);
-    })
+    var user = Parse.User.current(); 
+    
+    $scope.firstname = user.get("firstName"); 
+    $scope.lastname = user.get("lastName");
+    $scope.memberSince = user.get("createdAt"); 
+    $scope.username = user.get("username"); 
+    $scope.email = user.get("email"); 
+
   };
+
+
+$scope.changeUserName = function(username){
+  var user = Parse.User.current(); 
+console.log(user.get("username"));
+user.get("username");  
+user.save();
+  user.set("username", username); 
+}
+
+
+$scope.toggleusername = function(){
+  if($scope.usernameclicked == false){
+
+$scope.usernameclicked = true; 
+} else {
+$scope.usernameclicked = false; 
+}
+}
+
+$scope.toggleemail = function(){
+ 
+  if($scope.emailclicked == false){
+$scope.emailclicked = true; 
+} else {
+$scope.emailclicked = false; 
+}
+}
 
   $scope.getAllUsers = function() {
     usersRef.on('value', function(snapshot){

@@ -1,44 +1,60 @@
 <ion-view view-title="Profile" ng-controller="ProfileCtrl as profileCtrl" ng-init="getProfileInfo()">
-<ion-content>
+<ion-content style="background: url('https://unsplash.it/500/700?image=769');no-repeat center center fixed;
+	background-size: cover;">
 	<div class="eventsImage">  
 
 </div>
 
-
-
-
-
-<div class="row">
-  <div class="col col-100">.col.col-50</div>
-  
-</div>
-	<div class="row">
-		<div class="col">.col</div>
-  <div class="col">.col</div>
-
-  </div>
-		<div class="item item-divider">
-			<i class = "icon ion-scissors"></i>
-			Welcome {{firstname}} {{lastname}}
-		</div>
-
-
+<div class="profileCover">
 	
+	<p>
+			Welcome | {{firstname}} {{lastname}}
+			</p>
+		</div>
+	<div class="list card">
 
+  <div class="item item-avatar">
+    <img src="../img/rsz_1user.png" width="60px" height="60px">
+    <h2 style="color: #003366; font-weight: bold">{{firstname}} {{lastname}} </h2>
+    <p style="color: #000033; font-weight: bold"> Username: {{username}}
+    <p style="color: #000033; font-weight: bold">Member Since: {{memberSince | date: "MMMM dd yyyy" }}</p>
+  </div>
 
-<div class="list card">
-
-  <a ng-click="showFriends()" class="item item-icon-left">
-    <i class="icon ion-person-stalker"></i>
-    My Friends
-  </a>
-
-
+  <div class="item item-body">
   
  
+  <div class="list">
+   
+    <li>
+     Upcoming event goes here
+    <p>{{event.Title}}</p>
+    <span class="item-note">
+    {{event.eventDate | date: "yyyy-MM-dd" }} &nbsp &nbsp
+    {{event.Time | date: "HH:mm"}}
+    </span>
+    <p>{{event.Address}}</p>
+    </li>
+  </div>
+
+  </div>
+<div class="row">
+  <div class="col"> 
+  <a class="tab-item" href="#/app/editProfile">
+    <i class="icon ion-edit"></i>
+    Edit 
+  </a>
+</div>
+  <div class="col">
+   <a class="tab-item" ng-click="showFriends()">
+    <i class="icon ion-person-stalker"></i>
+    Friends
+  </a>
+</div>
+</div>
 
 </div>
 
+	
 
 	</ion-content>
   
@@ -53,6 +69,7 @@
   Logout
 </button>
   </a>
+
  </div>
 	
 </ion-view>

@@ -226,6 +226,18 @@ angular.module('kontribute', ['ionic', 'ngCordova', 'kontribute.controllers', 'k
 
           })
 
+
+            .state('app.editProfile', {
+            url:'/editProfile',
+            views: {
+              'menuContent': {
+                templateUrl: 'templates/editProfile.html',
+               
+              }
+            }, 
+      
+          })
+
           .state('app.profile', {
             url:'/profile',
             views: {
